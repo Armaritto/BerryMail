@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 public class UserDirector {
     public static HashMap <String, User> users = new HashMap<>();
-    private UserBuilderIF userbuilder;
+    private final UserBuilderIF userbuilder;
     public UserDirector(UserBuilderIF userbuilder){
         this.userbuilder= userbuilder;
     }

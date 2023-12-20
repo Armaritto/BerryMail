@@ -5,7 +5,6 @@ import com.berrymail.entities.UserBuilderIF;
 import com.berrymail.entities.UserDirector;
 import java.util.ArrayList;
 import java.util.Objects;
-
 public class UserService {
     UserBuilderIF userBuilder = new UserBuilder();
     UserDirector userDir = new UserDirector(userBuilder);
