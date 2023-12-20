@@ -1,22 +1,21 @@
 package com.berrymail.entities;
+import java.util.Date;
 public class Mail {
     private String id;
     private String from;
     private String to;
     private String subject;
     private String body;
-    private String date;
-    private String time;
+    private Date dateNtime;
     private String priority;
     private String attachment;
-    public Mail(String id, String from, String to, String subject, String body, String date, String time, String priority, String attachment) {
+    public Mail(String id, String from, String to, String subject, String body, Date dateNtime, String priority, String attachment) {
         this.id = id;
         this.from = from;
         this.to = to;
         this.subject = subject;
         this.body = body;
-        this.date = date;
-        this.time = time;
+        this.dateNtime = dateNtime;
         this.priority = priority;
         this.attachment = attachment;
     }
@@ -50,17 +49,11 @@ public class Mail {
     public void setBody(String body) {
         this.body = body;
     }
-    public String getDate() {
-        return date;
+    public Date getDateNtime() {
+        return dateNtime;
     }
-    public void setDate(String date) {
-        this.date = date;
-    }
-    public String getTime() {
-        return time;
-    }
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateNtime(Date dateNtime) {
+        this.dateNtime = dateNtime;
     }
     public String getPriority() {
         return priority;
@@ -74,6 +67,7 @@ public class Mail {
     public void setAttachment(String attachment) {
         this.attachment = attachment;
     }
+
     @Override
     public String toString() {
         return "Mail{" +
@@ -82,8 +76,7 @@ public class Mail {
                 ", to='" + to + '\'' +
                 ", subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
-                ", date='" + date + '\'' +
-                ", time='" + time + '\'' +
+                ", date=" + dateNtime +
                 ", priority='" + priority + '\'' +
                 ", attachment='" + attachment + '\'' +
                 '}';

@@ -1,12 +1,12 @@
 package com.berrymail.entities;
+import java.util.Date;
 public class MailBuilder implements MailBuilderIF{
     private String id;
     private String from;
     private String to;
     private String subject;
     private String body;
-    private String date;
-    private String time;
+    private Date dateNtime;
     private String priority;
     private String attachment;
     public void generateId(String id){
@@ -24,11 +24,8 @@ public class MailBuilder implements MailBuilderIF{
     public void generateBody(String body){
         this.body = body;
     }
-    public void generateDate(String date){
-        this.date = date;
-    }
-    public void generateTime(String time){
-        this.time = time;
+    public void generateDateNTime(Date dateNtime) {
+        this.dateNtime = dateNtime;
     }
     public void generatePriority(String priority){
         this.priority = priority;
@@ -37,7 +34,7 @@ public class MailBuilder implements MailBuilderIF{
         this.attachment = attachment;
     }
     public Mail getMail(){
-        return new Mail(id, from, to, subject, body, date, time, priority, attachment);
+        return new Mail(id, from, to, subject, body, dateNtime, priority, attachment);
     }
 
 }
