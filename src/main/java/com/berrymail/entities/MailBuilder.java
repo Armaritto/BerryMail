@@ -1,48 +1,43 @@
 package com.berrymail.entities;
 public class MailBuilder implements MailBuilderIF{
-    private Mail mail;
-    @Override
-    public void generateId(String id) {
-        this.mail.setId(id);
+    private String id;
+    private String from;
+    private String to;
+    private String subject;
+    private String body;
+    private String date;
+    private String time;
+    private String priority;
+    private String attachment;
+    public void generateId(String id){
+        this.id = id;
     }
-    @Override
-    public void generateFrom(String from) {
-        this.mail.setId(from);
+    public void generateFrom(String from){
+        this.from = from;
     }
-    @Override
-    public void generateTo(String to) {
-        this.mail.setId(to);
+    public void generateTo(String to){
+        this.to = to;
     }
-    @Override
-    public void generateSubject(String subject) {
-        this.mail.setId(subject);
+    public void generateSubject(String subject){
+        this.subject = subject;
     }
-    @Override
-    public void generateBody(String body) {
-        this.mail.setId(body);
+    public void generateBody(String body){
+        this.body = body;
     }
-    @Override
-    public void generateDate(String date) {
-        this.mail.setId(date);
+    public void generateDate(String date){
+        this.date = date;
     }
-    @Override
-    public void generateTime(String time) {
-        this.mail.setId(time);
+    public void generateTime(String time){
+        this.time = time;
     }
-    @Override
-    public void generatePriority(String priority) {
-        this.mail.setId(priority);
+    public void generatePriority(String priority){
+        this.priority = priority;
     }
-    @Override
-    public void generateFolder(String folder) {
-        this.mail.setId(folder);
+    public void generateAttachment(String attachment){
+        this.attachment = attachment;
     }
-    @Override
-    public void generateAttachment(String attachment) {
-        this.mail.setId(attachment);
+    public Mail getMail(){
+        return new Mail(id, from, to, subject, body, date, time, priority, attachment);
     }
-    @Override
-    public Mail getMail() {
-        return this.mail;
-    }
+
 }

@@ -8,8 +8,18 @@ public class Mail {
     private String date;
     private String time;
     private String priority;
-    private String folder;
     private String attachment;
+    public Mail(String id, String from, String to, String subject, String body, String date, String time, String priority, String attachment) {
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.subject = subject;
+        this.body = body;
+        this.date = date;
+        this.time = time;
+        this.priority = priority;
+        this.attachment = attachment;
+    }
     public String getId() {
         return id;
     }
@@ -58,12 +68,6 @@ public class Mail {
     public void setPriority(String priority) {
         this.priority = priority;
     }
-    public String getFolder() {
-        return folder;
-    }
-    public void setFolder(String folder) {
-        this.folder = folder;
-    }
     public String getAttachment() {
         return attachment;
     }
@@ -81,7 +85,6 @@ public class Mail {
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", priority='" + priority + '\'' +
-                ", folder='" + folder + '\'' +
                 ", attachment='" + attachment + '\'' +
                 '}';
     }
