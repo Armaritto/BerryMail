@@ -8,7 +8,6 @@ public interface MailBuilderIF {
     public void generateDate(String date);
     public void generateTime(String time);
     public void generatePriority(String priority);
-    public void generateFolder(String folder);
     public void generateAttachment(String attachment);
     public Mail getMail();
 }

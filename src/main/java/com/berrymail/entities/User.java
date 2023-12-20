@@ -6,10 +6,21 @@ public class User {
     private String email;
     private String password;
     private String username;
-    private ArrayList<Integer> inbox;
-    private ArrayList<Integer> sent;
-    private ArrayList<Integer> trash;
-    private ArrayList<Integer> draft;
+    private ArrayList<String> inbox;
+    private ArrayList<String> sent;
+    private ArrayList<String> trash;
+    private ArrayList<String> draft;
+    public User(String firstName, String lastName, String email, String password, String username, ArrayList<String> inbox, ArrayList<String> sent, ArrayList<String> trash, ArrayList<String> draft) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.inbox = inbox;
+        this.sent = sent;
+        this.trash = trash;
+        this.draft = draft;
+    }
     public String getFirstName() {
         return firstName;
     }
@@ -41,28 +52,28 @@ public class User {
         this.username = username;
     }
 
-    public ArrayList<Integer> getInbox() {
+    public ArrayList<String> getInbox() {
         return inbox;
     }
-    public void setInbox(ArrayList<Integer> inbox) {
+    public void setInbox(ArrayList<String> inbox) {
         this.inbox = inbox;
     }
-    public ArrayList<Integer> getSent() {
+    public ArrayList<String> getSent() {
         return sent;
     }
-    public void setSent(ArrayList<Integer> sent) {
+    public void setSent(ArrayList<String> sent) {
         this.sent = sent;
     }
-    public ArrayList<Integer> getTrash() {
+    public ArrayList<String> getTrash() {
         return trash;
     }
-    public void setTrash(ArrayList<Integer> trash) {
+    public void setTrash(ArrayList<String> trash) {
         this.trash = trash;
     }
-    public ArrayList<Integer> getDraft() {
+    public ArrayList<String> getDraft() {
         return draft;
     }
-    public void setDraft(ArrayList<Integer> draft) {
+    public void setDraft(ArrayList<String> draft) {
         this.draft = draft;
     }
     @Override

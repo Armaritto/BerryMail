@@ -8,7 +8,7 @@ import java.util.Objects;
 public class UserService {
     UserBuilderIF userBuilder = new UserBuilder();
     UserDirector userDir = new UserDirector(userBuilder);
-    public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<Integer> inbox ,ArrayList<Integer> sent, ArrayList<Integer> trash ,ArrayList<Integer> draft){
+    public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft){
         if(UserDirector.users.get(email) == null){
             userDir.makeUser(fname, lname, username, email, password, inbox, sent, trash, draft);
             return "Account created";
@@ -29,4 +29,13 @@ public class UserService {
         }
         return null;
     }
+    public String addMailToInbox(String email, String mailID){
+        UserDirector.users.get(email).getInbox().add(mailID);
+        return "Mail added to inbox";
+    }
+    public String addMailToSent(String email, String mailID){
+        UserDirector.users.get(email).getSent().add(mailID);
+        return "Mail sent Successfully";
+    }
+
 }
