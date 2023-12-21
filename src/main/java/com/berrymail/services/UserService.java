@@ -54,16 +54,16 @@ public class UserService {
         UserDirector.users.get(email).getDraft().add(mailID);
         return "Mail added to draft";
     }
-    public ArrayList<Mail> inboxList(String email, String Sortcriteria){ // criteria
+    public ArrayList<Mail> inboxList(String email, String Sortcriteria){
         ArrayList<String> inboxID = UserDirector.users.get(email).getInbox();
         ArrayList<Mail> inboxFolder= new ArrayList<>();
         for(int i=0; i<inboxID.size(); i++){
             inboxFolder.add(MailDirector.mails.get(inboxID.get(i)));
         }
         if(Sortcriteria.equals("Priority")){
-            return sortByPriority(email, inboxFolder);
+            return sortByPriority(inboxFolder);
         }
-        return sortByDate(email, inboxFolder);
+        return sortByDate(inboxFolder);
     }
     public ArrayList<Mail> sentList(String email, String Sortcriteria){
         ArrayList<String> sentID = UserDirector.users.get(email).getSent();
@@ -72,9 +72,9 @@ public class UserService {
             sentFolder.add(MailDirector.mails.get(sentID.get(i)));
         }
         if(Sortcriteria.equals("Priority")){
-            return sortByPriority(email, sentFolder);
+            return sortByPriority(sentFolder);
         }
-        return  sortByDate(email, sentFolder);
+        return  sortByDate(sentFolder);
     }
     public ArrayList<Mail> trashList(String email, String Sortcriteria){
         ArrayList<String> trashID = UserDirector.users.get(email).getTrash();
@@ -83,9 +83,9 @@ public class UserService {
             trashFolder.add(MailDirector.mails.get(trashID.get(i)));
         }
         if(Sortcriteria.equals("Priority")){
-            return sortByPriority(email, trashFolder);
+            return sortByPriority(trashFolder);
         }
-        return sortByDate(email, trashFolder);
+        return sortByDate(trashFolder);
     }
     public ArrayList<Mail> draftList(String email, String Sortcriteria){
         ArrayList<String> draftID = UserDirector.users.get(email).getDraft();
@@ -94,10 +94,120 @@ public class UserService {
             draftFolder.add(MailDirector.mails.get(draftID.get(i)));
         }
         if(Sortcriteria.equals("Priority")){
-            return sortByPriority(email, draftFolder);
+            return sortByPriority(draftFolder);
         }
-        return sortByDate(email, draftFolder);
+        return sortByDate(draftFolder);
     }
+    public ArrayList<Mail> filterInbox(String email, String sortCriteria, String filterCriteria, ArrayList<String> objects){
+        ArrayList<Mail> inbox = inboxList(email, sortCriteria);
+        if(filterCriteria.equals("Subject")){
+            return filterBySubject(inbox, objects);
+        }
+        else if(filterCriteria.equals("Sender")){
+            return filterBySender(inbox, objects);
+        }
+        else if(filterCriteria.equals("Receiver")){
+            return filterByReceiver(inbox, objects);
+        }
+        else if(filterCriteria.equals("Priority")){
+            return filterByPriority(inbox, objects);
+        }
+        else if(filterCriteria.equals("Attachment")){
+            return filterByAttachment(inbox, objects);
+        }
+        else if(filterCriteria.equals("Date")){
+            return filterByDate(inbox, objects);
+        }
+        else if(filterCriteria.equals("Body")){
+            return filterByBody(inbox, objects);
+        }
+        else {
+            return inbox;
+        }
+
+    }
+    public ArrayList<Mail> filterDraft(String email, String sortCriteria, String filterCriteria, ArrayList<String> objects){
+        ArrayList<Mail> draft = inboxList(email, sortCriteria);
+        if(filterCriteria.equals("Subject")){
+            return filterBySubject(draft, objects);
+        }
+        else if(filterCriteria.equals("Sender")){
+            return filterBySender(draft, objects);
+        }
+        else if(filterCriteria.equals("Receiver")){
+            return filterByReceiver(draft, objects);
+        }
+        else if(filterCriteria.equals("Priority")){
+            return filterByPriority(draft, objects);
+        }
+        else if(filterCriteria.equals("Attachment")){
+            return filterByAttachment(draft, objects);
+        }
+        else if(filterCriteria.equals("Date")){
+            return filterByDate(draft, objects);
+        }
+        else if(filterCriteria.equals("Body")){
+            return filterByBody(draft, objects);
+        }
+        else {
+            return draft;
+        }
+    }
+    public ArrayList<Mail> filterTrash(String email, String sortCriteria, String filterCriteria, ArrayList<String> objects){
+        ArrayList<Mail> trash = inboxList(email, sortCriteria);
+        if(filterCriteria.equals("Subject")){
+            return filterBySubject(trash, objects);
+        }
+        else if(filterCriteria.equals("Sender")){
+            return filterBySender(trash, objects);
+        }
+        else if(filterCriteria.equals("Receiver")){
+            return filterByReceiver(trash, objects);
+        }
+        else if(filterCriteria.equals("Priority")){
+            return filterByPriority(trash, objects);
+        }
+        else if(filterCriteria.equals("Attachment")){
+            return filterByAttachment(trash, objects);
+        }
+        else if(filterCriteria.equals("Date")){
+            return filterByDate(trash, objects);
+        }
+        else if(filterCriteria.equals("Body")){
+            return filterByBody(trash, objects);
+        }
+        else {
+            return trash;
+        }
+    }
+    public ArrayList<Mail> filterSent(String email, String sortCriteria, String filterCriteria, ArrayList<String> objects){
+        ArrayList<Mail> sent = inboxList(email, sortCriteria);
+        if(filterCriteria.equals("Subject")){
+            return filterBySubject(sent, objects);
+        }
+        else if(filterCriteria.equals("Sender")){
+            return filterBySender(sent, objects);
+        }
+        else if(filterCriteria.equals("Receiver")){
+            return filterByReceiver(sent, objects);
+        }
+        else if(filterCriteria.equals("Priority")){
+            return filterByPriority(sent, objects);
+        }
+        else if(filterCriteria.equals("Attachment")){
+            return filterByAttachment(sent, objects);
+        }
+        else if(filterCriteria.equals("Date")){
+            return filterByDate(sent, objects);
+        }
+        else if(filterCriteria.equals("Body")){
+            return filterByBody(sent, objects);
+        }
+        else {
+            return sent;
+        }
+    }
+
     public String addMailToTrash(String email, String mailID){
         if(UserDirector.users.get(email).getInbox().contains(mailID))
             UserDirector.users.get(email).getInbox().remove(mailID);
@@ -108,7 +218,7 @@ public class UserService {
         UserDirector.users.get(email).getTrash().add(mailID);
         return "Mail added to trash";
     }
-    public ArrayList<Mail> sortByDate(String email, ArrayList<Mail> Folder){
+    public ArrayList<Mail> sortByDate(ArrayList<Mail> Folder){
         ArrayList<Mail> folder = Folder;
         for(int i=0; i<folder.size(); i++){
             for(int j=0; j<folder.size()-1; j++){
@@ -121,8 +231,8 @@ public class UserService {
         }
         return folder;
     }
-    public ArrayList<Mail> sortByPriority(String email, ArrayList<Mail> Folder){
-        ArrayList<Mail> folder = sortByDate(email, Folder);
+    public ArrayList<Mail> sortByPriority(ArrayList<Mail> Folder){
+        ArrayList<Mail> folder = sortByDate(Folder);
         PriorityQueue<Mail> priorityQueue = new PriorityQueue<>(new PriorityComparator());
         priorityQueue.addAll(folder); // for loop
         folder.clear();
@@ -132,4 +242,33 @@ public class UserService {
         }
         return folder;
     }
+    public ArrayList<Mail> filterBySubject(ArrayList<Mail> Folder, ArrayList<String> subjects){
+        CriteriaIF subjectCriteria = new CriteriaSubject();
+        return subjectCriteria.meetCriteria(Folder, subjects);
+    }
+    public ArrayList<Mail> filterBySender(ArrayList<Mail> Folder, ArrayList<String> senders){
+        CriteriaIF senderCriteria = new CriteriaSender();
+        return senderCriteria.meetCriteria(Folder, senders);
+    }
+    public ArrayList<Mail> filterByReceiver(ArrayList<Mail> Folder, ArrayList<String> receivers){
+        CriteriaIF receiverCriteria = new CriteriaReciever();
+        return receiverCriteria.meetCriteria(Folder, receivers);
+    }
+    public ArrayList<Mail> filterByPriority(ArrayList<Mail> Folder, ArrayList<String> priority){
+        CriteriaIF priorityCriteria = new CriteriaPriority();
+        return priorityCriteria.meetCriteria(Folder, priority);
+    }
+    public ArrayList<Mail> filterByBody(ArrayList<Mail> Folder, ArrayList<String> body){
+        CriteriaIF bodyCriteria = new CriteriaBody();
+        return bodyCriteria.meetCriteria(Folder, body);
+    }
+    public ArrayList<Mail> filterByDate(ArrayList<Mail> Folder, ArrayList<String> date){
+        CriteriaIF dateCriteria = new CriteriaDate();
+        return dateCriteria.meetCriteria(Folder, date);
+    }
+public ArrayList<Mail> filterByAttachment(ArrayList<Mail> Folder, ArrayList<String> attachment){
+    CriteriaIF attachmentCriteria = new CriteriaAttachment();
+    return attachmentCriteria.meetCriteria(Folder, attachment);
+}
+
 }

@@ -39,5 +39,20 @@ public class UserController {
     public String deleteMail(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception {
         return userService.addMailToTrash(email, id);
     }
-
+    @PostMapping(path = "/filterInbox")
+    public ArrayList<Mail> filterInbox(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
+        return userService.filterInbox(email, SortCriteria, FilterCriteria, objects);
+    }
+    @PostMapping(path = "/filterDraft")
+    public ArrayList<Mail> filterDraft(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
+        return userService.filterDraft(email, SortCriteria, FilterCriteria, objects);
+    }
+    @PostMapping(path = "/filterTrash")
+    public ArrayList<Mail> filterTrash(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
+        return userService.filterTrash(email, SortCriteria, FilterCriteria, objects);
+    }
+    @PostMapping(path = "/filterSent")
+    public ArrayList<Mail> filterSent(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
+        return userService.filterSent(email, SortCriteria, FilterCriteria, objects);
+    }
 }
