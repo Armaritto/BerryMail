@@ -3,7 +3,6 @@ import java.util.Date;
 import com.berrymail.entities.Mail;
 import com.berrymail.entities.MailDirector;
 import com.berrymail.entities.UserDirector;
-
 public class Mediator implements MediatorIF {
     MailService mailService =  new MailService();
     UserService userService = new UserService();
