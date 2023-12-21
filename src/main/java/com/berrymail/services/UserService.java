@@ -1,6 +1,7 @@
 package com.berrymail.services;
 import com.berrymail.entities.*;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
@@ -8,6 +9,19 @@ public class UserService {
     UserBuilderIF userBuilder = new UserBuilder();
     UserDirector userDir = new UserDirector(userBuilder);
     public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft){
+        if(!email.contains("@berry.com")){
+            return "Email is not valid";
+        }
+        if(password.length()<6){
+            return "Password must be at least 6 characters";
+        }
+        for (Map.Entry<String, User> entry : UserDirector.users.entrySet()) {
+            String oldMail = entry.getKey();
+            String oldUsername = entry.getValue().getUsername();
+            if(username.equals(oldUsername)){
+                return "Username already taken";
+            }
+        }
         if(UserDirector.users.get(email) == null){
             userDir.makeUser(fname, lname, username, email, password, inbox, sent, trash, draft);
             return "Account created";
