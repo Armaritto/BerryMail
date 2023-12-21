@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      Hello Berry Mail
+      Hello Berry
     </h1>
   </div>
 </template>
