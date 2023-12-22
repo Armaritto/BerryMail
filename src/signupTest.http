@@ -1,0 +1,47 @@
+POST http://localhost:8080/Signup
+Content-Type: application/x-www-form-urlencoded
+
+firstName = armia &
+lastName = joseph &
+username = armia404 &
+email = armia404@berry.com &
+password = 1234
+
+###
+POST http://localhost:8080/Signup
+Content-Type: application/x-www-form-urlencoded
+
+firstName = karene &
+lastName = antoine &
+username = karene_antoine &
+email = karene_antoine@berry.com &
+password = 5678
+
+###
+POST http://localhost:8080/Signup
+Content-Type: application/x-www-form-urlencoded
+
+firstName = as &
+lastName = ddsd &
+username = karene_antoine &
+email = www@berry.com &
+password = 9999
+###
+### Send POST request with with body as parameters
+POST http://localhost:8080/Signup/
+
+firstName = armia &
+lastName = joseph &
+username = armia404 &
+email = armia404@berry.com &
+password = 1234 &
+
+### Send POST request with body as parameters
+POST http://localhost:8080/Signup/
+
+firstName = karene &
+lastName = antoine &
+username = karene_antoine &
+email = karene_antoine@berry.com &
+password = 5678 &
+

@@ -3,55 +3,60 @@ package com.berrymail.entities;
 import java.util.ArrayList;
 
 public class UserBuilder implements UserBuilderIF{
-    private User user;
-    public UserBuilder(){
-        this.user = new User();
-    }
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String username;
+    private ArrayList<String> inbox;
+    private ArrayList<String> sent;
+    private ArrayList<String> trash;
+    private ArrayList<String> draft;
     @Override
     public void generateFirstName(String fname) {
-        this.user.setFirstName(fname);
-
+        this.firstName = fname;
     }
+
     @Override
     public void generateLastName(String lname) {
-        this.user.setLastName(lname);
+        this.lastName = lname;
     }
+
     @Override
     public void generateUsername(String username) {
-        this.user.setUsername(username);
+        this.username = username;
     }
+
     @Override
     public void generateEmail(String email) {
-        this.user.setEmail(email);
+        this.email = email;
     }
+
     @Override
     public void generatePassword(String password) {
-        this.user.setPassword(password);
+        this.password = password;
     }
 
     @Override
-    public void generateInbox(ArrayList<Integer> inbox) {
-        this.user.setInbox(inbox);
+    public void generateInbox(ArrayList<String> inbox) {
+        this.inbox = inbox;
     }
 
     @Override
-    public void generateTrash(ArrayList<Integer> trash) {
-        this.user.setTrash(trash);
+    public void generateTrash(ArrayList<String> trash) {
+        this.trash = trash;
     }
 
     @Override
-    public void generateDraft(ArrayList<Integer> draft) {
-        this.user.setDraft(draft);
+    public void generateDraft(ArrayList<String> draft) {
+        this.draft = draft;
     }
 
     @Override
-    public void generateSent(ArrayList<Integer> sent) {
-        this.user.setSent(sent);
+    public void generateSent(ArrayList<String> sent) {
+        this.sent = sent;
     }
-
-    @Override
-    public User getUser() {
-        return this.user;
+    public User getUser(){
+        return new User(firstName, lastName, email, password, username,inbox, sent, trash, draft);
     }
 }
-
