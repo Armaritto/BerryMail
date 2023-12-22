@@ -1,14 +1,14 @@
 <template>
     <div class="folder">
-    <form @submit.prevent="handleSubmit" v-if="true">
-      <label>Email:</label>
-      <input type="email" v-model="email" required>
+    <form @submit.prevent="handleSend" v-if="true">
+      <label>to:</label>
+      <input type="email" v-model="to" required>
   
       <label>Subject:</label>
       <input type="text" v-model="subject">
   
       <label></label>
-      <textarea name="paragraph_text" cols="44" rows="10" v-model="content"></textarea>
+      <textarea name="paragraph_text" cols="44" rows="10" v-model="body"></textarea>
       
       <div class="submit">
         <button>send</button>
@@ -19,11 +19,12 @@
   
   <script>
   export default {
+    props:['myEmail'],
     data() {
       return {
-        email: '',
+        to: '',
         subject:'',
-        content:''
+        body:''
       }
     },
     methods: {
@@ -40,19 +41,25 @@
           return skill !== item
         })
       },
-      handleSubmit() {
-        // validate password
-        this.passwordError = this.password.length > 5 ?
-          '' : 'Password must be at least 6 characters long'
-  
-        if (!this.passwordError) {
-          // make request to database to save user
-          console.log('email: ', this.email)
-          console.log('password: ', this.password)
-          console.log('role: ', this.role)
-          console.log('skills: ', this.skills)
-          console.log('terms accepted: ', this.terms)
+      handleSend() { 
+        const url = "http://localhost:8080/send?"
+        const params = {
+          from:this.myEmail,
+          to:this.to,
+          subject:this.subject,
+          body:this.body,
+          priority:"Default",
+          attachment:"PNG"
         }
+        const query = new URLSearchParams(params)
+        const method = "POST"
+        const body = ""
+        
+        fetch(url+query, {method: method, body: body})
+        .then(res => res.text())
+        .then(data => console.log(data))
+
+        // make request to database to save user
       }
     }
   }

@@ -1,34 +1,33 @@
 <template>
     <div>
         <p>{{emailMeta.subject}}</p>
-        <!-- <p class="from">from: {{emailMeta.from}}</p>
+        <p class="from">from: {{emailMeta.from}}</p>
         <p class="date">{{emailMeta.date}}</p>
-        <p class="content">{{emailMeta.contentPreview}}</p> -->
+        <p class="content">{{emailMeta.contentPreview}}</p>
     </div>
 </template>
 <script>
 export default {
+    props:['emailMeta'],
     data(){
         return{
-            emailMeta:{
-                from:"someone",
-                subject:"Test email",
-                date:"19 dec",
-                contentPreview:"hi sombody I am..."
-            }
+            
         }
     }
 }
 </script>
 <style scoped>
    div{
-    height: 50px;
+    height: 60px;
     width: 700px;
     font-size: small;
     background: #f4f4f4;
     font-family: arial;
+    border-color: #4f4f4f;
+    border-style: solid;
+    border-width: 1px;
     /* margin: 5px; */
-    border-radius: 15px;
+    /* border-radius: 15px; */
     
    } 
    div:hover {

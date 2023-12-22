@@ -2,20 +2,16 @@
     <div class="email">
         <h2>{{email.subject}}</h2>
         <p class="from">from: {{email.from}}</p>
-        <p class="date">{{email.date}}</p>
-        <p class="content">{{email.content}}</p>
+        <p class="date">{{email.dateNtime}}</p>
+        <p class="content">{{email.body}}</p>
     </div>
 </template>
 <script>
 export default {
+    props:['email'],
     data(){
         return{
-            email:{
-                subject:"Test email",
-                from:"someone@berry.com",
-                content:"hi somebody, I am someone",
-                date:"19 dec"
-            }
+
         }
     }
 }
