@@ -1,4 +1,5 @@
 package com.berrymail.services;
+import java.io.IOException;
 import java.util.Date;
 import com.berrymail.entities.Mail;
 import com.berrymail.entities.MailDirector;
@@ -28,7 +29,7 @@ public class Mediator implements MediatorIF {
         this.dateNtime = new Date();
     }
     @Override
-    public String addMails(String from, String to, String subject, String body, String priority, String attachment) {
+    public String addMails(String from, String to, String subject, String body, String priority, String attachment) throws IOException {
         generateID();
         generateDateNTime();
         mailService.createMail(this.getID(), from, to, subject, body, this.getDateNtime(), priority, attachment);
@@ -37,7 +38,7 @@ public class Mediator implements MediatorIF {
         return "Successfully sent";
     }
     @Override
-    public String moveToDraft(String from, String to, String subject, String body, String priority, String attachment){
+    public String moveToDraft(String from, String to, String subject, String body, String priority, String attachment) throws IOException {
         generateID();
         generateDateNTime();
         mailService.createMail(this.getID(), from, to, subject, body, this.getDateNtime(), priority, attachment);
@@ -45,10 +46,12 @@ public class Mediator implements MediatorIF {
 
         return "Mail added to draft";
     }
-
     @Override
-    public Mail getFromDraft(String email, String id) {
+    public Mail getFromDraft(String email, String id) throws IOException {
         UserDirector.users.get(email).getDraft().remove(id);
-        return MailDirector.mails.remove(id);
+        Mail temp = MailDirector.mails.remove(id);
+        userService.userDir.saveUser(UserDirector.users.get(email));
+        mailService.mailDir.deleteMail(temp);
+        return temp;
     }
 }

@@ -1,12 +1,12 @@
 package com.berrymail.entities;
 import java.util.ArrayList;
-public class CriteriaReciever implements CriteriaIF{
+public class CriteriaReceiver implements CriteriaIF{
     @Override
     public ArrayList<Mail> meetCriteria(ArrayList<Mail> mails, ArrayList<String> criteria) {
         ArrayList<Mail> filtered = new ArrayList<>();
         for(String reciever : criteria){
             for(Mail mail : mails){
-                if(mail.getFrom().equalsIgnoreCase(reciever))
+                if(mail.getTo().equalsIgnoreCase(reciever))
                     filtered.add(mail);
             }
         }

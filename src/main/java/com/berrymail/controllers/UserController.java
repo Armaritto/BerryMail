@@ -2,9 +2,12 @@ package com.berrymail.controllers;
 import com.berrymail.entities.Mail;
 import com.berrymail.entities.User;
 import com.berrymail.services.UserService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.web.bind.annotation.*;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -12,7 +15,7 @@ public class UserController {
     UserService userService = new UserService();
     @PostMapping(path = "/Signup")
     public String createAccount(@RequestParam("firstName") String fname , @RequestParam("lastName") String lname, @RequestParam("username") String username
-            , @RequestParam("email") String email, @RequestParam("password") String password){
+            , @RequestParam("email") String email, @RequestParam("password") String password) throws IOException {
         return userService.createAccount(fname,lname,username,email,password,new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>());
     }
     @PostMapping(path = "/Login")
@@ -35,24 +38,25 @@ public class UserController {
     public ArrayList<Mail> draftMails(@RequestParam("email") String email , @RequestParam("SortCriteria") String SortCriteria) throws Exception {
         return userService.draftList(email,SortCriteria);
     }
-    @PostMapping(path = "/delete")
-    public String deleteMail(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception {
+    @PostMapping(path = "/moveToTrash")
+    public String moveToTrash(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception {
         return userService.addMailToTrash(email, id);
     }
     @PostMapping(path = "/filterInbox")
-    public ArrayList<Mail> filterInbox(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
-        return userService.filterInbox(email, SortCriteria, FilterCriteria, objects);
+    public ArrayList<Mail> filterInbox(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
+        System.out.println(criteriaMap);
+        return userService.filterInbox(email, SortCriteria, type, criteriaMap);
     }
     @PostMapping(path = "/filterDraft")
-    public ArrayList<Mail> filterDraft(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
-        return userService.filterDraft(email, SortCriteria, FilterCriteria, objects);
+    public ArrayList<Mail> filterDraft(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
+        return userService.filterDraft(email, SortCriteria, type, criteriaMap);
     }
     @PostMapping(path = "/filterTrash")
-    public ArrayList<Mail> filterTrash(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
-        return userService.filterTrash(email, SortCriteria, FilterCriteria, objects);
+    public ArrayList<Mail> filterTrash(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
+        return userService.filterTrash(email, SortCriteria, type, criteriaMap);
     }
     @PostMapping(path = "/filterSent")
-    public ArrayList<Mail> filterSent(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("FilterCriteria") String FilterCriteria, @RequestParam("Objects") ArrayList<String> objects) throws Exception {
-        return userService.filterSent(email, SortCriteria, FilterCriteria, objects);
+    public ArrayList<Mail> filterSent(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
+        return userService.filterSent(email, SortCriteria, type, criteriaMap);
     }
 }

@@ -6,7 +6,7 @@ public class CriteriaSender implements CriteriaIF{
         ArrayList<Mail> filtered = new ArrayList<>();
         for(String sender : criteria){
             for(Mail mail : mails){
-                if(mail.getTo().equalsIgnoreCase(sender))
+                if(mail.getFrom().equalsIgnoreCase(sender))
                     filtered.add(mail);
             }
         }
