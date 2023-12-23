@@ -1,8 +1,8 @@
 <template>
   <!-- <main></main> -->
-  <!-- <div>
+  <div>
     <MailEditor :myEmail="myEmail"></MailEditor>  
-  </div> -->
+  </div>
   <!-- <Mail :email="email"></Mail>
   <MailPreview :emailMeta="email"></MailPreview> -->
  <MailFolder :emails="emails"></MailFolder>
