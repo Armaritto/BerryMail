@@ -1,6 +1,8 @@
 package com.berrymail.services;
 import java.io.IOException;
+
 import java.util.ArrayList;
+
 import java.util.Date;
 import com.berrymail.entities.Mail;
 import com.berrymail.entities.MailDirector;
@@ -30,6 +32,7 @@ public class Mediator implements MediatorIF {
         this.dateNtime = new Date();
     }
     @Override
+
     public String addMails(String from, ArrayList<String> to, String subject, String body, String priority, String attachment) throws IOException {
         generateID();
         generateDateNTime();
