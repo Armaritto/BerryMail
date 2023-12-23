@@ -89,11 +89,19 @@ public class UserService {
         }
         return  sortByDate(sentFolder);
     }
-    public ArrayList<Mail> trashList(String email, String Sortcriteria){
+    public ArrayList<Mail> trashList(String email, String Sortcriteria) throws IOException {
         ArrayList<String> trashID = UserDirector.users.get(email).getTrash();
         ArrayList<Mail> trashFolder= new ArrayList<>();
         for(int i=0; i<trashID.size(); i++){
-            trashFolder.add(MailDirector.mails.get(trashID.get(i)));
+            Mail trashMail = MailDirector.mails.get(trashID.get(i));
+            if(isDateMoreThan30DaysAgo(trashMail.getDateNtime(), new Date())){
+                trashID.remove(i);
+                i--;
+                userDir.saveUser(UserDirector.users.get(email));
+            }
+            else{
+                trashFolder.add(MailDirector.mails.get(trashID.get(i)));
+            }
         }
         if(Sortcriteria.equals("Priority")){
             return sortByPriority(trashFolder);
@@ -119,7 +127,7 @@ public class UserService {
         ArrayList<Mail> draft = draftList(email, sortCriteria);
         return filter(draft, type, criteriaMap);
     }
-    public ArrayList<Mail> filterTrash(String email, String sortCriteria,String type, HashMap<String, ArrayList<String>> criteriaMap){
+    public ArrayList<Mail> filterTrash(String email, String sortCriteria,String type, HashMap<String, ArrayList<String>> criteriaMap) throws IOException {
         ArrayList<Mail> trash = trashList(email, sortCriteria);
         return filter(trash, type, criteriaMap);
     }
@@ -127,7 +135,6 @@ public class UserService {
         ArrayList<Mail> sent = sentList(email, sortCriteria);
         return filter(sent, type, criteriaMap);
     }
-
     public ArrayList<Mail> sortByDate(ArrayList<Mail> Folder){
         for(int i = 0; i< Folder.size(); i++){
             for(int j = 0; j< Folder.size()-1; j++){
@@ -139,6 +146,11 @@ public class UserService {
             }
         }
         return Folder;
+    }
+    public void emptyTrash(String email) throws IOException {
+        ArrayList<String> trashID = UserDirector.users.get(email).getTrash();
+        trashID.clear();
+        userDir.saveUser(UserDirector.users.get(email));
     }
     public ArrayList<Mail> sortByPriority(ArrayList<Mail> Folder){
         ArrayList<Mail> folder = sortByDate(Folder);
@@ -154,5 +166,9 @@ public class UserService {
     public ArrayList<Mail> filter(ArrayList<Mail> mails, String type, HashMap<String, ArrayList<String>> criteriaMap){ //type is AND - OR
         CriteriaFactory criteriaFactory = new CriteriaFactory(criteriaMap);
         return criteriaFactory.criteriaPattern(mails, type, criteriaMap);
+    }
+    private boolean isDateMoreThan30DaysAgo(Date mailDate, Date currentDate) {
+        long thirtyDaysInMillis = 30L * 24 * 60 * 60 * 1000;
+        return (currentDate.getTime() - mailDate.getTime()) > thirtyDaysInMillis;
     }
 }

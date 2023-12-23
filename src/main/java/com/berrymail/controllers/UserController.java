@@ -42,6 +42,11 @@ public class UserController {
     public String moveToTrash(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception {
         return userService.addMailToTrash(email, id);
     }
+    @PostMapping(path = "/emptyTrash")
+    public String emptyTrash(@RequestParam("email") String email) throws Exception {
+        userService.emptyTrash(email);
+        return "Trash emptied";
+    }
     @PostMapping(path = "/filterInbox")
     public ArrayList<Mail> filterInbox(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
         System.out.println(criteriaMap);
