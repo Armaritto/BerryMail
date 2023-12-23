@@ -6,7 +6,7 @@ public class CriteriaReceiver implements CriteriaIF{
         ArrayList<Mail> filtered = new ArrayList<>();
         for(String reciever : criteria){
             for(Mail mail : mails){
-                if(mail.getTo().equalsIgnoreCase(reciever))
+                if(mail.getTo().toLowerCase().contains(reciever.toLowerCase()))
                     filtered.add(mail);
             }
         }

@@ -4,13 +4,14 @@ import com.berrymail.services.Mediator;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin
 public class MailController {
     Mediator mediator = new Mediator();
     @PostMapping(path = "/send")
-    public String addEmails(@RequestParam("from") String from , @RequestParam("to") String to, @RequestParam("subject") String subject
+    public String addEmails(@RequestParam("from") String from , @RequestParam("to") ArrayList<String> to, @RequestParam("subject") String subject
             , @RequestParam("body") String body, @RequestParam("priority") String priority , @RequestParam("attachment") String attachment) throws IOException {
         return mediator.addMails(from, to, subject, body, priority, attachment);
     }
