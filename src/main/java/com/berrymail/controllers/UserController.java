@@ -50,6 +50,14 @@ public class UserController {
     public ArrayList<Mail> customFolderMails(@RequestParam("email") String email , @RequestParam("SortCriteria") String SortCriteria, @RequestParam("folderName") String folderName) throws Exception {
         return userService.customFolderList(email,folderName,SortCriteria);
     }
+    @PostMapping(path = "/deleteFolder")
+    public HashMap<String, ArrayList<String>> deleteFolder(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
+        return userService.deleteFolder(email, name);
+    }
+    @PostMapping(path = "/renameFolder")
+    public HashMap<String, ArrayList<String>> renameFolder(@RequestParam("email") String email, @RequestParam("oldFolderName") String oldFolderName,  @RequestParam("newFolderName") String newFolderName) throws Exception {
+        return userService.renameFolder(email, oldFolderName, newFolderName );
+    }
     @PostMapping(path = "/moveToTrash")
     public String moveToTrash(@RequestParam("email") String email, @RequestParam("id") String id) throws Exception {
         return userService.addMailToTrash(email, id);
@@ -77,12 +85,25 @@ public class UserController {
         return userService.filterSent(email, SortCriteria, type, criteriaMap);
     }
     @PostMapping(path = "/addContact")
-    public String addContact(@RequestParam("userEmail") String userEmail, @RequestParam("name") String name, @RequestParam("mails") ArrayList<String> mails) throws Exception {
+    public String addContact(@RequestParam("email") String userEmail, @RequestParam("name") String name, @RequestParam("mails") ArrayList<String> mails) throws Exception {
         return userService.addContact(userEmail, name, mails);
     }
     @PostMapping(path = "/contacts")
-    public HashMap<String, ArrayList<String>> contactsList(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria) throws Exception {
-        return userService.contactsList(email, SortCriteria);
+    public HashMap<String, ArrayList<String>> contactsList(@RequestParam("email") String email) throws Exception {
+        return userService.contactsList(email);
     }
+    @PostMapping(path = "/deleteContact")
+    public HashMap<String, ArrayList<String>> deleteContact(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
+        return userService.deleteContact(email, name);
+    }
+    @PostMapping(path = "/editContact")
+    public HashMap<String, ArrayList<String>> editContact(@RequestParam("email") String email, @RequestParam("oldContactName") String oldContactName,  @RequestParam("newContactName") String newContactName,@RequestParam("mails") ArrayList<String> mails) throws Exception {
+        return userService.editContact(email, oldContactName,newContactName, mails);
+    }
+    @PostMapping(path = "/sortContact")
+    public Map<String, ArrayList<String>> editContact(@RequestParam("email") String email) throws Exception {
+        return userService.sortContacts(email);
+    }
+
 
 }

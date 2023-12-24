@@ -1,6 +1,7 @@
 package com.berrymail.services;
 import com.berrymail.entities.*;
-
+import java.util.Map;
+import java.util.TreeMap;
 import java.io.IOException;
 import java.util.*;
 public class UserService {
@@ -48,6 +49,23 @@ public class UserService {
         UserDirector.users.get(email).getCustomFolders().put(folderName, new ArrayList<String>());
         userDir.saveUser(UserDirector.users.get(email));
         return "Folder created";
+    }
+    public  HashMap<String, ArrayList<String>>  deleteFolder(String email, String folderName) throws IOException {
+        if(UserDirector.users.get(email).getCustomFolders().containsKey(folderName)){
+            UserDirector.users.get(email).getCustomFolders().remove(folderName);
+            userDir.saveUser(UserDirector.users.get(email));
+        }
+        return UserDirector.users.get(email).getCustomFolders();
+    }
+    public HashMap<String, ArrayList<String>> renameFolder(String email, String oldFolderName, String newFolderName) throws IOException {
+        if(UserDirector.users.get(email).getCustomFolders().containsKey(oldFolderName)){
+            ArrayList<String> contentIDs = UserDirector.users.get(email).getCustomFolders().get(oldFolderName);
+            deleteFolder(email, oldFolderName);
+            UserDirector.users.get(email).getCustomFolders().put(newFolderName, contentIDs);
+            userDir.saveUser(UserDirector.users.get(email));
+
+        }
+        return UserDirector.users.get(email).getCustomFolders();
     }
     public String addMailToInbox(String email, String mailID) throws IOException {
         UserDirector.users.get(email).getInbox().add(mailID);
@@ -198,12 +216,39 @@ public class UserService {
         return (currentDate.getTime() - mailDate.getTime()) > thirtyDaysInMillis;
     }
     public String addContact(String userMail, String name, ArrayList<String> emails) throws IOException {
+        if(UserDirector.users.get(userMail).getContacts().containsKey(name)){
+            return "Name already taken";
+        }
         UserDirector.users.get(userMail).getContacts().put(name, emails);
         userDir.saveUser(UserDirector.users.get(userMail));
         return "Contact added";
     }
-    public HashMap<String, ArrayList<String>> contactsList(String email, String Sortcriteria) {
+    public HashMap<String, ArrayList<String>> contactsList(String email) {
         return UserDirector.users.get(email).getContacts();
+    }
+    public HashMap<String, ArrayList<String>> deleteContact(String userMail, String name) throws IOException {
+        if(UserDirector.users.get(userMail).getContacts().containsKey(name)){
+            UserDirector.users.get(userMail).getContacts().remove(name);
+            userDir.saveUser(UserDirector.users.get(userMail));
+        }
+        return UserDirector.users.get(userMail).getContacts();
+    }
+    public HashMap<String, ArrayList<String>> editContact(String userMail, String oldContactName, String newContactName, ArrayList<String> emails) throws IOException {
+        if(UserDirector.users.get(userMail).getContacts().containsKey(oldContactName)){
+            deleteContact(userMail, oldContactName);
+            UserDirector.users.get(userMail).getContacts().put(newContactName, emails);
+            userDir.saveUser(UserDirector.users.get(userMail));
+        }
+        return UserDirector.users.get(userMail).getContacts();
+    }
+    public Map<String, ArrayList<String>> sortContacts(String userMail){
+        Map<String, ArrayList<String>> sortedMap = new TreeMap<>(String::compareTo);
+        sortedMap.putAll(UserDirector.users.get(userMail).getContacts());
+        return sortedMap;
+    }
+    public void contactSearch(String email, String contactName, String type) throws IOException {
+
+
     }
 
 }
