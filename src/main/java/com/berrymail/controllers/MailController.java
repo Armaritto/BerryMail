@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 @RestController
@@ -16,39 +15,12 @@ public class MailController {
     @PostMapping(path = "/send")
 
     public String addEmails(@RequestParam("from") String from , @RequestParam("to") ArrayList<String> to, @RequestParam("subject") String subject
-            , @RequestParam("priority") String priority, @RequestBody Map<String, Object> payload) throws IOException {
-        String body;
-        String attachment;
-        try {
-            body = payload.get("body").toString();
-        }
-        catch (Exception e){
-            body = "";
-        }
-        try {
-            attachment = payload.get("attachment").toString();
-        }
-        catch (Exception e){
-            attachment = "";
-        }
+            , @RequestParam("body") String body, @RequestParam("priority") String priority , @RequestParam("attachment") String attachment) throws IOException {
         return mediator.addMails(from, to, subject, body, priority, attachment);
     }
     @PostMapping(path = "/addToDraft")
-    public String moveToDraft(@RequestParam("from") String from , @RequestParam("to") String to, @RequestParam("subject") String subject, @RequestParam("priority") String priority, @RequestBody Map<String, Object> payload) throws Exception {
-        String body;
-        String attachment;
-        try {
-            body = payload.get("body").toString();
-        }
-        catch (Exception e){
-            body = "";
-        }
-        try {
-            attachment = payload.get("attachment").toString();
-        }
-        catch (Exception e){
-            attachment = "";
-        }
+    public String moveToDraft(@RequestParam("from") String from , @RequestParam("to") String to, @RequestParam("subject") String subject
+            , @RequestParam("body") String body, @RequestParam("priority") String priority , @RequestParam("attachment") String attachment) throws Exception {
         return mediator.moveToDraft(from, to, subject, body, priority, attachment);
     }
     @PostMapping(path = "/getFromDraft")
@@ -57,15 +29,3 @@ public class MailController {
     }
 
 }
-/*
-{
-    "from": ....;
-    "body": ....;
-    "attach": {
-                "name": ....;
-                "type": ....;
-                "data": ....;
-               }
-}
-http://localhost:8080/send?from=armia404@berry.com&to=karene_antoine@berry.com&subject=Zoo&body=I went to the zoo&priority=Default&attachment=PNG
- */

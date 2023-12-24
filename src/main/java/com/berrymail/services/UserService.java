@@ -6,7 +6,7 @@ import java.util.*;
 public class UserService {
     UserBuilderIF userBuilder = new UserBuilder();
     UserDirector userDir = new UserDirector(userBuilder);
-    public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft, HashMap<String, ArrayList<String>> customFolders, HashMap<String, ArrayList<String>> contacts) throws IOException {
+    public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft) throws IOException {
         if(!email.contains("@berry.com")){
             return "Email is not valid";
         }
@@ -21,7 +21,7 @@ public class UserService {
             }
         }
         if(UserDirector.users.get(email) == null){
-            userDir.makeUser(fname, lname, username, email, password, inbox, sent, trash, draft,customFolders, contacts);
+            userDir.makeUser(fname, lname, username, email, password, inbox, sent, trash, draft);
             return "Account created";
         }
         return "An account already exists";
@@ -40,14 +40,6 @@ public class UserService {
            }
         }
         return null;
-    }
-    public String createFolder(String email, String folderName) throws IOException {
-        if(UserDirector.users.get(email).getCustomFolders().containsKey(folderName)){
-            return "Folder already exists";
-        }
-        UserDirector.users.get(email).getCustomFolders().put(folderName, new ArrayList<String>());
-        userDir.saveUser(UserDirector.users.get(email));
-        return "Folder created";
     }
     public String addMailToInbox(String email, String mailID) throws IOException {
         UserDirector.users.get(email).getInbox().add(mailID);
@@ -71,27 +63,9 @@ public class UserService {
             UserDirector.users.get(email).getDraft().remove(mailID);
         else if(UserDirector.users.get(email).getSent().contains(mailID))
             UserDirector.users.get(email).getSent().remove(mailID);
-        Date newDate = new Date();
-        MailDirector.mails.get(mailID).setDateNtime(newDate);
         UserDirector.users.get(email).getTrash().add(mailID);
         userDir.saveUser(UserDirector.users.get(email));
         return "Mail added to trash";
-    }
-    public String addMailToCustomFolder(String email, String folderName, String mailID) throws IOException {
-        UserDirector.users.get(email).getCustomFolders().get(folderName).add(mailID);
-        userDir.saveUser(UserDirector.users.get(email));
-        return "Mail added to folder" + folderName;
-    }
-    public ArrayList<Mail> customFolderList(String email, String folderName, String Sortcriteria){
-        ArrayList<String> customFolderID = UserDirector.users.get(email).getCustomFolders().get(folderName);
-        ArrayList<Mail> customFolder= new ArrayList<>();
-        for(int i=0; i<customFolderID.size(); i++){
-            customFolder.add(MailDirector.mails.get(customFolderID.get(i)));
-        }
-        if(Sortcriteria.equals("Priority")){
-            return sortByPriority(customFolder);
-        }
-        return sortByDate(customFolder);
     }
     public ArrayList<Mail> inboxList(String email, String Sortcriteria){
         ArrayList<String> inboxID = UserDirector.users.get(email).getInbox();
@@ -197,13 +171,4 @@ public class UserService {
         long thirtyDaysInMillis = 30L * 24 * 60 * 60 * 1000;
         return (currentDate.getTime() - mailDate.getTime()) > thirtyDaysInMillis;
     }
-    public String addContact(String userMail, String name, ArrayList<String> emails) throws IOException {
-        UserDirector.users.get(userMail).getContacts().put(name, emails);
-        userDir.saveUser(UserDirector.users.get(userMail));
-        return "Contact added";
-    }
-    public HashMap<String, ArrayList<String>> contactsList(String email, String Sortcriteria) {
-        return UserDirector.users.get(email).getContacts();
-    }
-
 }

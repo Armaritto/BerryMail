@@ -1,7 +1,6 @@
 package com.berrymail.entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class UserBuilder implements UserBuilderIF{
     private String firstName;
@@ -13,8 +12,6 @@ public class UserBuilder implements UserBuilderIF{
     private ArrayList<String> sent;
     private ArrayList<String> trash;
     private ArrayList<String> draft;
-    private HashMap<String, ArrayList<String>> customFolder;
-    private HashMap<String, ArrayList<String>> contacts;
     @Override
     public void generateFirstName(String fname) {
         this.firstName = fname;
@@ -59,18 +56,7 @@ public class UserBuilder implements UserBuilderIF{
     public void generateSent(ArrayList<String> sent) {
         this.sent = sent;
     }
-
-    @Override
-    public void generateCustomFolders(HashMap<String, ArrayList<String>> customFolders) {
-        this.customFolder = customFolders;
-    }
-
-    @Override
-    public void generateContacts(HashMap<String, ArrayList<String>> contacts) {
-        this.contacts = contacts;
-    }
-
     public User getUser(){
-        return new User(firstName, lastName, email, password, username,inbox, sent, trash, draft, customFolder, contacts);
+        return new User(firstName, lastName, email, password, username,inbox, sent, trash, draft);
     }
 }
