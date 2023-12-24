@@ -1,5 +1,7 @@
 package com.berrymail.entities;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 public class User {
     private String firstName;
     private String lastName;
@@ -10,7 +12,9 @@ public class User {
     private ArrayList<String> sent;
     private ArrayList<String> trash;
     private ArrayList<String> draft;
-    public User(String firstName, String lastName, String email, String password, String username, ArrayList<String> inbox, ArrayList<String> sent, ArrayList<String> trash, ArrayList<String> draft) {
+    private HashMap<String, ArrayList<String>> customFolders;
+    private HashMap<String, ArrayList<String>> contacts;
+    public User(String firstName, String lastName, String email, String password, String username, ArrayList<String> inbox, ArrayList<String> sent, ArrayList<String> trash, ArrayList<String> draft, HashMap<String, ArrayList<String>> customFolders, HashMap<String, ArrayList<String>> contacts) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -20,6 +24,8 @@ public class User {
         this.sent = sent;
         this.trash = trash;
         this.draft = draft;
+        this.customFolders = customFolders;
+        this.contacts = contacts;
     }
     public String getFirstName() {
         return firstName;
@@ -76,6 +82,18 @@ public class User {
     public void setDraft(ArrayList<String> draft) {
         this.draft = draft;
     }
+    public HashMap<String, ArrayList<String>> getCustomFolders() {
+        return customFolders;
+    }
+    public void setCustomFolders(HashMap<String, ArrayList<String>> customFolder) {
+        this.customFolders = customFolder;
+    }
+    public HashMap<String, ArrayList<String>> getContacts() {
+        return contacts;
+    }
+    public void setContacts(HashMap<String, ArrayList<String>> contacts) {
+        this.contacts = contacts;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -84,6 +102,15 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
+                ", inbox=" + inbox +
+                ", sent=" + sent +
+                ", trash=" + trash +
+                ", draft=" + draft +
+                ", customFolder=" + customFolders +
+                ", contacts=" + contacts +
                 '}';
     }
 }
+/*
+
+*/
