@@ -19,7 +19,7 @@ public class UserDirector {
     public User getUser(){
         return this.userbuilder.getUser();
     }
-    public void makeUser(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft) throws IOException {
+    public void makeUser(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft, HashMap<String, ArrayList<String>> customFolders, HashMap<String, ArrayList<String>> contacts) throws IOException {
         if(!users.containsKey(email)){
             this.userbuilder.generateFirstName(fname);
             this.userbuilder.generateLastName(lname);
@@ -30,6 +30,8 @@ public class UserDirector {
             this.userbuilder.generateTrash(trash);
             this.userbuilder.generateDraft(draft);
             this.userbuilder.generateSent(sent);
+            this.userbuilder.generateCustomFolders(customFolders);
+            this.userbuilder.generateContacts(contacts);
             users.put(email, this.getUser());
             saveUser(this.getUser());
         }
