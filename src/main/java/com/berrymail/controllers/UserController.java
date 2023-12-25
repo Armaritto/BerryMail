@@ -110,14 +110,4 @@ public class UserController {
         return userService.searchContatct(email, contactName);
 
     }
-    @PostMapping(path = "/editContact")
-    public HashMap<String, ArrayList<String>> editContact(@RequestParam("email") String email, @RequestParam("oldContactName") String oldContactName,  @RequestParam("newContactName") String newContactName,@RequestParam("mails") ArrayList<String> mails) throws Exception {
-        return userService.editContact(email, oldContactName,newContactName, mails);
-    }
-    @PostMapping(path = "/sortContact")
-    public Map<String, ArrayList<String>> editContact(@RequestParam("email") String email) throws Exception {
-        return userService.sortContacts(email);
-    }
-
-
 }
