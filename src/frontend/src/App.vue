@@ -1,11 +1,8 @@
 <template>
-  <!-- <main></main> -->
-  <div>
-    <MailEditor :myEmail="myEmail"></MailEditor>  
-  </div>
-  <!-- <Mail :email="email"></Mail>
-  <MailPreview :emailMeta="email"></MailPreview> -->
- <MailFolder :emails="emails"></MailFolder>
+  
+  <div class="left"><SideBar></SideBar></div>
+  <div class="middle"><router-view></router-view></div>
+  <div class="right"><MailEditor :myEmail="myEmail"></MailEditor></div>
 
 </template>
 
@@ -15,6 +12,7 @@ import MailEditor from "@/components/MailEditor.vue";
 import Mail from "@/components/Mail.vue";
 import MailPreview from "@/components/MailPreview.vue";
 import MailFolder from "@/components/MailFolder.vue";
+import SideBar from "@/components/SideBar.vue";
 
 export default {
   name: 'App',
@@ -30,35 +28,7 @@ export default {
         dateNtime: "2023-12-22T22:42:04.595+00:00",
         priority: "",
         attachment: ""
-    },
-    emails: [ {
-            id: "976370",
-            from: "user1@berry.com",
-            to: "user2@berry.com",
-            subject: "subject1",
-            body: "body",
-            dateNtime: "2023-12-22T22:42:04.595+00:00",
-            priority: "",
-            attachment: ""
-    },  {
-            id: "876370",
-            from: "user1@berry.com",
-            to: "user2@berry.com",
-            subject: "subject2",
-            body: "body",
-            dateNtime: "2023-12-22T22:42:04.595+00:00",
-            priority: "",
-            attachment: ""
-    },  {
-            id: "776370",
-            from: "user1@berry.com",
-            to: "user2@berry.com",
-            subject: "subject3",
-            body: "body",
-            dateNtime: "2023-12-22T22:42:04.595+00:00",
-            priority: "",
-            attachment: ""
-    }]
+    }
     }
   },
   components: {
@@ -66,10 +36,22 @@ export default {
     MailEditor,
     Mail,
     MailPreview,
-    MailFolder
+    MailFolder,
+    SideBar
   }
 }
 </script>
 <style>
-
+  div.left{
+    float: left;
+    margin: 10px;
+  }
+  div.middle{
+    float: left;
+    margin: 10px;
+  }
+  div.right{
+    float: left;
+    margin: 10px;
+  }
 </style>

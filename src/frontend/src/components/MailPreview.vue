@@ -19,7 +19,7 @@ export default {
 <style scoped>
    div{
     height: 60px;
-    width: 700px;
+    width: 400px;
     font-size: small;
     background: #f4f4f4;
     font-family: arial;

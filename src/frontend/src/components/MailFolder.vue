@@ -3,7 +3,6 @@
         <table v-if="emails">
             <tr v-for="e in emails" :key="e.id">
                 <MailPreview :emailMeta="e"></MailPreview>
-                <!-- {{e.id}} -->
             </tr>
             
         </table>
@@ -12,24 +11,39 @@
 <script>
 import MailPreview from "@/components/MailPreview.vue";
 export default {
-    props:['emails'],
+   props:['folderName'],
+   watch: { 
+    folderName: function() {
+          this.fetchFolder()
+        }
+    },
     components:{
         MailPreview
     },
     data(){
         return{
-        email: {
-            id: "876370",
-            from: "user1@berry.com",
-            to: "user2@berry.com",
-            subject: "subject",
-            body: "body",
-            dateNtime: "2023-12-22T22:42:04.595+00:00",
-            priority: "",
-            attachment: ""
-    },
-    
+            fetchFolder: function(){
+                if(this.folderName){
+        const url = "http://localhost:8080/" + this.folderName +"?"
+        const params = {
+          email:"armia404@berry.com",
+          SortCriteria:""
         }
+        const query = new URLSearchParams(params)
+        const method = "POST"
+        const body = ""
+        
+        fetch(url+query, {method: method, body: body})
+        .then(res => res.json())
+        .then(data => this.emails = data)
+
+    }
+            },
+        emails:[]
+        }
+    },
+    mounted(){
+        this.fetchFolder()
     }
     
     
@@ -39,7 +53,7 @@ export default {
     .folder{
         background: #f4f4f4;
         /* height: 500px; */
-        width: 705px;
+        width: 405px;
     }
     
 </style>

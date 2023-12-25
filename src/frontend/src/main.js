@@ -1,31 +1,19 @@
 import { createApp } from 'vue';
-import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
-import { createRouter, createWebHashHistory } from 'vue-router';
-import main from "@/components/main.vue";
+import router from './router'
+// import { createRouter, createWebHashHistory } from 'vue-router';
 
-const router = createRouter({
-    mode: 'history',
-    history: createWebHashHistory(),
-    // base: __dirname,
-    routes: [
-        { path: '/', component: main }
-    ]
-});
+import App from './App.vue'
 
-const app = createApp({
-    template: `
-    <div>
-      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-           
-          </ul>
-        </div>
-      </nav>
-      <router-view class="view"></router-view>
-    </div>
-  `
-});
+// const router = createRouter({
+//     mode: 'history',
+//     history: createWebHashHistory(),
+//     // base: __dirname,
+//     routes: [
+//         { path: '/', component: main }
+//     ]
+// });
+
+const app = createApp(App);
 
 app.use(router);
 app.mount("#app");
