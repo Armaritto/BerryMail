@@ -104,6 +104,9 @@ public class UserController {
     public Map<String, ArrayList<String>> editContact(@RequestParam("email") String email) throws Exception {
         return userService.sortContacts(email);
     }
-
+    @PostMapping(path = "/searchContact")
+    public ArrayList<String> searchContact(@RequestParam("email") String email, @RequestParam("contactName") String contactName) throws Exception {
+        return userService.searchContatct(email, contactName);
+    }
 
 }
