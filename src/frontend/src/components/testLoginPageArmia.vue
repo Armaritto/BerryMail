@@ -64,7 +64,7 @@ body{
 form{
   height: 520px;
   width: 400px;
-  background-color: rgba(44, 19, 66, 0.13);
+  background-color: rgba(44, 19, 66, 0.34);
   position: absolute;
   border-radius: 10px;
   backdrop-filter: blur(10px);
