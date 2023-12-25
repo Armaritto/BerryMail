@@ -82,13 +82,9 @@ public class UserService {
         userDir.saveUser(UserDirector.users.get(email));
         return "Mail added to draft";
     }
-    public String addMailToTrash(String email, String mailID) throws IOException {
-        if(UserDirector.users.get(email).getInbox().contains(mailID))
-            UserDirector.users.get(email).getInbox().remove(mailID);
-        else if(UserDirector.users.get(email).getDraft().contains(mailID))
-            UserDirector.users.get(email).getDraft().remove(mailID);
-        else if(UserDirector.users.get(email).getSent().contains(mailID))
-            UserDirector.users.get(email).getSent().remove(mailID);
+    public String addMailToTrash(String email, String folderName, String mailID) throws IOException {
+        removeMail(email, folderName, mailID);
+
         Date newDate = new Date();
         MailDirector.mails.get(mailID).setDateNtime(newDate);
         UserDirector.users.get(email).getTrash().add(mailID);
@@ -246,14 +242,24 @@ public class UserService {
         sortedMap.putAll(UserDirector.users.get(userMail).getContacts());
         return sortedMap;
     }
-
-
     public ArrayList<String> searchContatct(String email, String contactName) throws IOException {
         if(UserDirector.users.get(email).getContacts().containsKey(contactName)) {
             return UserDirector.users.get(email).getContacts().get(contactName);
         }
         return  null ;
-
     }
 
+    public void removeMail(String email, String oldFolder, String mailID) {
+        if(UserDirector.users.get(email).getInbox().contains(mailID))
+            UserDirector.users.get(email).getInbox().remove(mailID);
+        else if(UserDirector.users.get(email).getDraft().contains(mailID))
+            UserDirector.users.get(email).getDraft().remove(mailID);
+        else if(UserDirector.users.get(email).getSent().contains(mailID))
+            UserDirector.users.get(email).getSent().remove(mailID);
+        else if(UserDirector.users.get(email).getCustomFolders().containsKey(oldFolder)){
+            UserDirector.users.get(email).getCustomFolders().get(oldFolder).remove(mailID);
+        }
+        else
+            System.out.println("debug: mail not found: removeMail");
+    }
 }
