@@ -25,7 +25,7 @@
                 <i class="fa-solid fa-chart-simple"></i>
                 <router-link :to="{name:'folder', params:{folderName: 'trash'}}"><span>Trash</span></router-link>
             </li>
-            <li>
+            <!-- <li>
                 <i class="fa-solid fa-phone"></i>
                 <span>Support</span>
             </li>
@@ -35,7 +35,7 @@
             <li>
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Logout</span>
-            </li>
+            </li> -->
 
         </ul>
 
@@ -58,6 +58,8 @@ export default {
     border: 0;
     list-style: none;
     box-sizing: border-box;
+    text-decoration: none;
+    
 }
 
 body {
@@ -91,7 +93,7 @@ body {
     transition: .6s cubic-bezier(.8, .5, .5, .8);
 }
 
-.container nav:hover {
+.container nav {
     width: 320px;
 }
 
@@ -135,28 +137,28 @@ nav .list {
     width: 100%;
 }
 
-nav .list li {
+nav .list li, .router-link-exact-active{
     display: flex;
     margin: 12px 0;
     padding: 20px;
     cursor: pointer;
     border-radius: 8px;
-    transition: .4s ease-in-out;
+    /* transition: .1s ease-in-out; */
 }
 
-nav .list li:hover {
+nav .list li {
     background: rgba(230, 235, 240, .4);
 }
 
-nav .list li.active {
+.router-link-exact-active{
     background: #3681f6;
 }
 
-nav .list li.active span {
+nav .list li.active span,.router-link-exact-active {
     color: #fff;
 }
 
-nav .list li.active i {
+nav .list li.active i .router-link-exact-active{
     background: none;
     -webkit-text-fill-color: unset;
     color: #e6ebf0;
@@ -175,7 +177,7 @@ nav .list i {
 
 nav .list span {
     color: #505257;
-    font-size: 18px;
+    font-size: 25px;
     font-weight: 500;
     margin: 0 0 0 12px;
 }
@@ -196,7 +198,7 @@ nav .list span {
 }
 
 
-nav:hover .list span {
+nav .list span {
     animation: fadeIn .4s ease-out forwards;
 }
 /* 
