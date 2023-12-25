@@ -95,6 +95,20 @@ public class UserController {
     @PostMapping(path = "/deleteContact")
     public HashMap<String, ArrayList<String>> deleteContact(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
         return userService.deleteContact(email, name);
+
+    }
+    @PostMapping(path = "/editContact")
+    public HashMap<String, ArrayList<String>> editContact(@RequestParam("email") String email, @RequestParam("oldContactName") String oldContactName,  @RequestParam("newContactName") String newContactName,@RequestParam("mails") ArrayList<String> mails) throws Exception {
+        return userService.editContact(email, oldContactName,newContactName, mails);
+    }
+    @PostMapping(path = "/sortContact")
+    public Map<String, ArrayList<String>> editContact(@RequestParam("email") String email) throws Exception {
+        return userService.sortContacts(email);
+    }
+    @PostMapping(path = "/searchContact")
+    public ArrayList<String> searchContact(@RequestParam("email") String email, @RequestParam("contactName") String contactName) throws Exception {
+        return userService.searchContatct(email, contactName);
+
     }
     @PostMapping(path = "/editContact")
     public HashMap<String, ArrayList<String>> editContact(@RequestParam("email") String email, @RequestParam("oldContactName") String oldContactName,  @RequestParam("newContactName") String newContactName,@RequestParam("mails") ArrayList<String> mails) throws Exception {

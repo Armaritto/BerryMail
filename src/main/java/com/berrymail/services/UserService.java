@@ -246,8 +246,13 @@ public class UserService {
         sortedMap.putAll(UserDirector.users.get(userMail).getContacts());
         return sortedMap;
     }
-    public void contactSearch(String email, String contactName, String type) throws IOException {
 
+
+    public ArrayList<String> searchContatct(String email, String contactName) throws IOException {
+        if(UserDirector.users.get(email).getContacts().containsKey(contactName)) {
+            return UserDirector.users.get(email).getContacts().get(contactName);
+        }
+        return  null ;
 
     }
 
