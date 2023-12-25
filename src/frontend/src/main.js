@@ -15,13 +15,7 @@ const router = createRouter({
 const app = createApp({
     template: `
     <div>
-      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-           
-          </ul>
-        </div>
-      </nav>
+      
       <router-view class="view"></router-view>
     </div>
   `
