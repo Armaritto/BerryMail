@@ -247,11 +247,13 @@ public class UserService {
         return sortedMap;
     }
 
+
     public ArrayList<String> searchContatct(String email, String contactName) throws IOException {
         if(UserDirector.users.get(email).getContacts().containsKey(contactName)) {
             return UserDirector.users.get(email).getContacts().get(contactName);
         }
         return  null ;
+
     }
 
 }

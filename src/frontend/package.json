@@ -9,12 +9,16 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue-simple-search-dropdown": "^1.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "~5.0.0",
+    "bootstrap": "^4.0.0-beta",
+    "jquery": "^3.7.1",
+    "popper.js": "^1.16.1"
   },
   "browserslist": [
     "> 1%",

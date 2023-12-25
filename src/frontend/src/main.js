@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import main from "@/components/main.vue";
 
