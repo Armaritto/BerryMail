@@ -8,6 +8,7 @@ public class UserService {
     UserBuilderIF userBuilder = new UserBuilder();
     UserDirector userDir = new UserDirector(userBuilder);
     public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft, HashMap<String, ArrayList<String>> customFolders, HashMap<String, ArrayList<String>> contacts) throws IOException {
+        userDir.loadUserFromFile();
         if(!email.contains("@berry.com")){
             return "Email is not valid";
         }

@@ -12,4 +12,8 @@ public class MailService {
         mailDir.constructMail(id, from, to,subject, body, dateNtime, priority, attachments);
         return mailDir.getMail();
     }
+    public Mail getEmail(String id) throws IOException {
+        mailDir.loadMailFromFile();
+        return MailDirector.mails.get(id);
+    }
 }

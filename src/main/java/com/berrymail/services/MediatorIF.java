@@ -10,4 +10,5 @@ public interface MediatorIF {
     String addMails(String from, ArrayList<String> to, String subject, String body, String priority,  ArrayList<Attachment> attachments) throws IOException;
     public String moveToDraft(String from, String to, String subject, String body, String priority, ArrayList<Attachment> attachments) throws IOException;
     public Mail getFromDraft(String email, String id) throws IOException;
+    public Mail getEmail(String id) throws IOException;
 }
