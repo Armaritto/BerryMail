@@ -16,4 +16,7 @@ public class MailService {
         mailDir.loadMailFromFile();
         return MailDirector.mails.get(id);
     }
+    public void loadMails() throws IOException {
+        mailDir.loadMailFromFile();
+    }
 }

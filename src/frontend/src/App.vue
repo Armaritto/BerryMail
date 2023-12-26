@@ -3,6 +3,7 @@
     <router-view ></router-view>
 <!--    <compose></compose>-->
      <TestComposeEmailArmia myEmail="armia404@berry.com"></TestComposeEmailArmia>
+
   </div>
   <!-- <div>
     <router-view name="loginRouter"></router-view>
