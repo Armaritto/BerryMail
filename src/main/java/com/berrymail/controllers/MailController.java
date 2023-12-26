@@ -72,7 +72,10 @@ public class MailController {
     public Mail getFromDraft(@RequestParam("email") String email , @RequestParam("id") String id) throws Exception {
         return mediator.getFromDraft(email, id);
     }
-
+    @GetMapping(path = "/getEmail")
+    public Mail getEmail(@RequestParam("id") String id) throws Exception {
+        return mediator.getEmail(id);
+    }
 }
 /*
 payload : {
