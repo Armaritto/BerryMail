@@ -30,6 +30,7 @@ public class UserService {
     }
     public User accessAccount(String email, String password) throws Exception {
         userDir.loadUserFromFile();
+
         if(UserDirector.users.get(email) == null){
             throw new Exception("Account doesn't exist");
         }
@@ -67,6 +68,14 @@ public class UserService {
 
         }
         return UserDirector.users.get(email).getCustomFolders();
+    }
+    public ArrayList<String> customFolderNames(String email){
+        ArrayList<String> customFolderNames = new ArrayList<>();
+        for (Map.Entry<String, ArrayList<String>> entry : UserDirector.users.get(email).getCustomFolders().entrySet()) {
+            String folderName = entry.getKey();
+            customFolderNames.add(folderName);
+        }
+        return customFolderNames;
     }
     public String addMailToInbox(String email, String mailID) throws IOException {
         UserDirector.users.get(email).getInbox().add(mailID);

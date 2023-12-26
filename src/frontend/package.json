@@ -7,7 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@lordicon/element": "^1.4.2",
+    "@lordicon/react": "^1.4.1",
     "core-js": "^3.8.3",
+    "lottie-web": "^5.12.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vue-simple-search-dropdown": "^1.0.1"

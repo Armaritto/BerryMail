@@ -1,6 +1,7 @@
 package com.berrymail.controllers;
 import com.berrymail.entities.Mail;
 import com.berrymail.entities.User;
+import com.berrymail.services.MailService;
 import com.berrymail.services.UserService;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,16 @@ import java.util.Map;
 @CrossOrigin
 public class UserController {
     UserService userService = new UserService();
+    MailService mailService = new MailService();
     @PostMapping(path = "/Signup")
     public String createAccount(@RequestParam("firstName") String fname , @RequestParam("lastName") String lname, @RequestParam("username") String username
             , @RequestParam("email") String email, @RequestParam("password") String password) throws IOException {
+        mailService.loadMails();
         return userService.createAccount(fname,lname,username,email,password,new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(),new ArrayList<String>(), new HashMap<String, ArrayList<String>>(), new HashMap<String, ArrayList<String>>());
     }
     @GetMapping(path = "/Login")
     public User login(@RequestParam("email") String email, @RequestParam("password") String password) throws Exception {
+        mailService.loadMails();
         return userService.accessAccount(email,password);
     }
     @PostMapping(path = "/createFolder")
@@ -108,6 +112,9 @@ public class UserController {
     @GetMapping(path = "/searchContact")
     public ArrayList<String> searchContact(@RequestParam("email") String email, @RequestParam("contactName") String contactName) throws Exception {
         return userService.searchContatct(email, contactName);
-
+    }
+    @GetMapping(path = "/customFoldersNames")
+    public ArrayList<String> customFoldersNames(@RequestParam("email") String email) throws Exception {
+        return userService.customFolderNames(email);
     }
 }
