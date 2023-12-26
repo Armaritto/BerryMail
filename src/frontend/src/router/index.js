@@ -16,7 +16,7 @@ const routes = [
     component:LoginView
   },
   {
-    path: '/folder/:folderName',
+    path: '/:clientEmail/folder/:folderName',
     name: 'folder',
     props: true,
     component: Main,

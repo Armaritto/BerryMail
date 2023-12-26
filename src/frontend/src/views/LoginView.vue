@@ -6,16 +6,19 @@
     </div>
     <div style="display: flex; justify-content: center;position: absolute;top: 25%; left: 50%">
       <form>
-        <h3>Login</h3>
+        <h3>Login</h3><p v-if="isErr">try again</p>
         <label>Email</label>
         <input v-model="e" type="text"  id="username" placeholder="example@berry.com">
   
-        <label>Password</label>
+        <label>Password</label> 
         <input v-model="p" type="password"  id="password" placeholder="password">
         <span  @click="handleLogin" >Log In</span>
         <span>Create Account</span>
+        
       </form>
+     
     </div>
+     
    </div>
   </template>
   
@@ -25,13 +28,41 @@
         data(){
             return{
                 e:'',
-                p:''
+                p:'',
+                isErr: false,
+                
             }
         },
         methods:{
             handleLogin(){
-                console.log(this.e, this.p)
-            }
+              const url = "http://localhost:8080/Login?"
+              const params = {
+                email:this.e,
+                password:this.p,
+              
+              }
+              const query = new URLSearchParams(params)
+              const method = "GET"
+              const body = ""
+              
+              fetch(url+query, {method: method})
+              .then(res => {
+                
+                res.json();
+                if(res.status === 200){
+                  this.isErr = false;
+                  console.log("success")
+
+                }else if(res.status === 500){
+                  this.isErr = false;
+                  window.setTimeout( function(){this.isErr = true}.bind(this), 300)
+                  
+                }
+              
+              })
+              // .then(data => console.log(data))
+              // .catch(err => console.log("error"))
+                  }
         }
     }
   </script>
@@ -151,5 +182,9 @@
   }
   .social i{
     margin-right: 4px;
+  }
+  p {
+    text-emphasis-color: red;
+    color: red;
   }
   </style>

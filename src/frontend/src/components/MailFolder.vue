@@ -13,7 +13,7 @@
 <script>
 import MailPreview from "@/components/MailPreview.vue";
 export default {
-   props:['folderName'],
+   props:['clientEmail', 'folderName'],
    watch: { 
     folderName: function() {
           this.fetchFolder()
@@ -33,10 +33,10 @@ export default {
           SortCriteria:""
         }
         const query = new URLSearchParams(params)
-        const method = "POST"
+        const method = "GET"
         const body = ""
         
-        fetch(url+query, {method: method, body: body})
+        fetch(url+query, {method: method})
         .then(res => res.json())
         .then(data => this.emails = data)
 

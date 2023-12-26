@@ -59,7 +59,7 @@
         .then(res => res.text())
         .then(data => console.log(data))
 
-        // make request to database to save user
+        
       }
     }
   }

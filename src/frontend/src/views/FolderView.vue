@@ -1,13 +1,13 @@
 <template>
         <div key="">
-        <MailFolder  :folderName="folderName"></MailFolder>
+        <MailFolder  :clientEmail="clientEmail" :folderName="folderName"></MailFolder>
         </div>
 </template>
 <script>
 import MailFolder from '../components/MailFolder.vue';
 
 export default {
-    props:['folderName'],
+    props:['clientEmail', 'folderName'],
     watch: { 
     folderName: function() {
           console.log("changed")
