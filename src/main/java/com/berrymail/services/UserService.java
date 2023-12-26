@@ -30,6 +30,7 @@ public class UserService {
     }
     public User accessAccount(String email, String password) throws Exception {
         userDir.loadUserFromFile();
+
         if(UserDirector.users.get(email) == null){
             throw new Exception("Account doesn't exist");
         }
