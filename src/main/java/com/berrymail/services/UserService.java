@@ -22,7 +22,7 @@ public class UserService {
             }
         }
         if(UserDirector.users.get(email) == null){
-            userDir.makeUser(fname, lname, username, email, password, inbox, sent, trash, draft);
+            userDir.makeUser(fname, lname, username, email, password, inbox, sent, trash, draft,customFolders, contacts);
             return "Account created";
         }
         return "An account already exists";
@@ -42,31 +42,31 @@ public class UserService {
         }
         return null;
     }
-//    public String createFolder(String email, String folderName) throws IOException {
-//        if(UserDirector.users.get(email).getCustomFolders().containsKey(folderName)){
-//            return "Folder already exists";
-//        }
-//        UserDirector.users.get(email).getCustomFolders().put(folderName, new ArrayList<String>());
-//        userDir.saveUser(UserDirector.users.get(email));
-//        return "Folder created";
-//    }
-//    public  HashMap<String, ArrayList<String>>  deleteFolder(String email, String folderName) throws IOException {
-//        if(UserDirector.users.get(email).getCustomFolders().containsKey(folderName)){
-//            UserDirector.users.get(email).getCustomFolders().remove(folderName);
-//            userDir.saveUser(UserDirector.users.get(email));
-//        }
-//        return UserDirector.users.get(email).getCustomFolders();
-//    }
-//    public HashMap<String, ArrayList<String>> renameFolder(String email, String oldFolderName, String newFolderName) throws IOException {
-//        if(UserDirector.users.get(email).getCustomFolders().containsKey(oldFolderName)){
-//            ArrayList<String> contentIDs = UserDirector.users.get(email).getCustomFolders().get(oldFolderName);
-//            deleteFolder(email, oldFolderName);
-//            UserDirector.users.get(email).getCustomFolders().put(newFolderName, contentIDs);
-//            userDir.saveUser(UserDirector.users.get(email));
-//
-//        }
-//        return UserDirector.users.get(email).getCustomFolders();
-//    }
+    public String createFolder(String email, String folderName) throws IOException {
+        if(UserDirector.users.get(email).getCustomFolders().containsKey(folderName)){
+            return "Folder already exists";
+        }
+        UserDirector.users.get(email).getCustomFolders().put(folderName, new ArrayList<String>());
+        userDir.saveUser(UserDirector.users.get(email));
+        return "Folder created";
+    }
+    public  HashMap<String, ArrayList<String>>  deleteFolder(String email, String folderName) throws IOException {
+        if(UserDirector.users.get(email).getCustomFolders().containsKey(folderName)){
+            UserDirector.users.get(email).getCustomFolders().remove(folderName);
+            userDir.saveUser(UserDirector.users.get(email));
+        }
+        return UserDirector.users.get(email).getCustomFolders();
+    }
+    public HashMap<String, ArrayList<String>> renameFolder(String email, String oldFolderName, String newFolderName) throws IOException {
+        if(UserDirector.users.get(email).getCustomFolders().containsKey(oldFolderName)){
+            ArrayList<String> contentIDs = UserDirector.users.get(email).getCustomFolders().get(oldFolderName);
+            deleteFolder(email, oldFolderName);
+            UserDirector.users.get(email).getCustomFolders().put(newFolderName, contentIDs);
+            userDir.saveUser(UserDirector.users.get(email));
+
+        }
+        return UserDirector.users.get(email).getCustomFolders();
+    }
     public String addMailToInbox(String email, String mailID) throws IOException {
         UserDirector.users.get(email).getInbox().add(mailID);
         userDir.saveUser(UserDirector.users.get(email));
@@ -82,35 +82,31 @@ public class UserService {
         userDir.saveUser(UserDirector.users.get(email));
         return "Mail added to draft";
     }
-    public String addMailToTrash(String email, String mailID) throws IOException {
-        if(UserDirector.users.get(email).getInbox().contains(mailID))
-            UserDirector.users.get(email).getInbox().remove(mailID);
-        else if(UserDirector.users.get(email).getDraft().contains(mailID))
-            UserDirector.users.get(email).getDraft().remove(mailID);
-        else if(UserDirector.users.get(email).getSent().contains(mailID))
-            UserDirector.users.get(email).getSent().remove(mailID);
+    public String addMailToTrash(String email, String folderName, String mailID) throws IOException {
+        removeMail(email, folderName, mailID);
+
         Date newDate = new Date();
         MailDirector.mails.get(mailID).setDateNtime(newDate);
         UserDirector.users.get(email).getTrash().add(mailID);
         userDir.saveUser(UserDirector.users.get(email));
         return "Mail added to trash";
     }
-//    public String addMailToCustomFolder(String email, String folderName, String mailID) throws IOException {
-//        UserDirector.users.get(email).getCustomFolders().get(folderName).add(mailID);
-//        userDir.saveUser(UserDirector.users.get(email));
-//        return "Mail added to folder" + folderName;
-//    }
-//    public ArrayList<Mail> customFolderList(String email, String folderName, String Sortcriteria){
-//        ArrayList<String> customFolderID = UserDirector.users.get(email).getCustomFolders().get(folderName);
-//        ArrayList<Mail> customFolder= new ArrayList<>();
-//        for(int i=0; i<customFolderID.size(); i++){
-//            customFolder.add(MailDirector.mails.get(customFolderID.get(i)));
-//        }
-//        if(Sortcriteria.equals("Priority")){
-//            return sortByPriority(customFolder);
-//        }
-//        return sortByDate(customFolder);
-//    }
+    public String addMailToCustomFolder(String email, String folderName, String mailID) throws IOException {
+        UserDirector.users.get(email).getCustomFolders().get(folderName).add(mailID);
+        userDir.saveUser(UserDirector.users.get(email));
+        return "Mail added to folder" + folderName;
+    }
+    public ArrayList<Mail> customFolderList(String email, String folderName, String Sortcriteria){
+        ArrayList<String> customFolderID = UserDirector.users.get(email).getCustomFolders().get(folderName);
+        ArrayList<Mail> customFolder= new ArrayList<>();
+        for(int i=0; i<customFolderID.size(); i++){
+            customFolder.add(MailDirector.mails.get(customFolderID.get(i)));
+        }
+        if(Sortcriteria.equals("Priority")){
+            return sortByPriority(customFolder);
+        }
+        return sortByDate(customFolder);
+    }
     public ArrayList<Mail> inboxList(String email, String Sortcriteria){
         ArrayList<String> inboxID = UserDirector.users.get(email).getInbox();
         ArrayList<Mail> inboxFolder= new ArrayList<>();
@@ -215,45 +211,55 @@ public class UserService {
         long thirtyDaysInMillis = 30L * 24 * 60 * 60 * 1000;
         return (currentDate.getTime() - mailDate.getTime()) > thirtyDaysInMillis;
     }
-//    public String addContact(String userMail, String name, ArrayList<String> emails) throws IOException {
-//        if(UserDirector.users.get(userMail).getContacts().containsKey(name)){
-//            return "Name already taken";
-//        }
-//        UserDirector.users.get(userMail).getContacts().put(name, emails);
-//        userDir.saveUser(UserDirector.users.get(userMail));
-//        return "Contact added";
-//    }
-//    public HashMap<String, ArrayList<String>> contactsList(String email) {
-//        return UserDirector.users.get(email).getContacts();
-//    }
-//    public HashMap<String, ArrayList<String>> deleteContact(String userMail, String name) throws IOException {
-//        if(UserDirector.users.get(userMail).getContacts().containsKey(name)){
-//            UserDirector.users.get(userMail).getContacts().remove(name);
-//            userDir.saveUser(UserDirector.users.get(userMail));
-//        }
-//        return UserDirector.users.get(userMail).getContacts();
-//    }
-//    public HashMap<String, ArrayList<String>> editContact(String userMail, String oldContactName, String newContactName, ArrayList<String> emails) throws IOException {
-//        if(UserDirector.users.get(userMail).getContacts().containsKey(oldContactName)){
-//            deleteContact(userMail, oldContactName);
-//            UserDirector.users.get(userMail).getContacts().put(newContactName, emails);
-//            userDir.saveUser(UserDirector.users.get(userMail));
-//        }
-//        return UserDirector.users.get(userMail).getContacts();
-//    }
-//    public Map<String, ArrayList<String>> sortContacts(String userMail){
-//        Map<String, ArrayList<String>> sortedMap = new TreeMap<>(String::compareTo);
-//        sortedMap.putAll(UserDirector.users.get(userMail).getContacts());
-//        return sortedMap;
-//    }
-//
-//
-//    public ArrayList<String> searchContatct(String email, String contactName) throws IOException {
-//        if(UserDirector.users.get(email).getContacts().containsKey(contactName)) {
-//            return UserDirector.users.get(email).getContacts().get(contactName);
-//        }
-//        return  null ;
-//
-//    }
+    public String addContact(String userMail, String name, ArrayList<String> emails) throws IOException {
+        if(UserDirector.users.get(userMail).getContacts().containsKey(name)){
+            return "Name already taken";
+        }
+        UserDirector.users.get(userMail).getContacts().put(name, emails);
+        userDir.saveUser(UserDirector.users.get(userMail));
+        return "Contact added";
+    }
+    public HashMap<String, ArrayList<String>> contactsList(String email) {
+        return UserDirector.users.get(email).getContacts();
+    }
+    public HashMap<String, ArrayList<String>> deleteContact(String userMail, String name) throws IOException {
+        if(UserDirector.users.get(userMail).getContacts().containsKey(name)){
+            UserDirector.users.get(userMail).getContacts().remove(name);
+            userDir.saveUser(UserDirector.users.get(userMail));
+        }
+        return UserDirector.users.get(userMail).getContacts();
+    }
+    public HashMap<String, ArrayList<String>> editContact(String userMail, String oldContactName, String newContactName, ArrayList<String> emails) throws IOException {
+        if(UserDirector.users.get(userMail).getContacts().containsKey(oldContactName)){
+            deleteContact(userMail, oldContactName);
+            UserDirector.users.get(userMail).getContacts().put(newContactName, emails);
+            userDir.saveUser(UserDirector.users.get(userMail));
+        }
+        return UserDirector.users.get(userMail).getContacts();
+    }
+    public Map<String, ArrayList<String>> sortContacts(String userMail){
+        Map<String, ArrayList<String>> sortedMap = new TreeMap<>(String::compareTo);
+        sortedMap.putAll(UserDirector.users.get(userMail).getContacts());
+        return sortedMap;
+    }
+    public ArrayList<String> searchContatct(String email, String contactName) throws IOException {
+        if(UserDirector.users.get(email).getContacts().containsKey(contactName)) {
+            return UserDirector.users.get(email).getContacts().get(contactName);
+        }
+        return  null ;
+    }
 
+    public void removeMail(String email, String oldFolder, String mailID) {
+        if(UserDirector.users.get(email).getInbox().contains(mailID))
+            UserDirector.users.get(email).getInbox().remove(mailID);
+        else if(UserDirector.users.get(email).getDraft().contains(mailID))
+            UserDirector.users.get(email).getDraft().remove(mailID);
+        else if(UserDirector.users.get(email).getSent().contains(mailID))
+            UserDirector.users.get(email).getSent().remove(mailID);
+        else if(UserDirector.users.get(email).getCustomFolders().containsKey(oldFolder)){
+            UserDirector.users.get(email).getCustomFolders().get(oldFolder).remove(mailID);
+        }
+        else
+            System.out.println("debug: mail not found: removeMail");
+    }
 }
