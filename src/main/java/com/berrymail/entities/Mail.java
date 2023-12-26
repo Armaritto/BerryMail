@@ -1,4 +1,5 @@
 package com.berrymail.entities;
+import java.util.ArrayList;
 import java.util.Date;
 public class Mail {
     private String id;
@@ -8,8 +9,8 @@ public class Mail {
     private String body;
     private Date dateNtime;
     private String priority;
-    private String attachment;
-    public Mail(String id, String from, String to, String subject, String body, Date dateNtime, String priority, String attachment) {
+    private ArrayList<Attachment> attachments;
+    public Mail(String id, String from, String to, String subject, String body, Date dateNtime, String priority, ArrayList<Attachment> attachments) {
         this.id = id;
         this.from = from;
         this.to = to;
@@ -17,7 +18,7 @@ public class Mail {
         this.body = body;
         this.dateNtime = dateNtime;
         this.priority = priority;
-        this.attachment = attachment;
+        this.attachments = attachments;
     }
     public String getId() {
         return id;
@@ -61,13 +62,12 @@ public class Mail {
     public void setPriority(String priority) {
         this.priority = priority;
     }
-    public String getAttachment() {
-        return attachment;
+    public ArrayList<Attachment> getAttachments() {
+        return attachments;
     }
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
+    public void setAttachments(ArrayList<Attachment> attachments) {
+        this.attachments = attachments;
     }
-
     @Override
     public String toString() {
         return "Mail{" +
@@ -76,9 +76,9 @@ public class Mail {
                 ", to='" + to + '\'' +
                 ", subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
-                ", date=" + dateNtime +
+                ", dateNtime=" + dateNtime +
                 ", priority='" + priority + '\'' +
-                ", attachment='" + attachment + '\'' +
+                ", attachments=" + attachments +
                 '}';
     }
 }

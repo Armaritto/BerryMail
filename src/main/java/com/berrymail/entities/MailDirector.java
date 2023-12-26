@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ public class MailDirector {
     public Mail getMail(){
         return this.mailbuilder.getMail();
     }
-    public void constructMail(String id, String from, String to, String subject, String body, Date dateNtime, String priority, String attachment) throws IOException {
+    public void constructMail(String id, String from, String to, String subject, String body, Date dateNtime, String priority,  ArrayList<Attachment> attachments) throws IOException {
         mailbuilder.generateId(id);
         mailbuilder.generateFrom(from);
         mailbuilder.generateTo(to);
@@ -28,7 +29,7 @@ public class MailDirector {
         mailbuilder.generateBody(body);
         mailbuilder.generateDateNTime(dateNtime);
         mailbuilder.generatePriority(priority);
-        mailbuilder.generateAttachment(attachment);
+        mailbuilder.generateAttachment(attachments);
         mails.put(id, this.mailbuilder.getMail());
         saveMail(this.mailbuilder.getMail());
     }
