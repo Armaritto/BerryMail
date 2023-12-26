@@ -1,14 +1,22 @@
 <template>
-    
-        <MailFolder v-if="folderName" :folderName="folderName"></MailFolder>
-   
+        <div key="">
+        <MailFolder  :folderName="folderName"></MailFolder>
+        </div>
 </template>
 <script>
 import MailFolder from '../components/MailFolder.vue';
 
 export default {
     props:['folderName'],
-    components: { MailFolder }
+    watch: { 
+    folderName: function() {
+          console.log("changed")
+        }
+    },
+    components: { MailFolder },
+    mounted(){
+        console.log("FV mounted");
+    }
 }
 </script>
 <style>

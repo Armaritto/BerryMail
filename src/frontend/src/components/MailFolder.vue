@@ -1,5 +1,7 @@
 <template>
+    
     <div class="folder">
+
         <table v-if="emails">
             <tr v-for="e in emails" :key="e.id">
                 <MailPreview :emailMeta="e"></MailPreview>
@@ -15,6 +17,7 @@ export default {
    watch: { 
     folderName: function() {
           this.fetchFolder()
+          console.log("fetched")
         }
     },
     components:{

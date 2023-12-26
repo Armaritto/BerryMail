@@ -11,19 +11,19 @@
         <ul class="list">
             <li class="active">
                 <i class="fa-solid fa-home"></i>
-                <router-link :to="{name:'folder', params:{folderName: 'inbox'}}"><span>Inbox</span></router-link>
+                <router-link :to="{path:'/folder/inbox'}"><span>Inbox</span></router-link>
             </li>
             <li>
-                <i class="fa-solid fa-user"></i>
-                <router-link :to="{name:'folder', params:{folderName: 'sent'}}"><span>Sent</span></router-link>
+                <i  class="fa-solid fa-user"></i>
+                <router-link :to="{path:'/folder/sent'}"><span>Sent</span></router-link>
             </li>
             <li>
                 <i class="fa-solid fa-box"></i>
-                <router-link :to="{name:'folder', params:{folderName: 'draft'}}"><span>Draft</span></router-link>
+                <router-link :to="{path:'/folder/draft'}"><span>Draft</span></router-link>
             </li>
             <li>
                 <i class="fa-solid fa-chart-simple"></i>
-                <router-link :to="{name:'folder', params:{folderName: 'trash'}}"><span>Trash</span></router-link>
+                <router-link :to="{path:'/folder/trash'}"><span>Trash</span></router-link>
             </li>
             <!-- <li>
                 <i class="fa-solid fa-phone"></i>
@@ -48,7 +48,20 @@
 </template>
 <script>
 export default {
-    
+    data(){
+        return{
+            h: async function(){
+                this.$router.replace({path:'/folder/sent'})
+                
+            }
+        }
+    },
+    methods:{
+        handle(){
+            this.h()
+            
+        }
+    }
 }
 </script>
 <style scoped>

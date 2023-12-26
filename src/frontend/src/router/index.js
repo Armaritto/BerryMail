@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import FolderView from '../views/FolderView.vue'
-
+import LoginView from '../views/LoginView.vue'
+import Main from "@/components/Main.vue";
+import MailFolder from "@/components/MailFolder.vue";
 
 const routes = [
   // {
@@ -9,14 +11,22 @@ const routes = [
   //   component: HomeView
   // },
   {
-    path: '/about/id',
-    name: 'about',
+    path: '/login',
+    name: 'login',
+    component:LoginView
   },
   {
     path: '/folder/:folderName',
     name: 'folder',
     props: true,
-    component: FolderView
+    component: Main,
+    
+    children:[{
+      path:'',
+      name:'test',
+      props: true,
+      component: MailFolder
+    }]
   }
 ]
 
