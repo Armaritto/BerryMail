@@ -104,7 +104,7 @@
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 14px;
     font-weight: 300;
   }
