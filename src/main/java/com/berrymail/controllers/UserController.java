@@ -108,6 +108,9 @@ public class UserController {
     @GetMapping(path = "/searchContact")
     public ArrayList<String> searchContact(@RequestParam("email") String email, @RequestParam("contactName") String contactName) throws Exception {
         return userService.searchContatct(email, contactName);
-
+    }
+    @GetMapping(path = "/customFoldersNames")
+    public ArrayList<String> customFoldersNames(@RequestParam("email") String email) throws Exception {
+        return userService.customFolderNames(email);
     }
 }
