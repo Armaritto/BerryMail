@@ -34,7 +34,6 @@ public class Mediator implements MediatorIF {
         this.dateNtime = new Date();
     }
     @Override
-
     public String addMails(String from, ArrayList<String> to, String subject, String body, String priority,  ArrayList<Attachment> attachments) throws IOException {
         generateID();
         generateDateNTime();
@@ -67,5 +66,9 @@ public class Mediator implements MediatorIF {
         userService.userDir.saveUser(UserDirector.users.get(email));
         mailService.mailDir.deleteMail(temp);
         return temp;
+    }
+    @Override
+    public Mail getEmail(String id) throws IOException {
+        return mailService.getEmail(id);
     }
 }
