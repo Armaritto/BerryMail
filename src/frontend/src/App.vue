@@ -9,11 +9,11 @@
   </div> -->
 </template>
 <script>
-import compose from './components/compose.vue'
+
 export default {
   name:'App',
   components:{
-    compose
+    
   },
   mounted(){
     console.log(this.$router.currentRoute.path)

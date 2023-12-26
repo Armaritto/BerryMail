@@ -28,12 +28,20 @@ export default {
     },
     data(){
         return{
+            folders:["inbox", "sent", "draft", "trash"],
             fetchFolder: function(){
+                var url = null
                 if(this.folderName){
-        const url = "http://localhost:8080/" + this.folderName +"?"
+        if(!this.folders.includes(this.folderName)){
+             url = "http://localhost:8080/" + "customFolder" + "?"
+        }
+        else {
+         url = "http://localhost:8080/" + this.folderName +"?"
+    }
         const params = {
           email: this.clientEmail + "@berry.com",
-          SortCriteria:""
+          SortCriteria:"",
+          folderName: this.folderName
         }
         const query = new URLSearchParams(params)
         const method = "GET"
@@ -42,6 +50,7 @@ export default {
         fetch(url+query, {method: method})
         .then(res => res.json())
         .then(data => this.emails = data)
+    
 
     }
             },
