@@ -30,7 +30,11 @@
                 e:'',
                 p:'',
                 isErr: false,
-                
+                rout: function(){
+                  const clientEmail = this.e.slice(0, -10)
+                  const path = clientEmail + "/folder/inbox"
+                  this.$router.push({path: path})
+                }
             }
         },
         methods:{
@@ -52,6 +56,7 @@
                 if(res.status === 200){
                   this.isErr = false;
                   console.log("success")
+                  this.rout()
 
                 }else if(res.status === 500){
                   this.isErr = false;

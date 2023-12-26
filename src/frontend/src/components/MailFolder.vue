@@ -1,6 +1,9 @@
 <template>
     
     <div class="folder">
+        <div v-if="emails.length == 0">
+            <h1>{{this.folderName}} is empty</h1>
+        </div>
 
         <table v-if="emails">
             <tr v-for="e in emails" :key="e.id">
@@ -29,7 +32,7 @@ export default {
                 if(this.folderName){
         const url = "http://localhost:8080/" + this.folderName +"?"
         const params = {
-          email:"armia404@berry.com",
+          email: this.clientEmail + "@berry.com",
           SortCriteria:""
         }
         const query = new URLSearchParams(params)

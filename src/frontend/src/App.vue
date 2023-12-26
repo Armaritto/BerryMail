@@ -1,19 +1,17 @@
 <template lang="">
   <div>
     <router-view ></router-view>
+    <!-- <testComposeEmailArmia></testComposeEmailArmia> -->
   </div>
   <!-- <div>
     <router-view name="loginRouter"></router-view>
   </div> -->
 </template>
 <script>
-import Main from "@/components/Main.vue";
-
 
 export default {
   name:'App',
   components:{
-    Main,
     
   },
   mounted(){

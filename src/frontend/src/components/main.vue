@@ -1,7 +1,7 @@
 <template>
 
   <div>
-  <div class="left"><SideBar></SideBar></div>
+  <div class="left"><SideBar :clientEmail="clientEmail"></SideBar></div>
   <div class="middle"><router-view> </router-view></div>
   <div class="right"><MailEditor :myEmail="myEmail"></MailEditor></div>
   </div>
@@ -18,9 +18,10 @@ import SideBar from "@/components/SideBar.vue";
 
 export default {
   name: 'Main',
+  props:['clientEmail'],
   data(){
     return{
-      myEmail:"user1@berry.com",
+      myEmail:"armia404",
     }
   },
   components: {
