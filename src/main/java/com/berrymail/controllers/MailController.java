@@ -77,14 +77,3 @@ public class MailController {
         return mediator.getEmail(id);
     }
 }
-/*
-payload : {
-    "body": ....;
-    "attach": {
-                "name": ....;
-                "type": ....;
-                "content": ....;
-               }
-}
-http://localhost:8080/send?from=armia404@berry.com&to=karene_antoine@berry.com&subject=Zoo&body=I went to the zoo&priority=Default&attachment=PNG
- */
