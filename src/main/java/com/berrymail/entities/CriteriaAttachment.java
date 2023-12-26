@@ -6,9 +6,8 @@ public class CriteriaAttachment implements CriteriaIF{
         ArrayList<Mail> filtered = new ArrayList<>();
         for(String attachment : criteria){
             for(Mail mail : mails){
-                for(Attachment att : mail.getAttachments())
-                    if(att.getName().equalsIgnoreCase(attachment))
-                        filtered.add(mail);
+                if(mail.getAttachment().equalsIgnoreCase(attachment))
+                    filtered.add(mail);
             }
         }
         return filtered;

@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Date;
-
-import com.berrymail.entities.Attachment;
 import com.berrymail.entities.Mail;
 import com.berrymail.entities.MailDirector;
 import com.berrymail.entities.UserDirector;
@@ -35,7 +33,7 @@ public class Mediator implements MediatorIF {
     }
     @Override
 
-    public String addMails(String from, ArrayList<String> to, String subject, String body, String priority,  ArrayList<Attachment> attachments) throws IOException {
+    public String addMails(String from, ArrayList<String> to, String subject, String body, String priority, String attachment) throws IOException {
         generateID();
         generateDateNTime();
         String bigTo = "";
@@ -44,7 +42,7 @@ public class Mediator implements MediatorIF {
              if(to.indexOf(s) != to.size()-1)
                 bigTo += ",";
         }
-        mailService.createMail(this.getID(), from, bigTo, subject, body, this.getDateNtime(), priority, attachments);
+        mailService.createMail(this.getID(), from, bigTo, subject, body, this.getDateNtime(), priority, attachment);
         for (String s : to) {
             userService.addMailToInbox(s, ID);
         }
@@ -52,10 +50,10 @@ public class Mediator implements MediatorIF {
         return "Successfully sent";
     }
     @Override
-    public String moveToDraft(String from, String to, String subject, String body, String priority, ArrayList<Attachment> attachments) throws IOException {
+    public String moveToDraft(String from, String to, String subject, String body, String priority, String attachment) throws IOException {
         generateID();
         generateDateNTime();
-        mailService.createMail(this.getID(), from, to, subject, body, this.getDateNtime(), priority, attachments);
+        mailService.createMail(this.getID(), from, to, subject, body, this.getDateNtime(), priority, attachment);
         userService.addMailToDraft(from, ID);
 
         return "Mail added to draft";
