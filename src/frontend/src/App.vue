@@ -1,17 +1,26 @@
-<template>
-  <main></main> 
-        
+<template lang="">
+  <div>
+    <router-view ></router-view>
+  </div>
+  <!-- <div>
+    <router-view name="loginRouter"></router-view>
+  </div> -->
 </template>
-
 <script>
-import main from "@/components/main.vue";
+import Main from "@/components/Main.vue";
+
+
 export default {
-  name: 'App',
-  components: {
-    main
+  name:'App',
+  components:{
+    Main,
+    
+  },
+  mounted(){
+    console.log(this.$router.currentRoute.path)
   }
 }
 </script>
-<style>
-
+<style lang="">
+  
 </style>
