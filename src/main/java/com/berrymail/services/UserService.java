@@ -8,6 +8,7 @@ public class UserService {
     UserBuilderIF userBuilder = new UserBuilder();
     UserDirector userDir = new UserDirector(userBuilder);
     public String createAccount(String fname, String lname, String username, String email, String password, ArrayList<String> inbox ,ArrayList<String> sent, ArrayList<String> trash ,ArrayList<String> draft, HashMap<String, ArrayList<String>> customFolders, HashMap<String, ArrayList<String>> contacts) throws IOException {
+        userDir.loadUserFromFile();
         if(!email.contains("@berry.com")){
             return "Email is not valid";
         }
@@ -29,6 +30,7 @@ public class UserService {
     }
     public User accessAccount(String email, String password) throws Exception {
         userDir.loadUserFromFile();
+
         if(UserDirector.users.get(email) == null){
             throw new Exception("Account doesn't exist");
         }
@@ -66,6 +68,14 @@ public class UserService {
 
         }
         return UserDirector.users.get(email).getCustomFolders();
+    }
+    public ArrayList<String> customFolderNames(String email){
+        ArrayList<String> customFolderNames = new ArrayList<>();
+        for (Map.Entry<String, ArrayList<String>> entry : UserDirector.users.get(email).getCustomFolders().entrySet()) {
+            String folderName = entry.getKey();
+            customFolderNames.add(folderName);
+        }
+        return customFolderNames;
     }
     public String addMailToInbox(String email, String mailID) throws IOException {
         if(UserDirector.users.containsKey(email)){

@@ -21,9 +21,9 @@
       <label for="sender">Date</label>
       <div class="date_options">
         <input type="datetime-local" placeholder="Type Subject" id="subject" style="width: 50%">
-        <button class="date" :class="{ 'true': this.isBefore.value, 'false': !this.isBefore.value }" @click="handleTime(this.isBefore)" type="submit" >Before</button>
-        <button class="date" :class="{ 'true': this.isOn.value , 'false': !this.isOn.value  }"  @click="handleTime(this.isOn)" type="submit" >On</button>
-        <button class="date" :class="{ 'true': this.isAfter.value, 'false': !this.isAfter.value }"  @click="handleTime(this.isAfter)" type="submit" >After</button>
+        <span class="date" :class="{ 'true': this.isBefore.value, 'false': !this.isBefore.value }" @click="handleTime(this.isBefore)"  >Before</span>
+        <span class="date" :class="{ 'true': this.isOn.value , 'false': !this.isOn.value  }"  @click="handleTime(this.isOn)"  >On</span>
+        <span class="date" :class="{ 'true': this.isAfter.value, 'false': !this.isAfter.value }"  @click="handleTime(this.isAfter)"  >After</span>
       </div>
       <label for="sender" >Body</label>
       <input type="text" placeholder="Body" id="username">
@@ -88,6 +88,9 @@ export default {
   font-size: 8px;
   color: #ffffff;
   font-weight: 20;
+}
+.date:hover{
+  cursor: pointer;
 }
 *,
 *:before,
