@@ -39,7 +39,7 @@
           <p class="subject">{{emailMeta.subject}}</p>
         </td>
         <td class="date-cell">
-          <p class="date"><strong>{{emailMeta.date|| "1/1/1900"}}</strong></p>
+          <p class="date"><strong>{{emailMeta.dateNtime.substr(0, 10) +'   '+ emailMeta.dateNtime.substr(11, 11).substr(0, 5) || "1/1/1900"}}</strong></p>
         </td>
       </tr>
     </table>
