@@ -25,20 +25,22 @@
         <input v-model="e" type="text" placeholder="example@berry.com" id="username">
         <label for="password">Password</label>
         <input v-model="p" type="password" placeholder="Password" id="password">
-        <span @click="handleAccount">Create Account</span>
-        <span>Log In</span>
+        <div style="display: flex; flex-direction: column; align-content: center">
+          <span @click="handleAccount">Create Account</span>
+          <span>Log In</span>
+        </div>
       </form>
-      
+
     </div>
     </body>
   </template>
-  
+
   <script>
   export default {
     name: 'main',
     props: {
       msg: String
-    }, 
+    },
     data(){
         return{
             fname:'',
@@ -63,15 +65,15 @@
                 username:this.uname,
                 email:this.e,
                 password:this.p,
-                
+
               }
               const query = new URLSearchParams(params)
               const method = "POST"
               const body = ""
-              
+
               fetch(url+query, {method: method})
               .then(res => {
-                
+
                 res.json();
                 if(res.status === 200){
                   this.isErr = false;
@@ -81,15 +83,15 @@
                 }else {
                   this.isErr = false;
                   window.setTimeout( function(){this.isErr = true}.bind(this), 300)
-                  
+
                 }
-             } 
+             }
             )
         }
     }
   }
   </script>
-  
+
   <style scoped>
   *,
   *:before,
@@ -101,7 +103,7 @@
   body{
     background-color: #080710;
   }
-  
+
   .background{
     width: 430px;
     height: 520px;
@@ -116,13 +118,13 @@
     position: absolute;
     border-radius: 50%;
   }
-  
+
   form{
-    height: 820px;
+    height: 830px;
     width: 400px;
-  
+
     background-color: rgba(44, 19, 66, 0.34);
-  
+
     position: absolute;
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -130,7 +132,7 @@
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
   }
-  
+
   form *{
     font-family: 'Poppins',sans-serif;
     color: #ffffff;
@@ -146,7 +148,7 @@
   }
   label{
     display: block;
-    margin-top: 30px;
+    margin-top: 25px;
     font-size: 16px;
     font-weight: 500;
   }
@@ -165,24 +167,28 @@
     color: #e5e5e5;
   }
   span{
-    margin: 25px;
-    width: 100px;
-    background-color: #bc3fdb;
-    color: #080710;
-    padding: 15px 0;
+    margin-top: 30px;
+    width: 100%;
+    background-color: #a41eb1;
+    padding: 14px 0;
     font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
+    align-self: center;
+    text-align: center;
+    color: #ffffff;
+    transition: 1s;
   }
   span:last-child{
-    background-color: rgba(255,255,255,0.07);
+    margin-top: 18px;
     color: #ffffff;
-    margin-top: 20px;
+    background-color: rgba(255,255,255,0.07);
+    transition: 1s;
   }
   span:hover{
-    background-color: #521bb4;
-    color: #080710;
+    background-color: #856cd1;
+    color: #ffffff;
   }
   .social{
     margin-top: 30px;
@@ -206,4 +212,3 @@
     margin-right: 4px;
   }
   </style>
-  

@@ -9,19 +9,18 @@
         <h3>Login</h3><p v-if="isErr">try again</p>
         <label>Email</label>
         <input v-model="e" type="text"  id="username" placeholder="example@berry.com">
-  
-        <label>Password</label> 
+
+        <label>Password</label>
         <input v-model="p" type="password"  id="password" placeholder="password">
-        <span  @click="handleLogin" >Log In</span>
-        <span>Create Account</span>
-        
+        <div style="display: flex; flex-direction: column; align-content: center">
+          <span  @click="handleLogin" >Log In</span>
+          <span>Create Account</span>
+        </div>
       </form>
-     
     </div>
-     
    </div>
   </template>
-  
+
     <script>
     export default {
         name: 'LoginView',
@@ -43,15 +42,15 @@
               const params = {
                 email:this.e,
                 password:this.p,
-              
+
               }
               const query = new URLSearchParams(params)
               const method = "GET"
               const body = ""
-              
+
               fetch(url+query, {method: method})
               .then(res => {
-                
+
                 res.json();
                 if(res.status === 200){
                   this.isErr = false;
@@ -61,9 +60,9 @@
                 }else if(res.status === 500){
                   this.isErr = false;
                   window.setTimeout( function(){this.isErr = true}.bind(this), 300)
-                  
+
                 }
-              
+
               })
               // .then(data => console.log(data))
               // .catch(err => console.log("error"))
@@ -71,7 +70,7 @@
         }
     }
   </script>
-  
+
   <style scoped>
   *,
   *:before,
@@ -83,7 +82,7 @@
   body{
     background-color: #080710;
   }
-  
+
   .background{
     width: 430px;
     height: 520px;
@@ -98,13 +97,13 @@
     position: absolute;
     border-radius: 50%;
   }
-  
+
   form{
     height: 520px;
     width: 400px;
-  
+
     background-color: rgba(44, 19, 66, 0.34);
-  
+
     position: absolute;
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -112,7 +111,7 @@
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
   }
-  
+
   form *{
     font-family: 'Poppins',sans-serif;
     color: #ffffff;
@@ -148,22 +147,46 @@
     color: #e5e5e5;
   }
   span{
-    margin-top: 100px;
+    margin-top: 10px;
+    width: 100%;
+    background-color: #a41eb1;
+    padding: 14px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    text-align: center;
+    color: #ffffff;
+    transition: 1s;
+  }
+  span:last-child{
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: rgba(255,255,255,0.07);
+    transition: 1s;
+  }
+  span:hover{
+    background-color: #856cd1;
+    color: #ffffff;
+  }
+  button{
+    margin-top: 50px;
     width: 100%;
     background-color: #ffffff;
-    color: rgba(53, 8, 64, 0.9);;
-    padding: 20px 0;
-    font-size: medium;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
   }
-  span:last-child{
+  button:last-child{
     background-color: rgba(255,255,255,0.07);
     background-color: #bc3fdb;
-    margin-left: 20px;
+    margin-top: 20px;
   }
-  span:hover{
+  button:hover{
     background-color: #521bb4;
     color: #080710;
   }

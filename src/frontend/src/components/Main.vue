@@ -5,7 +5,7 @@
   <div class="middle"><router-view> </router-view></div>
   <div class="right"><TestComposeEmailArmia :clientEmail="clientEmail"></TestComposeEmailArmia></div>
   </div>
-  
+
 </template>
 
 <script>
@@ -34,7 +34,7 @@ export default {
     TestComposeEmailArmia
   },
   mounted(){
-    
+
   }
 }
 </script>
@@ -56,6 +56,7 @@ export default {
   }
   div.right{
     float: left;
-    margin: 10px;
+    margin-left: 4rem;
+    min-width: 900px;
   }
 </style>

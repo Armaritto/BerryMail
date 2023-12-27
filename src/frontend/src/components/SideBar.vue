@@ -1,13 +1,9 @@
 <template>
 <div>
     <body>
-
 <div class="container">
-
 <nav>
-
     <hr class="line">
-
     <ul class="list">
         <li class="active" v-for="folder in folders">
             <i class="fa-solid fa-home"></i>
@@ -43,7 +39,6 @@
 
     </ul>
     <button> +Folder </button>
-
 </nav>
 
 </div>
@@ -65,18 +60,18 @@ data(){
         fetchFolderList: function(){
 
         const  url = "http://localhost:8080/" + 'customFoldersNames' + "?"
-         
+
         const params = {
           email: this.clientEmail + "@berry.com",
         }
         const query = new URLSearchParams(params)
         const method = "GET"
         const body = ""
-        
+
         fetch(url+query, {method: method})
         .then(res => res.json())
         .then(data => this.customFolders = data)
-    
+
             }
     }
 },
@@ -84,7 +79,7 @@ methods:{
     handle(){
         this.h()
     }
-    
+
 },
 mounted(){
     this.fetchFolderList()
@@ -116,7 +111,7 @@ font-family: 'Roboto', sans-serif;
 width: 100%;
 height: 100%;
 display: flex;
-align-items: left;
+
 justify-content: left;
 background-repeat: no-repeat;
 background-position: bottom;
@@ -242,7 +237,7 @@ to {
 nav .list span {
 animation: fadeIn .4s ease-out forwards;
 }
-/* 
+/*
 nav:hover .list li:nth-child(1) span {
 animation-delay: .5s;
 }
@@ -266,4 +261,4 @@ animation-delay: .9s;
 nav:hover .list li:nth-child(7) span {
 animation-delay: 1s;
 } */
-</style> 
+</style>

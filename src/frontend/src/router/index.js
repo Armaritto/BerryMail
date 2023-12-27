@@ -26,7 +26,7 @@ const routes = [
     name: 'folder',
     props: true,
     component: Main,
-    
+
     children:[{
       path:'',
       name:'test',
