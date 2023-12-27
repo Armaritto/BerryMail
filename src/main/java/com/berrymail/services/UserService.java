@@ -78,8 +78,10 @@ public class UserService {
         return customFolderNames;
     }
     public String addMailToInbox(String email, String mailID) throws IOException {
-        UserDirector.users.get(email).getInbox().add(mailID);
-        userDir.saveUser(UserDirector.users.get(email));
+        if(UserDirector.users.containsKey(email)){
+            UserDirector.users.get(email).getInbox().add(mailID);
+            userDir.saveUser(UserDirector.users.get(email));
+        }
         return "Mail added to inbox";
     }
     public String addMailToSent(String email, String mailID) throws IOException {
