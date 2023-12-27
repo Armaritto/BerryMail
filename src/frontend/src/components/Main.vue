@@ -3,7 +3,7 @@
   <div>
   <div class="left"><SideBar :clientEmail="clientEmail"></SideBar></div>
   <div class="middle"><router-view> </router-view></div>
-  <div class="right"><MailEditor :myEmail="myEmail"></MailEditor></div>
+  <div class="right"><TestComposeEmailArmia :clientEmail="clientEmail"></TestComposeEmailArmia></div>
   </div>
   
 </template>
@@ -15,6 +15,7 @@ import Mail from "@/components/Mail.vue";
 import MailPreview from "@/components/MailPreview.vue";
 import MailFolder from "@/components/MailFolder.vue";
 import SideBar from "@/components/SideBar.vue";
+import TestComposeEmailArmia from "@/components/TestComposeEmailArmia.vue";
 
 export default {
   name: 'Main',
@@ -29,7 +30,8 @@ export default {
     Mail,
     MailPreview,
     MailFolder,
-    SideBar
+    SideBar,
+    TestComposeEmailArmia
   },
   mounted(){
     
@@ -43,7 +45,14 @@ export default {
   }
   div.middle{
     float: left;
-    margin: 10px;
+    margin: auto;
+    /* background: #601cb1; */
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(to right, #3681f6, #601cb1);
+    /* align-items: center; */
+    /* height: 100vh; */
   }
   div.right{
     float: left;

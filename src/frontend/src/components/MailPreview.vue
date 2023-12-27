@@ -26,12 +26,20 @@ export default {
     border-color: #4f4f4f;
     border-style: solid;
     border-width: 1px;
+        /* float: left;
+    margin: 10px;
+    background: #601cb1;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(to right, #3681f6, #601cb1); */
     /* margin: 5px; */
     /* border-radius: 15px; */
     
    } 
    div:hover {
-     background-color: rgba(170, 115, 205, 0.5);
+    background: linear-gradient(to left, #3681f6, #601cb1);
+    color: #fff;
 }
     /* .from{
     position: absolute;

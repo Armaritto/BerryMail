@@ -22,7 +22,7 @@
             <span  class="btn btn-priority" :class="{ 'true': this.isModerate.value, 'false': !this.isModerate.value }" @click="handlePriority(isModerate)">Moderate</span>
             <span  class="btn btn-priority" :class="{ 'true': this.isDefault.value, 'false': !this.isDefault.value }" @click="handlePriority(isDefault)">Default</span>
           </div>
-          <label for="Priority" class="col-2 col-sm-1 col-form-label" style="margin-left: 50px; margin-right: 10px">Attachment:</label>
+          <label for="Priority" class="col-2 col-sm-1 col-form-label" style=" margin-right: 84px">Attachment:</label>
           <input
               type="file"
               multiple
@@ -60,7 +60,7 @@ import { defineElement } from "@lordicon/element";
 // define "lord-icon" custom element with default properties
 defineElement(lottie.loadAnimation);
 export default {
-  props:['myEmail'],
+  props:['clientEmail'],
   data() {
     return {
       to: '',
@@ -132,7 +132,7 @@ export default {
       const url = "http://localhost:8080/send?"
       const params = {
         // from:this.myEmail,
-        from:"karene_antoine@berry.com",
+        from:this.clientEmail + "@berry.com",
         to:this.to,
         subject:this.subject,
         priority:this.priority,

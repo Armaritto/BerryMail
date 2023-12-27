@@ -60,7 +60,7 @@ data(){
             this.$router.replace({path:'/folder/sent'})
         },
         folders: ["inbox", "sent", "draft", "trash"],
-        customFolders: ["myfolder1"],
+        customFolders: [],
 
         fetchFolderList: function(){
 
@@ -75,7 +75,7 @@ data(){
         
         fetch(url+query, {method: method})
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => this.customFolders = data)
     
             }
     }
@@ -87,7 +87,8 @@ methods:{
     
 },
 mounted(){
-    this.fetchFolderList
+    this.fetchFolderList()
+    console.log(this.clientEmail)
 }
 }
 </script>

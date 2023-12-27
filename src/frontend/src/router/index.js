@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import FolderView from '../views/FolderView.vue'
 import LoginView from '../views/LoginView.vue'
+import SignupView from '../views/SignupView.vue'
 import Main from "@/components/Main.vue";
 import MailFolder from "@/components/MailFolder.vue";
 
@@ -10,6 +11,11 @@ const routes = [
   //   name: 'home',
   //   component: HomeView
   // },
+  {
+    path: '/signup',
+    name: 'signup',
+    component:SignupView
+  },
   {
     path: '/login',
     name: 'login',
