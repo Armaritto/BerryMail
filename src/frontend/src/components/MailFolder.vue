@@ -111,7 +111,7 @@ export default {
 
         fetch(url+query, {method: method})
         .then(res => res.json())
-        .then(data => this.emails = data)
+        .then(data => {this.emails = data; console.log(data)})
     }
             },
         emails:[],

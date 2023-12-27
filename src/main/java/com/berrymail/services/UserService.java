@@ -187,6 +187,10 @@ public class UserService {
         ArrayList<Mail> sent = sentList(email, sortCriteria);
         return filter(sent, type, criteriaMap);
     }
+    public ArrayList<Mail> filterCustomFolder(String email,String folderName, String sortCriteria,String type, HashMap<String, ArrayList<String>> criteriaMap){
+        ArrayList<Mail> customFolder = customFolderList(email, folderName, sortCriteria );
+        return filter(customFolder, type, criteriaMap);
+    }
     public ArrayList<Mail> sortByDate(ArrayList<Mail> Folder){
         for(int i = 0; i< Folder.size(); i++){
             for(int j = 0; j< Folder.size()-1; j++){

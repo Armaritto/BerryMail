@@ -39,11 +39,11 @@
           <p class="subject">{{emailMeta.subject}}</p>
         </td>
         <td class="date-cell">
-          <p class="date"><strong>{{emailMeta.date || "1/1/1900"}}</strong></p>
+          <p class="date"><strong>{{emailMeta.dateNtime|| "1/1/1900"}}</strong></p>
         </td>
       </tr>
     </table>
-    <p class="content">{{emailMeta.contentPreview  || "No preview Available"}}</p>
+    <p class="content">{{emailMeta.body.substr(0, 50)  || "No preview Available"}}</p>
   </div>
 </template>
 <script>
