@@ -27,7 +27,11 @@
         <input v-model="p" type="password" placeholder="Password" id="password">
         <div style="display: flex; flex-direction: column; align-content: center">
           <span @click="handleAccount">Create Account</span>
-          <span>Log In</span>
+          <router-link to="/login">
+            <span style="display: flex; flex-direction: column; align-content: center">Log In</span>
+          </router-link>
+          <div style="color: #ffffff; align-content: center;display: flex; flex-direction: column;">{{ condition }}</div>
+          
         </div>
       </form>
 
@@ -43,6 +47,8 @@
     },
     data(){
         return{
+            fromBack:'',
+            condition:'',
             fname:'',
             lname:'',
             uname:'',
@@ -73,20 +79,31 @@
 
               fetch(url+query, {method: method})
               .then(res => {
+                return res.text();
+                // res.json();
+                // if(res.status === 200){
+                //   this.isErr = false;
+                //   console.log("success")
+                //   this.rout()
 
-                res.json();
-                if(res.status === 200){
-                  this.isErr = false;
-                  console.log("success")
-                  this.rout()
+                // }else {
+                //   this.isErr = false;
+                //   window.setTimeout( function(){this.isErr = true}.bind(this), 300)
 
-                }else {
-                  this.isErr = false;
-                  window.setTimeout( function(){this.isErr = true}.bind(this), 300)
-
-                }
+                // }
              }
             )
+            .then(data => {
+            this.fromBack = data;
+            if(this.fromBack!=="Account created"){
+              this.condition=this.fromBack;
+            }
+            else{
+              alert("Account created!")
+              const path = this.e + "/folder/inbox"
+              this.$router.push({path: path})
+            }
+          });
         }
     }
   }
