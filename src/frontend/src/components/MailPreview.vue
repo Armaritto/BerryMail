@@ -43,7 +43,7 @@
         </td>
       </tr>
     </table>
-    <p class="content">{{emailMeta.body.substr(0, 50)  || "No preview Available"}}</p>
+    <p class="content">{{emailMeta.body  || "No preview Available"}}</p>
   </div>
 </template>
 <script>
