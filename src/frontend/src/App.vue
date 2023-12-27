@@ -2,7 +2,7 @@
   <div>
     <router-view ></router-view>
     <!-- <compose></compose> -->
-    <!-- <testComposeEmailArmia></testComposeEmailArmia> -->
+<!--     <testComposeEmailArmia></testComposeEmailArmia>-->
   </div>
   <!-- <div>
     <router-view name="loginRouter"></router-view>
@@ -13,7 +13,7 @@
 export default {
   name:'App',
   components:{
-    
+
   },
   mounted(){
     console.log(this.$router.currentRoute.path)
@@ -21,5 +21,5 @@ export default {
 }
 </script>
 <style>
-  
+
 </style>

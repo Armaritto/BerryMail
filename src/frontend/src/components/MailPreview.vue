@@ -43,7 +43,7 @@
         </td>
       </tr>
     </table>
-    <p class="content">{{emailMeta.body  || "No preview Available"}}</p>
+    <p class="content">{{emailMeta.body  || "No preview Available"}}</p><p v-if="emailMeta.body" class="content">...</p>
   </div>
 </template>
 <script>
@@ -73,7 +73,6 @@ export default {
   flex-direction: column;
   margin: 5px;
   padding: 10px;
-
 }
 .from{
   margin: 0;

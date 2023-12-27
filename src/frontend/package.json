@@ -9,9 +9,12 @@
   "dependencies": {
     "@lordicon/element": "^1.4.2",
     "@lordicon/react": "^1.4.1",
+    "@sweetalert/with-react": "^0.1.1",
     "core-js": "^3.8.3",
     "lottie-vuejs": "^0.3.6",
     "lottie-web": "^5.12.2",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.10.2",
     "vue": "^3.2.13",
     "vue-click-outside": "^1.1.0",
     "vue-router": "^4.0.3",

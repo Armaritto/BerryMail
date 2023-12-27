@@ -1,21 +1,21 @@
 <template>
   <div @contextmenu.prevent="$refs.wrapper.$refs.menu.open($event, 'Payload')">
-    <ContextMenu ref="wrapper" reference="menu">
-      <template slot-scope="{ contextData }">
-        <ContextMenuItem >
-          Action 1 {{ contextData }}
-        </ContextMenuItem>
-        <ContextMenuItem >
-          Action 2 {{ contextData }}
-        </ContextMenuItem>
-        <ContextMenuItem >
-          Action 3 {{ contextData }}
-        </ContextMenuItem>
-        <ContextMenuItem >
-          Action 4 {{ contextData }}
-        </ContextMenuItem>
-      </template>
-    </ContextMenu>
+<!--    <ContextMenu ref="wrapper" reference="menu">-->
+<!--      <template slot-scope="{ contextData }">-->
+<!--        <ContextMenuItem >-->
+<!--          Action 1 {{ contextData }}-->
+<!--        </ContextMenuItem>-->
+<!--        <ContextMenuItem >-->
+<!--          Action 2 {{ contextData }}-->
+<!--        </ContextMenuItem>-->
+<!--        <ContextMenuItem >-->
+<!--          Action 3 {{ contextData }}-->
+<!--        </ContextMenuItem>-->
+<!--        <ContextMenuItem >-->
+<!--          Action 4 {{ contextData }}-->
+<!--        </ContextMenuItem>-->
+<!--      </template>-->
+<!--    </ContextMenu>-->
 
 
     <div class="folder">

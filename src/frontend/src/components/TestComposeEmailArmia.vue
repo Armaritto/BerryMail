@@ -11,7 +11,7 @@
         <div class="form-row mb-3">
           <label for="to" class="col-2 col-sm-1 col-form-label">To:</label>
           <div class="col-10 col-sm-11">
-            <input type="email" class="form-control" id="to" placeholder="Type email" v-model="to">
+            <input class="form-control" id="to" placeholder="Type email" v-model="to">
           </div>
         </div>
         <div class="form-row mb-3">
@@ -97,7 +97,7 @@
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-success">Send</button>
-              <span type="submit" class="btn btn-danger">Draft</span>
+              <span @click="handleDraft" class="btn btn-danger">Draft</span>
             </div>
           </div>
         </div>
@@ -109,6 +109,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+import swal from '@sweetalert/with-react';
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
 // define "lord-icon" custom element with default properties
@@ -118,6 +120,7 @@ export default {
   data() {
     return {
       to: '',
+      arrayReceivers:[],
       subject:'',
       body:'',
       priority: '',
@@ -182,11 +185,66 @@ export default {
       });
     },
     handleSend() {
+      if(this.to === '' || this.subject === '' || this.body === ''){
+        swal({
+          title: "Please fill all the fields!",
+          icon: "error",
+          button: "Ok!",
+        });
+        return
+      }
+      this.arrayReceivers = this.to.split(', ');
       const url = "http://localhost:8080/send?"
+
       const params = {
         // from:this.myEmail,
         from:this.clientEmail + "@berry.com",
-        to:this.to,
+        to:this.arrayReceivers,
+        subject:this.subject,
+        priority:this.priority,
+      }
+
+      const query = new URLSearchParams(params)
+      const method = "POST"
+      const body = JSON.stringify({body:this.body, attachment:this.attachments})
+      fetch(url+query, {
+        method: method,
+        body: body,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }})
+          .then(res => res.text())
+          .then(data => console.log(data))
+      this.to = ''
+      this.subject = ''
+      this.body = ''
+      this.priority = 'Default'
+      this.isCritical.value = false
+      this.isDefault.value = true
+      this.isUrgent.value = false
+      this.isModerate.value = false
+      this.attachments = []
+      swal({
+        title: "Email Sent Successfuly!",
+        icon: "success",
+        button: "Yaaay!",
+      });
+    },
+    handleDraft() {
+      if(this.to === '' || this.subject === '' || this.body === ''){
+        swal({
+          title: "Please fill all the fields!",
+          icon: "error",
+          button: "Ok!",
+        });
+        return
+      }
+      this.arrayReceivers = this.to.split(',');
+      const url = "http://localhost:8080/addToDraft?"
+      const params = {
+        // from:this.myEmail,
+        from:this.clientEmail + "@berry.com",
+        to:this.arrayReceivers,
         subject:this.subject,
         priority:this.priority,
       }
@@ -201,7 +259,20 @@ export default {
         }})
           .then(res => res.text())
           .then(data => console.log(data))
-    }
+      this.to = ''
+      this.subject = ''
+      this.body = ''
+      this.priority = 'Default'
+      this.isCritical.value = false
+      this.isDefault.value = true
+      this.isUrgent.value = false
+      this.isModerate.value = false
+      this.attachments = []
+      swal({
+        title: "Email Saved to Draft!",
+        button: "Ok!",
+      });
+    },
   }
 }
 </script>
