@@ -13,8 +13,10 @@
     "lottie-vuejs": "^0.3.6",
     "lottie-web": "^5.12.2",
     "vue": "^3.2.13",
+    "vue-click-outside": "^1.1.0",
     "vue-router": "^4.0.3",
-    "vue-simple-search-dropdown": "^1.0.1"
+    "vue-simple-search-dropdown": "^1.0.1",
+    "vue-sticky-element": "^1.7.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
@@ -22,7 +24,10 @@
     "@vue/cli-service": "~5.0.0",
     "bootstrap": "^5.3.2",
     "jquery": "^3.7.1",
-    "popper.js": "^1.16.1"
+    "popper.js": "^1.16.1",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.3",
+    "webpack": "^5.89.0"
   },
   "browserslist": [
     "> 1%",

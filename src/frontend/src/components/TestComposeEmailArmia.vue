@@ -15,12 +15,60 @@
           </div>
         </div>
         <div class="form-row mb-3">
-          <label for="Priority" class="col-2 col-sm-1 col-form-label">Priority:</label>
+          <label for="Priority" class="pri col-2 col-sm-1 col-form-label">Priority:</label>
           <div class="Priority-group">
-            <span  class="btn btn-priority" :class="{ 'true': this.isCritical.value, 'false': !this.isCritical.value }" @click="handlePriority(isCritical)" >Critical</span>
-            <span  class="btn btn-priority" :class="{ 'true': this.isUrgent.value, 'false': !this.isUrgent.value }" @click="handlePriority(isUrgent)" >Urgent</span>
-            <span  class="btn btn-priority" :class="{ 'true': this.isModerate.value, 'false': !this.isModerate.value }" @click="handlePriority(isModerate)">Moderate</span>
-            <span  class="btn btn-priority" :class="{ 'true': this.isDefault.value, 'false': !this.isDefault.value }" @click="handlePriority(isDefault)">Default</span>
+            <span  class="btn btn-priority" :class="{ 'true': this.isCritical.value, 'false': !this.isCritical.value }" @click="handlePriority(isCritical)" >
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/vihyezfv.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Critical
+                </div>
+              </div>
+            </span>
+            <span  class="btn btn-priority" :class="{ 'true': this.isUrgent.value, 'false': !this.isUrgent.value }" @click="handlePriority(isUrgent)" >
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/rpgflpkp.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Urgent
+                </div>
+              </div>
+            </span>
+            <span  class="btn btn-priority" :class="{ 'true': this.isModerate.value, 'false': !this.isModerate.value }" @click="handlePriority(isModerate)">
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/yxczfiyc.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Moderate
+                </div>
+              </div>
+            </span>
+            <span  class="btn btn-priority" :class="{ 'true': this.isDefault.value, 'false': !this.isDefault.value }" @click="handlePriority(isDefault)">
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/nzixoeyk.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Default
+                </div>
+              </div>
+            </span>
           </div>
 
         </div>
@@ -81,7 +129,6 @@ export default {
     }
   },
   methods: {
-    //bahaa code
     async handleFileChange() {
       this.file = this.$refs.fileInput.files;
       for (let i = 0; i < this.file.length; i++) {
@@ -161,6 +208,9 @@ export default {
 
 
 <style>
+.pri{
+  margin-top: 13px;
+}
 .priority-group{
   display: flex;
   flex-direction: row;
@@ -171,7 +221,7 @@ export default {
   border-radius: 3px;
   color: #ffffff;
   margin-right: 20px;
-  width: 100px;
+  width:85px;
   transition: 1s;
 }
 .btn-priority:first-child{
@@ -206,7 +256,7 @@ export default {
 }
 
 .btn-priority.false {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.13);
   color: white;
   transition: 1s;
 }

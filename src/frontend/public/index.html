@@ -6,8 +6,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="../src/assets/logo16.png">
     <title><%= htmlWebpackPlugin.options.title %></title>
+      <style>
+          body{
+              margin: 0;
+              padding: 0;
+              background: url('bg.jpg') no-repeat center center fixed;
+              background-size: cover;
+          }
+      </style>
   </head>
-  <body  style="background-image:url('bg.jpg') ;height: 55rem; background-position: center; background-repeat: no-repeat; background-size: cover;">
+  <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>

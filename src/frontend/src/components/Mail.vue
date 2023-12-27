@@ -1,10 +1,4 @@
 <template>
-<!--    <div class="email">-->
-<!--        <h2>{{email.subject}}</h2>-->
-<!--        <p class="from">from: {{email.from}}</p>-->
-<!--        <p class="date">{{email.dateNtime}}</p>-->
-<!--        <p class="content">{{email.body}}</p>-->
-<!--    </div>-->
   <div>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <br>
@@ -12,37 +6,101 @@
     <div class="container bootdey">
       <div class="email-app">
         <main>
-
-            <h3 class="text-center">Compose Email</h3>
             <div class="form-row mb-3">
-              <label for="to" class="col-2 col-sm-1 col-form-label">To:</label>
+                <div style="display: flex; flex-direction: row; align-content: center; max-width: 500px">
+                  <label for="Priority" class="col-2 col-sm-1 col-form-label" style=" font-weight: bold; margin-right: 30px; margin-top: 7px">Priority:</label>
+                  <div v-if="this.priority === 'Critical'">
+                    <div style="display: flex; flex-direction: column; align-items: center">
+                      <lord-icon
+                          src="https://cdn.lordicon.com/vihyezfv.json"
+                          trigger="hover"
+                          colors="primary:#ffffff"
+                          style="width:30px;height:30px">
+                      </lord-icon>
+                      <div>
+                        Critical
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="this.priority === 'Urgent'">
+                    <div style="display: flex; flex-direction: column; align-items: center">
+                      <lord-icon
+                          src="https://cdn.lordicon.com/rpgflpkp.json"
+                          trigger="hover"
+                          colors="primary:#ffffff"
+                          style="width:30px;height:30px">
+                      </lord-icon>
+                      <div>
+                        Urgent
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="this.priority === 'Moderate'">
+                    <div style="display: flex; flex-direction: column; align-items: center">
+                      <lord-icon
+                          src="https://cdn.lordicon.com/yxczfiyc.json"
+                          trigger="hover"
+                          colors="primary:#ffffff"
+                          style="width:30px;height:30px">
+                      </lord-icon>
+                      <div>
+                        Moderate
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="this.priority === 'Default'">
+                    <div style="display: flex; flex-direction: column; align-items: center">
+                      <lord-icon
+                          src="https://cdn.lordicon.com/nzixoeyk.json"
+                          trigger="hover"
+                          colors="primary:#ffffff"
+                          style="width:30px;height:30px">
+                      </lord-icon>
+                      <div>
+                        Default
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <label for="to" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;">From:</label>
               <div class="col-10 col-sm-11">
-                <input type="email" class="form-control" id="to" placeholder="Type email" >
+                {{this.from}}
               </div>
             </div>
+          <div class="form-row mb-3">
+            <label for="to" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;">To:</label>
+            <div class="col-10 col-sm-11">
+              {{this.to}}
+            </div>
+          </div>
             <div class="form-row mb-3">
-              <label for="Priority" class="col-2 col-sm-1 col-form-label">Priority:</label>
-              <div class="Priority-group">
-
+              <label for="Priority" class="col-2 col-sm-1 col-form-label" style="font-weight: bold; margin-right: 30px">Attachment:</label>
+              <span @click="download" class="btn btn-priority" :class="{ 'true': this.isCritical.value, 'false': !this.isCritical.value }">
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/vihyezfv.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Critical
+                </div>
               </div>
-              <label for="Priority" class="col-2 col-sm-1 col-form-label" style="margin-left: 50px; margin-right: 10px">Attachment:</label>
-
+            </span>
             </div>
             <div class="form-row mb-3">
-              <label for="subject" class="col-2 col-sm-1 col-form-label">Subject:</label>
+              <label for="subject" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;">Subject:</label>
               <div class="col-10 col-sm-11">
-                <input type="text" class="form-control" id="subject" placeholder="Type Subject" >
+                {{this.subject}}
               </div>
             </div>
             <div class="row">
               <div class="col-sm-11 ml-auto">
                 <div class="form-group mt-4">
-                  <textarea class="form-control" id="message" name="body" rows="12" placeholder="Click here to reply" ></textarea>
+                  <textarea class="form-control" id="message" name="body" rows="12" placeholder="Click here to reply" v-model="body"></textarea>
                 </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-success">Send</button>
-                  <span type="submit" class="btn btn-danger">Draft</span>
-                </div>
+
               </div>
             </div>
 
@@ -51,17 +109,171 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-    props:['email'],
-    data(){
-        return{
 
-        }
+<script>
+import lottie from "lottie-web";
+import { defineElement } from "@lordicon/element";
+// define "lord-icon" custom element with default properties
+defineElement(lottie.loadAnimation);
+export default {
+  props:['id'],
+  watch: {
+    id: function() {
+      this.fetchEmail()
+      console.log("fetched")
     }
+  },
+  data() {
+    return {
+      email:null,
+      to: '',
+      from: 'armia404@berry.com',
+      subject:'',
+      body: '',
+      priority: 'Default',
+      isCritical:{value: false} ,
+      isDefault: {value: true},
+      isUrgent: {value: false},
+      isModerate: {value: false},
+      attachments: [],
+      fetchEmail: function(){
+        const url = "http://localhost:8080/getEmail?"
+        const params = {
+          id: this.id
+        }
+        const query = new URLSearchParams(params)
+        const method = "GET"
+        fetch(url + query, {
+          method: method,
+        })
+            .then(res => res.json())
+            .then(data => {
+              this.to = data.to;
+              this.subject = data.subject;
+              this.body = data.body;
+              this.priority = data.priority;
+              this.attachments = data.attachments;
+              this.from = data.from;
+              console.log(data)
+            })
+      },
+      async download(){
+        let i;
+        for(i in this.attachments){
+          await this.downloadAttachment(this.attachments[i])
+        }
+      },
+      async downloadAttachment(attachment){
+        try{
+          const binaryData = atob(attachment.content);
+          console.log("finished atob")
+          const arrayBuffer = new ArrayBuffer(binaryData.length);
+          const view = new Uint8Array(arrayBuffer);
+          for (let i = 0; i < binaryData.length; i++) {
+            view[i] = binaryData.charCodeAt(i);
+          }
+          const blob = new Blob([arrayBuffer], {
+            type: attachment.type || "application/octet-stream",
+          });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = attachment.name;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } catch (error) {
+          console.error("Error downloading attachment:", error);
+        }
+      },
+    }
+  },
+  methods: {
+    async handleFileChange() {
+      this.file = this.$refs.fileInput.files;
+      for (let i = 0; i < this.file.length; i++) {
+        let temp = {
+          name: this.file[i].name,
+          type: this.file[i].type,
+          content: await this.convertFileToBase64(this.file[i]),
+        };
+        this.attachments.push(temp);
+      }
+      console.log(this.attachments.at(0));
+    },
+    handlePriority(interval) {
+      this.isCritical.value = false
+      this.isDefault.value = false
+      this.isUrgent.value = false
+      this.isModerate.value = false
+      interval.value = true
+      if (interval.value === this.isCritical.value) {
+        this.priority = "Critical"
+      } else if (interval.value === this.isDefault.value) {
+        this.priority = "Default"
+      } else if (interval.value === this.isUrgent.value) {
+        this.priority = "Urgent"
+      } else if (interval.value === this.isModerate.value) {
+        this.priority = "Moderate"
+      }
+    },
+    addSkill($event) {
+      if ($event.key === ',' && this.tempSkill) {
+        if (!this.skills.includes(this.tempSkill)) {
+          this.skills.push(this.tempSkill)
+        }
+        this.tempSkill = ''
+      }
+    },
+    deleteSkill(skill) {
+      this.skills = this.skills.filter(item => {
+        return skill !== item
+      })
+    },
+    convertFileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = (error) => reject(error);
+      });
+    },
+    handleSend() {
+      const url = "http://localhost:8080/send?"
+      const params = {
+        // from:this.myEmail,
+        from: this.clientEmail + "@berry.com",
+        to: this.to,
+        subject: this.subject,
+        priority: this.priority,
+      }
+      const query = new URLSearchParams(params)
+      const method = "POST"
+      const body = JSON.stringify({body: this.body, attachment: this.attachments})
+      fetch(url + query, {
+        method: method,
+        body: body,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      })
+          .then(res => res.text())
+          .then(data => console.log(data))
+    }
+  },
+  mounted() {
+    if(this.id !== null){
+      this.fetchEmail();
+    }
+
+  }
 }
 </script>
+
+
 <style>
+.pri{
+  margin-top: 13px;
+}
 .priority-group{
   display: flex;
   flex-direction: row;
@@ -72,7 +284,7 @@ export default {
   border-radius: 3px;
   color: #ffffff;
   margin-right: 20px;
-  width: 100px;
+  width:85px;
   transition: 1s;
 }
 .btn-priority:first-child{
@@ -107,7 +319,7 @@ export default {
 }
 
 .btn-priority.false {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.13);
   color: white;
   transition: 1s;
 }
@@ -441,3 +653,4 @@ input[type=file]::file-selector-button:hover {
 }
 @import'~bootstrap/dist/css/bootstrap.css';
 </style>
+

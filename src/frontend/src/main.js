@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import router from './router'
+import VStickyElement from 'vue-sticky-element';
 // import { createRouter, createWebHashHistory } from 'vue-router';
 
 import App from './App.vue'
@@ -14,6 +15,6 @@ import App from './App.vue'
 // });
 
 const app = createApp(App);
-
+app.use(VStickyElement);
 app.use(router);
 app.mount("#app");

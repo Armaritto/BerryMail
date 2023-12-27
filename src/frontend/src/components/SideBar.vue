@@ -1,7 +1,7 @@
 <template>
-<div>
-    <body>
 <div class="container">
+    <body>
+
 <nav>
     <hr class="line">
     <ul class="list">
@@ -11,37 +11,26 @@
         </li>
         <li class="active" v-for="folder in customFolders">
             <i class="fa-solid fa-home"></i>
-            <router-link :to="{path: '/' + clientEmail + '/folder/' + folder}"><span>{{folder}}</span></router-link>
-        </li>
-        <!-- <li>
-            <i  class="fa-solid fa-user"></i>
-            <router-link :to="{path: '/' + clientEmail + '/folder/sent'}"><span>Sent</span></router-link>
-        </li>
-        <li>
-            <i class="fa-solid fa-box"></i>
-            <router-link :to="{path: '/' + clientEmail +'/folder/draft'}"><span>Draft</span></router-link>
-        </li>
-        <li>
-            <i class="fa-solid fa-chart-simple"></i>
-            <router-link :to="{path: '/' + clientEmail +'/folder/trash'}"><span>Trash</span></router-link>
-        </li> -->
-        <!-- <li>
-            <i class="fa-solid fa-phone"></i>
-            <span>Support</span>
+            <router-link :to="{path: '/' + clientEmail + '/folder/' + folder}">
+              <span>{{folder}}</span>
+            </router-link>
+<!--          <div id="demo" v-on="contextmenu: openMenu">-->
+<!--            <h1 class="center">-->
+<!--              Right click anywhere to bring up a menu.-->
+<!--            </h1>-->
+<!--            <ul id="right-click-menu" tabindex="-1"  v-if="viewMenu" >-->
+<!--              <li>First list item</li>-->
+<!--              <li>Second list item</li>-->
+<!--            </ul>-->
+<!--          </div>-->
         </li>
 
-        <hr class="line">
-
-        <li>
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-        </li> -->
 
     </ul>
     <button> +Folder </button>
 </nav>
 
-</div>
+
 
 </body>
 </div>
@@ -51,6 +40,9 @@ export default {
 props:['clientEmail'],
 data(){
     return{
+        viewMenu: false,
+        top: '0px',
+        left: '0px',
         h: async function(){
             this.$router.replace({path:'/folder/sent'})
         },
@@ -261,4 +253,9 @@ animation-delay: .9s;
 nav:hover .list li:nth-child(7) span {
 animation-delay: 1s;
 } */
+/*
+background-color: #FF3CAC;
+background-image: linear-gradient(315deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+
+*/
 </style>

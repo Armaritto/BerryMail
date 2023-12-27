@@ -1,44 +1,92 @@
 <template>
-    
+  <div @contextmenu.prevent="$refs.wrapper.$refs.menu.open($event, 'Payload')">
+    <ContextMenu ref="wrapper" reference="menu">
+      <template slot-scope="{ contextData }">
+        <ContextMenuItem >
+          Action 1 {{ contextData }}
+        </ContextMenuItem>
+        <ContextMenuItem >
+          Action 2 {{ contextData }}
+        </ContextMenuItem>
+        <ContextMenuItem >
+          Action 3 {{ contextData }}
+        </ContextMenuItem>
+        <ContextMenuItem >
+          Action 4 {{ contextData }}
+        </ContextMenuItem>
+      </template>
+    </ContextMenu>
+
+
     <div class="folder">
         <div v-if="emails.length == 0">
             <h1>{{this.folderName}} is empty</h1>
         </div>
         <div v-if="emails.length !== 0">
         <table>
-            <label class="Sorting-Label">Sort By:</label>
+            <div class="sort_options">
+
             <div class="Priority-group">
-            <span  class="btn btn-priority" :class="{ 'true': this.sortByTime.value, 'false': !this.sortByTime.value }" @click="handleSort(sortByTime)">Time</span>
-            <span  class="btn btn-priority" :class="{ 'true': this.sortByPriority.value, 'false': !this.sortByPriority.value }" @click="handleSort(sortByPriority)">Priority</span>
+            <span  class="btn btn-priority" :class="{ 'true': this.sortByTime.value, 'false': !this.sortByTime.value }" @click="handleSort(sortByTime)">
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/abfverha.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Date
+                </div>
+              </div>
+            </span>
+            <span  class="btn btn-priority" :class="{ 'true': this.sortByPriority.value, 'false': !this.sortByPriority.value }" @click="handleSort(sortByPriority)">
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/axteoudt.json"
+                    trigger="hover"
+                    colors="primary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Priority
+                </div>
+              </div>
+            </span>
             </div>
-            <label for="inputField" class="input-label">Filter By</label>
-            <select id="inputField" class="input-field">
-                <option value="">No Filter</option>
-                <option value="1">Time</option>
-                <option value="2">Subject</option>
-                <option value="3">Priority</option>
-                <option value="4">HELP</option>
-            </select>
-            <tr v-for="e in emails" :key="e.id" class="mails">
-                <MailPreview :emailMeta="e"></MailPreview>
+            </div>
+<!--            <label for="inputField" class="input-label">Filter By</label>-->
+<!--            <select id="inputField" class="input-field">-->
+<!--                <option value="">No Filter</option>-->
+<!--                <option value="1">Time</option>-->
+<!--                <option value="2">Subject</option>-->
+<!--                <option value="3">Priority</option>-->
+<!--                <option value="4">HELP</option>-->
+<!--            </select>-->
+            <tr v-for="e in emails" :key="e.id" class="mails" @click="$emit('itemPressed', e.id)">
+                <MailPreview :emailMeta="e" ></MailPreview>
             </tr>
-            
         </table>
     </div>
     </div>
+  </div>
 </template>
 <script>
 import MailPreview from "@/components/MailPreview.vue";
+import ContextMenu from "@/components/ContextMenu";
+import ContextMenuItem from "@/components/ContextMenuItem";
 export default {
    props:['clientEmail', 'folderName'],
-   watch: { 
+   watch: {
     folderName: function() {
           this.fetchFolder()
           console.log("fetched")
         }
     },
     components:{
-        MailPreview
+        MailPreview,
+        ContextMenu,
+        ContextMenuItem
     },
     data(){
         return{
@@ -60,10 +108,10 @@ export default {
         const query = new URLSearchParams(params)
         const method = "GET"
         const body = ""
-        
+
         fetch(url+query, {method: method})
         .then(res => res.json())
-        .then(data => this.emails = data)
+        .then(data => {this.emails = data; console.log(data)})
     }
             },
         emails:[],
@@ -91,11 +139,19 @@ export default {
             this.fetchFolder()
         }
     }
-    
-    
+
+
 }
 </script>
 <style scoped>
+.sort_options{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
     .folder{
         /* height: 500px; */
         display: flex;
@@ -111,7 +167,7 @@ export default {
         float: center;
         margin: 10px;
         display: flex;
-        justify-content: center; 
+        justify-content: center;
         border-radius: 10px;
     }
 
@@ -120,7 +176,7 @@ export default {
     border-radius: 3px;
     color: #ffffff;
     margin-right: 20px;
-    width: 100px;
+    width: 70px;
     transition: 1s;
     }
 
@@ -155,12 +211,10 @@ export default {
     }
 
     .Sorting-Label{
-        
         float: left;
         display: block;
-        font-size: 14px;
+        font-size: 20px;
         color: white;
-        margin-bottom: 5px;
     }
 
 .input-label {
@@ -189,5 +243,5 @@ export default {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
-    
+
 </style>
