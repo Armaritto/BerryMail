@@ -22,14 +22,20 @@
             <span  class="btn btn-priority" :class="{ 'true': this.isModerate.value, 'false': !this.isModerate.value }" @click="handlePriority(isModerate)">Moderate</span>
             <span  class="btn btn-priority" :class="{ 'true': this.isDefault.value, 'false': !this.isDefault.value }" @click="handlePriority(isDefault)">Default</span>
           </div>
-          <label for="Priority" class="col-2 col-sm-1 col-form-label" style="margin-left: 50px; margin-right: 10px">Attachment:</label>
-          <input
-              type="file"
-              multiple
-              ref="fileInput"
-              @change="handleFileChange"
-              />
+
         </div>
+          <div class="form-row mb-3">
+            <label for="Priority" class="col-2 col-sm-1 col-form-label" style=" margin-right: 30px">Attachment:</label>
+            <input
+                type="file"
+                multiple
+                ref="fileInput"
+                @change="handleFileChange"
+            />
+            <div v-for="attachment in attachments" :key="attachment.name">
+              <span>{{ attachment.name}}</span>
+            </div>
+          </div>
         <div class="form-row mb-3">
           <label for="subject" class="col-2 col-sm-1 col-form-label">Subject:</label>
           <div class="col-10 col-sm-11">
@@ -60,7 +66,7 @@ import { defineElement } from "@lordicon/element";
 // define "lord-icon" custom element with default properties
 defineElement(lottie.loadAnimation);
 export default {
-  props:['myEmail'],
+  props:['clientEmail'],
   data() {
     return {
       to: '',
@@ -132,7 +138,7 @@ export default {
       const url = "http://localhost:8080/send?"
       const params = {
         // from:this.myEmail,
-        from:"karene_antoine@berry.com",
+        from:this.clientEmail + "@berry.com",
         to:this.to,
         subject:this.subject,
         priority:this.priority,

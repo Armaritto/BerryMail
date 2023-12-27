@@ -1,51 +1,74 @@
 <template>
-   <div>
+
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Glass morphism </title>
+    </head>
+    <body>
     <div class="background">
       <div class="shape"></div>
       <div class="shape"></div>
     </div>
-    <div style="display: flex; justify-content: center;position: absolute;top: 25%; left: 50%">
+    <div style="display: flex; justify-content: center;position: absolute;top: 7%; left: 50%">
       <form>
-        <h3>Login</h3><p v-if="isErr">try again</p>
-        <label>Email</label>
-        <input v-model="e" type="text"  id="username" placeholder="example@berry.com">
-
-        <label>Password</label>
-        <input v-model="p" type="password"  id="password" placeholder="password">
+        <h3>Sign Up</h3>
+        <p v-if="isErr">try again</p>
+        <label for="fname">First Name</label>
+        <input v-model="fname" type="text" placeholder="First Name" id="username">
+        <label for="lname">Last Name</label>
+        <input v-model="lname" type="text" placeholder="Last Name" id="username">
+        <label for="username">Username</label>
+        <input v-model="uname" type="text" placeholder="Username" id="username">
+        <label for="email">Email</label>
+        <input v-model="e" type="text" placeholder="example@berry.com" id="username">
+        <label for="password">Password</label>
+        <input v-model="p" type="password" placeholder="Password" id="password">
         <div style="display: flex; flex-direction: column; align-content: center">
-          <span  @click="handleLogin" >Log In</span>
-          <span>Create Account</span>
+          <span @click="handleAccount">Create Account</span>
+          <span>Log In</span>
         </div>
       </form>
+
     </div>
-   </div>
+    </body>
   </template>
 
-    <script>
-    export default {
-        name: 'LoginView',
-        data(){
-            return{
-                e:'',
-                p:'',
-                isErr: false,
+  <script>
+  export default {
+    name: 'main',
+    props: {
+      msg: String
+    },
+    data(){
+        return{
+            fname:'',
+            lname:'',
+            uname:'',
+            e:'',
+            p:'',
+            isErr: false,
                 rout: function(){
                   const clientEmail = this.e.slice(0, -10)
                   const path = clientEmail + "/folder/inbox"
                   this.$router.push({path: path})
                 }
-            }
-        },
-        methods:{
-            handleLogin(){
-              const url = "http://localhost:8080/Login?"
+        }
+    },
+    methods:{
+        handleAccount(){
+              const url = "http://localhost:8080/Signup?"
               const params = {
+                firstName:this.fname,
+                lastName:this.lname,
+                username:this.uname,
                 email:this.e,
                 password:this.p,
 
               }
               const query = new URLSearchParams(params)
-              const method = "GET"
+              const method = "POST"
               const body = ""
 
               fetch(url+query, {method: method})
@@ -57,18 +80,16 @@
                   console.log("success")
                   this.rout()
 
-                }else if(res.status === 500){
+                }else {
                   this.isErr = false;
                   window.setTimeout( function(){this.isErr = true}.bind(this), 300)
 
                 }
-
-              })
-              // .then(data => console.log(data))
-              // .catch(err => console.log("error"))
-                  }
+             }
+            )
         }
     }
+  }
   </script>
 
   <style scoped>
@@ -99,7 +120,7 @@
   }
 
   form{
-    height: 520px;
+    height: 830px;
     width: 400px;
 
     background-color: rgba(44, 19, 66, 0.34);
@@ -127,7 +148,7 @@
   }
   label{
     display: block;
-    margin-top: 30px;
+    margin-top: 25px;
     font-size: 16px;
     font-weight: 500;
   }
@@ -139,7 +160,6 @@
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
-    margin-bottom: 30px;
     font-size: 14px;
     font-weight: 300;
   }
@@ -147,7 +167,7 @@
     color: #e5e5e5;
   }
   span{
-    margin-top: 10px;
+    margin-top: 30px;
     width: 100%;
     background-color: #a41eb1;
     padding: 14px 0;
@@ -161,7 +181,7 @@
     transition: 1s;
   }
   span:last-child{
-    margin-top: 20px;
+    margin-top: 18px;
     color: #ffffff;
     background-color: rgba(255,255,255,0.07);
     transition: 1s;
@@ -169,26 +189,6 @@
   span:hover{
     background-color: #856cd1;
     color: #ffffff;
-  }
-  button{
-    margin-top: 50px;
-    width: 100%;
-    background-color: #ffffff;
-    color: #080710;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:last-child{
-    background-color: rgba(255,255,255,0.07);
-    background-color: #bc3fdb;
-    margin-top: 20px;
-  }
-  button:hover{
-    background-color: #521bb4;
-    color: #080710;
   }
   .social{
     margin-top: 30px;
@@ -210,9 +210,5 @@
   }
   .social i{
     margin-right: 4px;
-  }
-  p {
-    text-emphasis-color: red;
-    color: red;
   }
   </style>
