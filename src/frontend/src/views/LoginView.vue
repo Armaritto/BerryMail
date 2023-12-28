@@ -14,6 +14,7 @@
         <input v-model="p" type="password"  id="password" placeholder="password">
         <div style="display: flex; flex-direction: column; align-content: center">
           <span  @click="handleLogin" >Log In</span>
+
           <router-link to="/signup" style="text-decoration: none">
             <span style="display: flex; flex-direction: column; align-content: center;">Create New Account</span>
           </router-link>
