@@ -31,3 +31,5 @@
 #### Factory Design Pattern:
 -  Used to make factory for the filter criterias. The Filter Factory class creates an instance of any filter by using a key string which is the name of the desired filter to be formed .
 ---
+## Enjoy your Berries 🍒📧
+![Compose Email](BerryMail.png)
