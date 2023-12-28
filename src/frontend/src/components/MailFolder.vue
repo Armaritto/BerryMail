@@ -43,13 +43,13 @@
             </span>
             <span  class="btn btn-priority" :class="{ 'true': this.sortByPriority.value, 'false': !this.sortByPriority.value }" @click="handleSort(sortByPriority)">
               <div style="display: flex; flex-direction: column; align-items: center">
-                <lord-icon
+                <lord-icon v-show="!this.emailsList"
                     src="https://cdn.lordicon.com/axteoudt.json"
                     trigger="hover"
                     colors="primary:#ffffff"
                     style="width:30px;height:30px">
                 </lord-icon>
-                <div>
+                <div v-show="!this.emailsList">
                   Priority
                 </div>
               </div>
@@ -119,20 +119,16 @@ import {VueAwesomePaginate} from "vue-awesome-paginate";
 // const changePage = (page: number) => console.log('New page: ', page);
 
 export default {
-  props: ['clientEmail', 'folderName', 'isSearching', 'searchData'],
+  props: ['clientEmail', 'folderName',  'emailsList'],
   watch: {
     folderName: function () {
       this.fetchFolder()
       console.log("fetched")
       this.$emit("folderChanged", this.folderName)
     },
-    isSearching: function () {
-      if(this.isSearching === true){
-        console.log(this.searchData)
-        this.emails = this.searchData
-        console.log(this.email)
-        console.log('heeereee')
-        console.log(this.isSearching)
+    emailsList: function () {
+      if(this.emailsList){
+      this.emails = this.emailsList
       }
     }
   },
@@ -189,7 +185,11 @@ export default {
       }
   },
   mounted() {
-    this.fetchFolder()
+    //this.fetchFolder()
+        if(this.emailsList){
+      this.emails = this.emailsList
+          console.log(this.emails)
+    }
   },
   methods: {
     handleDeleteF(){
