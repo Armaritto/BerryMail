@@ -1,4 +1,5 @@
 <template>
+  <div style="display: flex">
   <div class="icon" v-if="emailMeta.priority === 'Critical'">
     <lord-icon
         src="https://cdn.lordicon.com/vihyezfv.json"
@@ -43,15 +44,58 @@
         </td>
       </tr>
     </table>
-    <p class="content">{{emailMeta.body  || "No preview Available"}}</p>
+    <p class="content" v-if="emailMeta.body !== null">{{emailMeta.body.substr(0, 10) + "..."}}</p>
+    <p class="content" v-else>{{emailMeta.body  || "No preview Available"}}</p>
+    <!-- <p v-if="emailMeta.body" class="content">...</p> -->
+    <p v-if="!isRenaming" @dblclick="isRenaming = true">{{folderName}}</p>
+    <input v-if="isRenaming" :placeholder="folderName" v-model="newName" v-on:keyup.enter="handleEnter(this.id); for(let i in selected){ handleEnter(selected[i]) ;selected.splice(i, 1)}" >
+
+  </div>
   </div>
 </template>
 <script>
 export default {
-    props:['emailMeta'],
+    props:['emailMeta', 'selected','folderName', 'id', 'clientEmail'],
     data(){
         return{
+          isRenaming:false,
+          newName:''
         }
+    },
+    methods:{
+      handleEnter(id){
+        const url = "http://localhost:8080/addToFolder?"
+        const params = {
+          email: this.clientEmail + "@berry.com",
+          folderName:this.newName,
+          mailID:id,
+          oldFolder:this.folderName
+
+
+        }
+        const query = new URLSearchParams(params)
+        const method = "PUT"
+        const body = ""
+
+        fetch(url+query, {method: method})
+            // .then(res => {
+
+            //   res.json();
+            //   if(res.status === 200){
+            //     console.log("success")
+
+
+            //   }else {
+            //     console.log("failure")
+
+            //   }
+
+            // })
+            .then((res) => {this.isRenaming=false;
+                          this.$emit('move',this.newName);
+                          console.log(res)
+                        })
+      }
     }
 }
 </script>
@@ -60,7 +104,7 @@ export default {
   padding: 0;
   width: 12%;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 45px;
   background-color: rgba(255, 255, 255, 0);
 }
 .icon:hover{
@@ -73,7 +117,6 @@ export default {
   flex-direction: column;
   margin: 5px;
   padding: 10px;
-
 }
 .from{
   margin: 0;

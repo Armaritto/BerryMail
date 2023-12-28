@@ -27,11 +27,11 @@
         <input v-model="p" type="password" placeholder="Password" id="password">
         <div style="display: flex; flex-direction: column; align-content: center">
           <span @click="handleAccount">Create Account</span>
-          <router-link to="/login">
+
+          <router-link to="/login" style="text-decoration: none">
             <span style="display: flex; flex-direction: column; align-content: center">Log In</span>
           </router-link>
           <div style="color: #ffffff; align-content: center;display: flex; flex-direction: column;">{{ condition }}</div>
-          
         </div>
       </form>
 
@@ -100,7 +100,9 @@
             }
             else{
               alert("Account created!")
-              const path = this.e + "/folder/inbox"
+
+              const path = this.e.slice(0, -10) + "/folder/inbox"
+
               this.$router.push({path: path})
             }
           });

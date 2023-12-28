@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="">
     <router-view ></router-view>
     <!-- <compose></compose> -->
-    <!-- <testComposeEmailArmia></testComposeEmailArmia> -->
+<!--     <testComposeEmailArmia></testComposeEmailArmia>-->
   </div>
   <!-- <div>
     <router-view name="loginRouter"></router-view>
@@ -13,7 +13,7 @@
 export default {
   name:'App',
   components:{
-    
+
   },
   mounted(){
     console.log(this.$router.currentRoute.path)
@@ -21,5 +21,10 @@ export default {
 }
 </script>
 <style>
-  
+body{
+  margin: 0;
+  padding: 0;
+  background: url('bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 </style>

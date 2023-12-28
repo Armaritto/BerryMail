@@ -4,7 +4,6 @@ import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import Main from "@/components/Main.vue";
 import MailFolder from "@/components/MailFolder.vue";
-
 const routes = [
   // {
   //   path: '/',

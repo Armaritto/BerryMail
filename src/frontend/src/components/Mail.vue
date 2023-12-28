@@ -8,7 +8,7 @@
         <main>
             <div class="form-row mb-3">
                 <div style="display: flex; flex-direction: row; align-content: center; max-width: 500px">
-                  <label for="Priority" class="col-2 col-sm-1 col-form-label" style=" font-weight: bold; margin-right: 30px; margin-top: 7px">Priority:</label>
+                  <label for="Priority" class="col-2 col-sm-1 col-form-label" style=" font-weight: bold; margin-right: 50px; margin-top: 7px; font-size: 20px">Priority:</label>
                   <div v-if="this.priority === 'Critical'">
                     <div style="display: flex; flex-direction: column; align-items: center">
                       <lord-icon
@@ -62,48 +62,50 @@
                     </div>
                   </div>
                 </div>
-              <label for="to" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;">From:</label>
+
+              <label for="to" class="col-2 col-sm-1 col-form-label" style="font-weight: bold; font-size: 20px">From:</label>
               <div class="col-10 col-sm-11">
                 {{this.from}}
               </div>
             </div>
           <div class="form-row mb-3">
-            <label for="to" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;">To:</label>
+            <label for="to" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;font-size: 20px">To:</label>
             <div class="col-10 col-sm-11">
               {{this.to}}
             </div>
           </div>
+            <hr>
             <div class="form-row mb-3">
-              <label for="Priority" class="col-2 col-sm-1 col-form-label" style="font-weight: bold; margin-right: 30px">Attachment:</label>
-              <span @click="download" class="btn btn-priority" :class="{ 'true': this.isCritical.value, 'false': !this.isCritical.value }">
-              <div style="display: flex; flex-direction: column; align-items: center">
-                <lord-icon
-                    src="https://cdn.lordicon.com/vihyezfv.json"
-                    trigger="hover"
-                    colors="primary:#ffffff"
-                    style="width:30px;height:30px">
-                </lord-icon>
-                <div>
-                  Critical
-                </div>
-              </div>
-            </span>
-            </div>
-            <div class="form-row mb-3">
-              <label for="subject" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;">Subject:</label>
+              <label for="subject" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;font-size: 20px">Subject:</label>
               <div class="col-10 col-sm-11">
                 {{this.subject}}
               </div>
             </div>
-            <div class="row">
-              <div class="col-sm-11 ml-auto">
-                <div class="form-group mt-4">
-                  <textarea class="form-control" id="message" name="body" rows="12" placeholder="Click here to reply" v-model="body"></textarea>
-                </div>
+          <div class="form-row mb-3">
+            <label for="subject" class="col-2 col-sm-1 col-form-label" style="font-weight: bold;font-size: 20px">Message:</label>
+            <div class="col-10 col-sm-11">
+              {{this.body}}
+            </div>
+          </div>
+            <div class="form-row mb-3" v-if="this.attachments.length !== 0">
+              <label for="Priority" class="col-2 col-sm-1 col-form-label" style="font-weight: bold; margin-right: 30px;font-size: 20px">Attachment:</label>
+              <br>
+            <div @click="download" class="btn btn-attachment " >
 
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                <lord-icon
+                    src="https://cdn.lordicon.com/wzwygmng.json"
+                    trigger="hover"
+                    stroke="bold"
+                    colors="primary:#ffffff,secondary:#ffffff"
+                    style="width:30px;height:30px">
+                </lord-icon>
+                <div>
+                  Download
+                </div>
               </div>
             </div>
-
+          </div>
         </main>
       </div>
     </div>
@@ -158,6 +160,7 @@ export default {
             })
       },
       async download(){
+        console.log(this.attachments.length)
         let i;
         for(i in this.attachments){
           await this.downloadAttachment(this.attachments[i])
@@ -278,6 +281,14 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.btn-attachment{
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  color: #ffffff;
+  margin-right: 20px;
+  width:80px;
+  transition: 1s;
 }
 .btn-priority{
   background-color: rgba(255, 255, 255, 0.2);
