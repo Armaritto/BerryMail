@@ -20,14 +20,14 @@
 - EEnjoy using the BerryMail web application.
 ---
 ## Design Pattern used:
-- #### Builder Design Pattern:
+#### Builder Design Pattern:
 - Used to create an object of type User and type Mail with different number of attributes .
-- #### Singleton Design Pattern:
+#### Singleton Design Pattern:
 - Used in order to make sure that there exists only one instance of the user .
-- #### Mediator Design Pattern:
+#### Mediator Design Pattern:
 - Used to reduce dependencies between objects and restricts direct communications between these objects and forces them to collaborate only via a mediator object (User Service has the ability to communicate with Mail Service) .
-- #### Filter Design Pattern:
+#### Filter Design Pattern:
 -  Used simply to implement features of each type of filter .
-- #### Factory Design Pattern:
+#### Factory Design Pattern:
 -  Used to make factory for the filter criterias. The Filter Factory class creates an instance of any filter by using a key string which is the name of the desired filter to be formed .
 ---
