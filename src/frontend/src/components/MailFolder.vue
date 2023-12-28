@@ -63,7 +63,7 @@
 <!--                <option value="4">HELP</option>-->
 <!--            </select>-->
           <tr v-for="e in pageEmails" :key="e.id" class="mails" @click.exact="$emit('itemPressed', e.id)">
-                <MailPreview :emailMeta="e" @click.ctrl.prevent="handleSelect(e.id)" :class="{ 'true': selected.includes(e.id), 'false': !selected.includes(e.id) }" @click.alt.exact.prevent="handleDelete(e.id); for(i in selected){handleDelete(selected[i]) ;selected.splice(i, 1);}"  :selected="selected"></MailPreview>
+                <MailPreview :clientEmail="clientEmail" :id="e.id" :folderName="folderName" :emailMeta="e" @click.ctrl.prevent="handleSelect(e.id)" :class="{ 'true': selected.includes(e.id), 'false': !selected.includes(e.id) }" @click.alt.exact.prevent="handleDelete(e.id); for(i in selected){handleDelete(selected[i]) ;selected.splice(i, 1);}"  :selected="selected"></MailPreview>
           </tr>
         </table>
         <div class="page_nav">

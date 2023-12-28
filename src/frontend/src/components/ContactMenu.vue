@@ -11,7 +11,7 @@
     <div class="shape"></div>
   </div>
   <div style="display: flex; justify-content: center;position: absolute;top: 25%; left: 50%">
-    <form >
+    <form>
       <label for="sender">Search Contact</label>
       <input type="text" placeholder="Type Contact" id="sender" v-model="Sender">
       <button type="button" @click="handleSearch">Search</button>
@@ -26,8 +26,22 @@
         </tr>
       </table>
     </div>
-
+    <div class="new_cont">
+    <span class="btn btn-priority">
+      <div style="display: flex; flex-direction: column; align-items: center">
+        <lord-icon
+          src="https://cdn.lordicon.com/jgnvfzqg.json"
+          trigger="hover"
+          style="width:30px;height:30px;">
+        </lord-icon>
+        <div>
+          Add Contact
+        </div>
+      </div>
+    </span>
   </div>
+  </div>
+
   </body>
 </template>
 
@@ -37,11 +51,30 @@ export default {
   props: ['clientEmail'],
   data(){
     return{
-      contacts :{
-        Karene: ["karene_antoine@berry.com","karo@berry.com"],
-        Armia: ["armia404@berry.com"]
+      contacts: {},
+      sortContactsBy: 'date',
+      fetchContacts: function(){
+        var url = "http://localhost:8080/" + "contacts" + "?"
+        const params = {
+          email: this.clientEmail + "@berry.com",
+          SortCriteria: this.sortContactsBy,
+        }
+        const query = new URLSearchParams(params)
+        const method = "GET"
+        const body = ""
+        fetch(url + query, {method: method})
+            .then(res => res.json())
+            .then(data => {
+              this.contacts = data;
+              console.log(data)
+              // this.paginate();
+              // this.numOfPages = Math.ceil(this.emails.length / this.emailsPerPage)
+            })
       }
     }
+  },
+  mounted(){
+    this.fetchContacts
   },
   methods:{
     handleTime(interval){
@@ -267,5 +300,22 @@ button:hover {
   background-color: #521bb4;
   color: #080710;
 }
+.new_cont{
+  display: flex;
+  flex-direction: column;
+  align-items: bottom;
+  justify-content: right;
+  margin-bottom: auto;
+  margin-left: auto;
+}
+.btn-priority{
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    color: #ffffff;
+    margin-right: 20px;
+    width: 70px;
+    transition: 1s;
+    }
+
 
 </style>

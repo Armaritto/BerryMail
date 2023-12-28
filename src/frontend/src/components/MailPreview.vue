@@ -44,16 +44,57 @@
         </td>
       </tr>
     </table>
-    <p class="content">{{emailMeta.body  || "No preview Available"}}</p><p v-if="emailMeta.body" class="content">...</p>
+    <p class="content">{{emailMeta.body  || "No preview Available"}}</p>
+    <!-- <p v-if="emailMeta.body" class="content">...</p> -->
+    <p v-if="!isRenaming" @dblclick="isRenaming = true">{{folderName}}</p>
+    <input v-if="isRenaming" :placeholder="folderName" v-model="newName" v-on:keyup.enter="handleEnter" >
+    
   </div>
   </div>
 </template>
 <script>
 export default {
-    props:['emailMeta', 'selected'],
+    props:['emailMeta', 'selected','folderName', 'id', 'clientEmail'],
     data(){
         return{
+          isRenaming:false,
+          newName:''
         }
+    },
+    methods:{
+      handleEnter(){
+        const url = "http://localhost:8080/addToFolder?"
+        const params = {
+          email: this.clientEmail + "@berry.com",
+          folderName:this.newName,
+          mailID:this.id,
+          oldFolder:this.folderName
+
+
+        }
+        const query = new URLSearchParams(params)
+        const method = "PUT"
+        const body = ""
+
+        fetch(url+query, {method: method})
+            // .then(res => {
+
+            //   res.json();
+            //   if(res.status === 200){
+            //     console.log("success")
+
+
+            //   }else {
+            //     console.log("failure")
+
+            //   }
+
+            // })
+            .then((res) => {this.isRenaming=false;
+                          this.$emit('move',this.newName);
+                          console.log(res)
+                        })
+      }
     }
 }
 </script>
