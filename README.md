@@ -1,4 +1,4 @@
-# Berry Mail
+# @berry.com
 ## Contributers:
 -  [Armaritto](https://github.com/Armaritto)
 -  [SantiagoMontag](https://github.com/SantiagoMontag)
