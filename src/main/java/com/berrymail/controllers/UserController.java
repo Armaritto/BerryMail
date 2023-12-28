@@ -117,7 +117,7 @@ public class UserController {
     public ArrayList<String> customFoldersNames(@RequestParam("email") String email) throws Exception {
         return userService.customFolderNames(email);
     }
-    @GetMapping(path = "/filterCustomFolder")
+    @PostMapping(path = "/filterCustomFolder")
     public ArrayList<Mail> customFoldersFilter(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestParam("folderName") String folderName, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
         return userService.filterCustomFolder(email,folderName, SortCriteria, type, criteriaMap);
     }

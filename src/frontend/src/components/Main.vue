@@ -6,10 +6,11 @@
             <div class="left"><SideBar :clientEmail="clientEmail"></SideBar></div>
         </td>
         <td>
-          <div class="middle"><router-view @itemPressed="handleItemPressed"> </router-view></div>
+          <div class="middle"><router-view @itemPressed="handleItemPressed" @folderChanged="handleFolderChanged"> </router-view></div>
           <div class="right" v-if="this.isCompose === true" ><TestComposeEmailArmia :clientEmail="clientEmail"></TestComposeEmailArmia></div>
           <div class="right" v-if="this.isCompose === false && this.id !== null"><Mail :id="id"></Mail></div>
-          <div class="search" v-if="this.isSearch === true"><TestSearchArmia></TestSearchArmia></div>
+          <div class="search" v-if="this.isSearch === true"><TestSearchArmia :clientEmail="clientEmail" :folder="folder"></TestSearchArmia></div>
+          <div class="contact" v-if="this.isContact === true"><ContactMenu :clientEmail="clientEmail"></ContactMenu></div>
         </td>
       </tr>
     </table>
@@ -36,6 +37,16 @@
       </lord-icon>
     </div>
   </div>
+  <div class="float3" @click="handleContact">
+    <div class="my-float3">
+      <lord-icon
+          src="https://cdn.lordicon.com/kthelypq.json"
+          trigger="hover"
+          colors="primary:#ffffff"
+          style="width:40px;height:40px">
+      </lord-icon>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -48,15 +59,18 @@ import TestComposeEmailArmia from "@/components/TestComposeEmailArmia.vue";
 import ContextMenu from "@/components/ContextMenu";
 import ContextMenuItem from "@/components/ContextMenuItem";
 import TestSearchArmia from "@/components/TestSearchArmia.vue";
+import ContactMenu from "@/components/ContactMenu.vue";
 export default {
   name: 'Main',
   props:['clientEmail'],
   data(){
     return{
+      folder:'inbox',
       id: null,
       myEmail:"armia404",
       isCompose: false,
       isSearch: false,
+      isContact: false,
       handleMain(){
         if(this.isCompose){
           this.isCompose = false
@@ -71,6 +85,13 @@ export default {
           this.isSearch = true
         }
       },
+      handleContact() {
+        if(this.isContact){
+          this.isContact = false
+        }else{
+          this.isContact = true
+        }
+      },
     }
   },
   components: {
@@ -82,11 +103,16 @@ export default {
     TestComposeEmailArmia,
     ContextMenu,
     ContextMenuItem,
-    TestSearchArmia
+    TestSearchArmia,
+    ContactMenu
   },methods:{
     handleItemPressed(id){
       this.id = id
-    }
+    },
+    handleFolderChanged(folderName){
+      this.folder = folderName
+      console.log(folderName)
+    },
   },
   mounted(){
 
@@ -95,6 +121,17 @@ export default {
 </script>
 <style>
   div.search{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    //background: rgba(0, 0, 0, 0.4) no-repeat bottom;
+    //background: rgba(230, 235, 240, .4) no-repeat bottom;
+    backdrop-filter: blur(18px);
+    //border: 1px solid #ccc;
+  }
+  div.contact{
     position: fixed;
     top: 0;
     left: 0;
@@ -192,4 +229,22 @@ div.left {
 .my-float2:hover{
   cursor: pointer;
 }
+  .float3{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:260px;
+    background-image: linear-gradient(to left, #2765c5, #6e21cc);
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+  }
+  .my-float3{
+    margin-top:10px;
+    margin-right: 2px;
+  }
+  .my-float3:hover{
+    cursor: pointer;
+  }
 </style>

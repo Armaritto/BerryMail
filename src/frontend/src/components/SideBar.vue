@@ -210,20 +210,10 @@ methods:{
     const method = "POST"
     const body = ""
 
-    fetch(url+query, {method: method})
-        .then(res => {
+    fetch(url+query, {method: method})})
+        .then((res) => this.fetchFolderList)
 
-          res.json();
-          if(res.status === 200){
-            console.log("success")
-
-
-          }else {
-            console.log("failure")
-
-          }
-        });
-      }) .then(this.fetchFolderList)
+        .then(() => this.fetchFolderList)
     this.fetchFolderList
   },handleRename(newName){
 

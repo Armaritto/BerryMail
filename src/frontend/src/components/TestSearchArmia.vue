@@ -29,6 +29,9 @@
       <input type="text" placeholder="Body" id="username" v-model="Body">
       <label for="sender">Attachment</label>
       <input type="text" placeholder="Enter Attachment Name" id="attachment" v-model="Attachment">
+      <label for="sender">Criteria</label>
+      <span class="criteria" :class="{ 'true': this.isAND.value, 'false': !this.isAND.value }" @click="handleCriteria(this.isAND)"  >And</span>
+      <span class="criteria" :class="{ 'true': this.isOR.value , 'false': !this.isOR.value  }"  @click="handleCriteria(this.isOR)"  >Or</span>
       <button type="button" @click="handleSearch">Search</button>
     </form>
   </div>
@@ -38,11 +41,10 @@
 <script>
 export default {
   name: 'main',
-  props: {
-    msg: String
-  },
+  props: ['clientEmail'],
   data(){
     return{
+      folder:'inbox',
       isBefore:{value: false} ,
       isOn: {value: true},
       isAfter: {value: false},
@@ -51,7 +53,10 @@ export default {
       Subject:'',
       Date:'',
       Body:'',
-      Attachment:''
+      criteriaTime:'',
+      Attachment:'',
+      isAND: {value: true},
+      isOR:{value: false},
     }
   },
   methods:{
@@ -61,8 +66,78 @@ export default {
       this.isAfter.value = false
       interval.value = true
     },
-    handleSearch(){
-
+    handleCriteria(criteria){
+      this.isAND.value = false
+      this.isOR.value = false
+      criteria.value = true
+    },
+    handleSearch() {
+      if(this.isBefore.value){
+        this.criteriaTime = "Before"
+      }
+      else if(this.isOn.value){
+        this.criteriaTime = "On"
+      }
+      else if(this.isAfter.value){
+        this.criteriaTime = "After"
+      }
+      let url;
+      let isCustom = false;
+      switch (this.folder){
+        case "inbox":
+          url = "http://localhost:8080/filterInbox?"
+          break;
+        case "sent":
+          url = "http://localhost:8080/filterSent?"
+          break;
+        case "draft":
+          url = "http://localhost:8080/filterDraft?"
+          break;
+        case "trash":
+          url = "http://localhost:8080/filterTrash?"
+          break;
+        default:
+          isCustom = true
+          url = "http://localhost:8080/filterCustomFolder?"
+          break;
+      }
+      let params;
+      if(isCustom){
+        params = {
+          email: this.clientEmail + "@berry.com",
+          folderName: this.folder,
+          SortCriteria: "Time",
+          Type:this.isAND.value ? "AND" : "OR"
+        }
+      }
+      else{
+        params = {
+          email: this.clientEmail + "@berry.com",
+          SortCriteria: "Time",
+          Type:this.isAND.value ? "AND" : "OR"
+        }
+      }
+      const query = new URLSearchParams(params)
+      const method = "POST"
+      const body = JSON.stringify({
+        sender:this.Sender,
+        receiver:this.Receiver,
+        subject:this.Subject,
+        date:[this.Date, this.criteriaTime],
+        body:this.Body,
+        attachment:this.Attachment,
+      })
+      fetch(url+query, {
+        method: method,
+        body: body,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
     }
   }
 }
@@ -100,6 +175,32 @@ export default {
 .date:hover{
   cursor: pointer;
 }
+.criteria.true {
+  background-color: #521bb4;
+  color: white;
+}
+
+.criteria.false {
+  background-color: rgba(255, 255, 255, 0.44);
+  color: white;
+}
+.criteria{
+  background-color: rgba(255,255,255,0.07);
+  margin-top: 0;
+  margin-bottom: 7px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 15%;
+  padding: 2px;
+  font-size: 8px;
+  color: #ffffff;
+  font-weight: 20;
+}
+.criteria:hover{
+  cursor: pointer;
+}
+
 *,
 *:before,
 *:after{

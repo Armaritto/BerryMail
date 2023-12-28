@@ -25,9 +25,8 @@
         <div v-if="emails.length !== 0">
         <table>
             <div class="sort_options">
-
             <div class="Priority-group">
-            <span  class="btn btn-priority" :class="{ 'true': this.sortByTime.value, 'false': !this.sortByTime.value }" @click="handleSort(sortByTime)">
+            <span class="btn btn-priority" :class="{ 'true': this.sortByTime.value, 'false': !this.sortByTime.value }" @click="handleSort(sortByTime)">
               <div style="display: flex; flex-direction: column; align-items: center">
                 <lord-icon
                     src="https://cdn.lordicon.com/abfverha.json"
@@ -63,10 +62,11 @@
 <!--                <option value="3">Priority</option>-->
 <!--                <option value="4">HELP</option>-->
 <!--            </select>-->
-            <tr v-for="e in emails" :key="e.id" class="mails" @click="$emit('itemPressed', e.id)">
-                <MailPreview :emailMeta="e" ></MailPreview>
-            </tr>
+          <tr v-for="(e, index) in emails" :key="e.id" class="mails" @click="$emit('itemPressed', e.id)">
+                <MailPreview v-if="index < emailsPerPage" :emailMeta="e" ></MailPreview>
+          </tr>
         </table>
+          <span @click="handleSort(sortByPriority);">Next Page</span>
 <!--          <vue-awesome-paginate-->
 <!--              :total-items="50"-->
 <!--              :items-per-page="5"-->
@@ -82,6 +82,7 @@
 import MailPreview from "@/components/MailPreview.vue";
 import ContextMenu from "@/components/ContextMenu";
 import ContextMenuItem from "@/components/ContextMenuItem";
+import {VueAwesomePaginate} from "vue-awesome-paginate";
 // import VuePagination from 'vue3-pagination';
 
 // const changePage = (page: number) => console.log('New page: ', page);
@@ -92,9 +93,11 @@ export default {
     folderName: function () {
       this.fetchFolder()
       console.log("fetched")
+      this.$emit("folderChanged", this.folderName)
     }
   },
   components: {
+    VueAwesomePaginate,
     MailPreview,
     ContextMenu,
     ContextMenuItem
@@ -131,7 +134,9 @@ export default {
       sortByTime: {value: true},
       sortByPriority: {value: false},
       sortBy: 'Time',
-
+      emailsPerPage: 2,
+      currentPage: 1,
+      emailsCounter: 0
       }
   },
   mounted() {
@@ -150,7 +155,14 @@ export default {
         this.sortBy = 'Priority'
       }
       this.fetchFolder()
+    },
+    nextPage(){
+      this.currentPage++
+      this.emails = this.emails.slice((this.currentPage-1))
     }
+    // onClickHandler: function(page){
+    //   console.log(page);
+    // }
   }
 }
 </script>
