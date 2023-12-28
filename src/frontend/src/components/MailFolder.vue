@@ -1,5 +1,5 @@
 <template>
-  <div @contextmenu.prevent="$refs.wrapper.$refs.menu.open($event, 'Payload')">
+ 
 <!--    <ContextMenu ref="wrapper" reference="menu">-->
 <!--      <template slot-scope="{ contextData }">-->
 <!--        <ContextMenuItem >-->
@@ -62,8 +62,8 @@
 <!--                <option value="3">Priority</option>-->
 <!--                <option value="4">HELP</option>-->
 <!--            </select>-->
-          <tr v-for="e in pageEmails" :key="e.id" class="mails" @click="$emit('itemPressed', e.id)">
-                <MailPreview :emailMeta="e" ></MailPreview>
+          <tr v-for="e in pageEmails" :key="e.id" class="mails" @click.exact="$emit('itemPressed', e.id)">
+                <MailPreview :emailMeta="e" @click.ctrl.prevent="handleSelect(e.id)" :class="{ 'true': selected.includes(e.id), 'false': !selected.includes(e.id) }" @click.alt.exact.prevent="handleDelete(e.id); for(i in selected){handleDelete(selected[i]) ;selected.splice(i, 1);}"  :selected="selected"></MailPreview>
           </tr>
         </table>
         <div class="page_nav">
@@ -103,7 +103,7 @@
 <!--          />-->
         </div>
     </div>
-  </div>
+  
 </template>
 <script>
 import MailPreview from "@/components/MailPreview.vue";
@@ -131,6 +131,7 @@ export default {
   },
   data() {
     return {
+      selected:[],
       folders: ["inbox", "sent", "draft", "trash"],
        fetchFolder: function () {
         var url = null
@@ -178,6 +179,35 @@ export default {
     this.fetchFolder()
   },
   methods: {
+    handleDelete(id){
+      const url = "http://localhost:8080/moveToTrash?"
+      const params = {
+        email:this.clientEmail + "@berry.com",
+        id:id,
+        folderName:this.folderName
+      }
+
+      const query = new URLSearchParams(params)
+      const method = "PUT"
+
+      fetch(url+query, {
+        method: method,
+        })
+          .then(res => res.json())
+          .catch(data => console.log(data))
+          .then(()=>this.fetchFolder())
+    },
+    handleSelect(id){
+      if(this.selected.includes(id)){ 
+        for (let i = 0; i < this.selected.length; i++) {
+          if (this.selected[i] === id) { 
+            this.selected.splice(i, 1);
+             } 
+          }
+      } else{
+        this.selected.push(id)
+      }
+    },
     handleSort(interval) {
       this.sortByTime.value = false
       this.sortByPriority.value = false
@@ -314,5 +344,7 @@ export default {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
-
+.true{
+  background: #980697;
+}
 </style>

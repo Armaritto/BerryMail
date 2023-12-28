@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="icon" v-if="emailMeta.priority === 'Critical'">
     <lord-icon
         src="https://cdn.lordicon.com/vihyezfv.json"
@@ -45,10 +46,11 @@
     </table>
     <p class="content">{{emailMeta.body  || "No preview Available"}}</p><p v-if="emailMeta.body" class="content">...</p>
   </div>
+  </div>
 </template>
 <script>
 export default {
-    props:['emailMeta'],
+    props:['emailMeta', 'selected'],
     data(){
         return{
         }
