@@ -36,17 +36,14 @@
     </form>
   </div>
   </body>
-  <MailFolder :emailsList="emails"></MailFolder>
 </template>
 
 <script>
-import MailFolder from "@/components/MailFolder.vue";
 export default {
   name: 'main',
   props: ['clientEmail','currentFolder'],
   data(){
     return{
-      emails:[],
       folder:'inbox',
       isBefore:{value: false} ,
       isOn: {value: true},
@@ -61,8 +58,6 @@ export default {
       isAND: {value: true},
       isOR:{value: false},
     }
-  },components:{
-    MailFolder
   },
   methods:{
     handleTime(interval){
@@ -158,9 +153,7 @@ export default {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        console.log("that was data1");
-        this.emails = data;
-
+        this.$emit('searchEvent', data);
       })
     },
   }

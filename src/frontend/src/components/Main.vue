@@ -10,7 +10,7 @@
           <div class="right" v-if="this.isCompose === true" ><TestComposeEmailArmia :clientEmail="clientEmail"></TestComposeEmailArmia></div>
           <div class="right" v-if="this.isCompose === false && this.id !== null"><Mail :id="id"></Mail></div>
           <div class="search" v-if="this.isSearch === true"><TestSearchArmia  @searchEvent="handleSearchEvent()" :clientEmail="clientEmail" :currentFolder="folder"></TestSearchArmia></div>
-          <div class="contact" v-if="this.isContact === false"><ContactMenu :mail="clientEmail"></ContactMenu></div>
+          <div class="contact" v-if="this.isContact === true"><ContactMenu :clientEmail="clientEmail"></ContactMenu></div>
         </td>
       </tr>
     </table>
@@ -65,14 +65,14 @@ export default {
   props:['clientEmail'],
   data(){
     return{
-      searchData:'',
+      searchData:[],
       isSearching: false,
       folder:'inbox',
       id: null,
       myEmail:"armia404",
       isCompose: false,
       isSearch: false,
-      isContact: true,
+      isContact: false,
       handleMain(){
         if(this.isCompose){
           this.isCompose = false
@@ -117,9 +117,6 @@ export default {
     },handleSearchEvent(data){
       this.searchData = data;
       this.isSearching = true;
-      console.log(data);
-
-      console.log("that was data2");
     }
   },
   mounted(){
