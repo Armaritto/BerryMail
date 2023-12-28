@@ -11,7 +11,7 @@
     <div class="shape"></div>
   </div>
   <div style="display: flex; justify-content: center;position: absolute;top: 25%; left: 50%">
-    <form >
+    <form>
       <label for="sender">Sender</label>
       <input type="text" placeholder="example@berry.com" id="sender" v-model="Sender">
       <label for="receiver">Receiver</label>
@@ -25,7 +25,7 @@
         <span class="date" :class="{ 'true': this.isOn.value , 'false': !this.isOn.value  }"  @click="handleTime(this.isOn)"  >On</span>
         <span class="date" :class="{ 'true': this.isAfter.value, 'false': !this.isAfter.value }"  @click="handleTime(this.isAfter)"  >After</span>
       </div>
-      <label for="sender">Body</label>
+      <label for="sender" @click="console.log(Sender)">Body</label>
       <input type="text" placeholder="Body" id="username" v-model="Body">
       <label for="sender">Attachment</label>
       <input type="text" placeholder="Enter Attachment Name" id="attachment" v-model="Attachment">
@@ -41,7 +41,7 @@
 <script>
 export default {
   name: 'main',
-  props: ['clientEmail'],
+  props: ['clientEmail','currentFolder'],
   data(){
     return{
       folder:'inbox',
@@ -72,6 +72,7 @@ export default {
       criteria.value = true
     },
     handleSearch() {
+
       if(this.isBefore.value){
         this.criteriaTime = "Before"
       }
@@ -83,7 +84,8 @@ export default {
       }
       let url;
       let isCustom = false;
-      switch (this.folder){
+      console.log(this.currentFolder)
+      switch (this.currentFolder){
         case "inbox":
           url = "http://localhost:8080/filterInbox?"
           break;
@@ -105,7 +107,7 @@ export default {
       if(isCustom){
         params = {
           email: this.clientEmail + "@berry.com",
-          folderName: this.folder,
+          folderName: this.currentFolder,
           SortCriteria: "Time",
           Type:this.isAND.value ? "AND" : "OR"
         }
@@ -119,14 +121,28 @@ export default {
       }
       const query = new URLSearchParams(params)
       const method = "POST"
-      const body = JSON.stringify({
-        sender:this.Sender,
-        receiver:this.Receiver,
-        subject:this.Subject,
-        date:[this.Date, this.criteriaTime],
-        body:this.Body,
-        attachment:this.Attachment,
-      })
+      var obj1 = {}
+      if(this.Sender !== ''){
+        obj1["sender"] = [this.Sender]
+      }
+      if(this.Receiver !== ''){
+        obj1["receiver"] = [this.Receiver]
+      }
+      if(this.Subject !== ''){
+        obj1["subject"] = [this.Subject]
+      }
+      if(this.Date !== ''){
+        obj1["date"] = [this.Date,this.criteriaTime]
+      }
+      if(this.Body !== ''){
+        obj1["body"] = [this.Body]
+      }
+      if(this.Attachment !== ''){
+        obj1["attachment"] = [this.Attachment]
+      }
+
+      const body = JSON.stringify(obj1)
+
       fetch(url+query, {
         method: method,
         body: body,
@@ -136,9 +152,10 @@ export default {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        console.log(data);
+        this.$emit('searchEvent', data);
       })
-    }
+    },
   }
 }
 </script>

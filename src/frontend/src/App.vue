@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="">
     <router-view ></router-view>
     <!-- <compose></compose> -->
 <!--     <testComposeEmailArmia></testComposeEmailArmia>-->
@@ -21,5 +21,10 @@ export default {
 }
 </script>
 <style>
-
+body{
+  margin: 0;
+  padding: 0;
+  background: url('bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 </style>

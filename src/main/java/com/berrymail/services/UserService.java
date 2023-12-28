@@ -264,7 +264,6 @@ public class UserService {
         }
         return  null ;
     }
-
     public void removeMail(String email, String oldFolder, String mailID) {
         if(UserDirector.users.get(email).getInbox().contains(mailID))
             UserDirector.users.get(email).getInbox().remove(mailID);

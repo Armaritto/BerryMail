@@ -1,5 +1,5 @@
 <template>
- 
+
 <!--    <ContextMenu ref="wrapper" reference="menu">-->
 <!--      <template slot-scope="{ contextData }">-->
 <!--        <ContextMenuItem >-->
@@ -19,8 +19,10 @@
 
 
     <div class="folder">
-        <div v-if="emails.length == 0">
-            <h1>{{this.folderName}} is empty</h1>
+        <div v-if="emails.length == 0" style="color: white; display: flex;justify-content: center;margin: auto">
+          <div>
+            <h4>{{this.folderName}} is empty</h4>
+          </div>
         </div>
         <div v-if="emails.length !== 0">
         <table>
@@ -63,7 +65,7 @@
 <!--                <option value="4">HELP</option>-->
 <!--            </select>-->
           <tr v-for="e in pageEmails" :key="e.id" class="mails" @click.exact="$emit('itemPressed', e.id)">
-                <MailPreview :clientEmail="clientEmail" :id="e.id" :folderName="folderName" :emailMeta="e" @click.ctrl.prevent="handleSelect(e.id)" :class="{ 'true': selected.includes(e.id), 'false': !selected.includes(e.id) }" @click.alt.exact.prevent="handleDelete(e.id); for(i in selected){handleDelete(selected[i]) ;selected.splice(i, 1);}"  :selected="selected"></MailPreview>
+                <MailPreview :clientEmail="clientEmail" :id="e.id" :folderName="folderName" :emailMeta="e" @click.ctrl.prevent="handleSelect(e.id)" :class="{ 'true': selected.includes(e.id), 'false': !selected.includes(e.id) }" @click.alt.exact.prevent="handleDelete(e.id); for( i in this.selected){handleDelete(selected[i]) ;selected.splice(i, 1);}"  :selected="selected"></MailPreview>
           </tr>
         </table>
         <div class="page_nav">
@@ -71,11 +73,12 @@
             <div style="display: flex; flex-direction: column; align-items: center">
               <lord-icon
                 src="https://cdn.lordicon.com/vduvxizq.json"
+                colors="primary:#ffffff"
                 trigger="hover"
                 style="width:30px;height:30px; transform: scaleX(-1);">
               </lord-icon>
               <div>
-                Previous Page
+                Previous
               </div>
             </div>
           </span>
@@ -83,11 +86,12 @@
             <div style="display: flex; flex-direction: column; align-items: center">
               <lord-icon
                 src="https://cdn.lordicon.com/vduvxizq.json"
+                colors="primary:#ffffff"
                 trigger="hover"
                 style="width:30px;height:30px">
               </lord-icon>
               <div>
-                Next Page
+                Next
               </div>
             </div>
           </span>
@@ -103,7 +107,7 @@
 <!--          />-->
         </div>
     </div>
-  
+
 </template>
 <script>
 import MailPreview from "@/components/MailPreview.vue";
@@ -115,12 +119,21 @@ import {VueAwesomePaginate} from "vue-awesome-paginate";
 // const changePage = (page: number) => console.log('New page: ', page);
 
 export default {
-  props: ['clientEmail', 'folderName'],
+  props: ['clientEmail', 'folderName', 'isSearching', 'searchData'],
   watch: {
     folderName: function () {
       this.fetchFolder()
       console.log("fetched")
       this.$emit("folderChanged", this.folderName)
+    },
+    isSearching: function () {
+      if(this.isSearching === true){
+        console.log(this.searchData)
+        this.emails = this.searchData
+        console.log(this.email)
+        console.log('heeereee')
+        console.log(this.isSearching)
+      }
     }
   },
   components: {
@@ -170,7 +183,7 @@ export default {
       sortByTime: {value: true},
       sortByPriority: {value: false},
       sortBy: 'Time',
-      emailsPerPage: 2,
+      emailsPerPage: 5,
       currentPage: 1,
       numOfPages: 1
       }
@@ -179,6 +192,9 @@ export default {
     this.fetchFolder()
   },
   methods: {
+    handleDeleteF(){
+
+    },
     handleDelete(id){
       const url = "http://localhost:8080/moveToTrash?"
       const params = {
@@ -198,11 +214,11 @@ export default {
           .then(()=>this.fetchFolder())
     },
     handleSelect(id){
-      if(this.selected.includes(id)){ 
+      if(this.selected.includes(id)){
         for (let i = 0; i < this.selected.length; i++) {
-          if (this.selected[i] === id) { 
+          if (this.selected[i] === id) {
             this.selected.splice(i, 1);
-             } 
+             }
           }
       } else{
         this.selected.push(id)
@@ -265,8 +281,7 @@ export default {
     .mails{
         width: 330px; /* set the width of the table to 100% of its parent container */
         margin: 0 auto; /* center the table horizontally */
-        float: center;
-        margin: 10px;
+
         display: flex;
         justify-content: center;
         border-radius: 10px;

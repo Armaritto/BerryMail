@@ -72,21 +72,44 @@ public class UserController {
         userService.emptyTrash(email);
         return "Trash emptied";
     }
-    @GetMapping(path = "/filterInbox")
+    @PostMapping(path = "/filterInbox")
     public ArrayList<Mail> filterInbox(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
         System.out.println(criteriaMap);
         return userService.filterInbox(email, SortCriteria, type, criteriaMap);
     }
-    @GetMapping(path = "/filterDraft")
+    @PostMapping(path = "/filterDraft")
     public ArrayList<Mail> filterDraft(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
         return userService.filterDraft(email, SortCriteria, type, criteriaMap);
     }
-    @GetMapping(path = "/filterTrash")
+    @PostMapping(path = "/filterTrash")
     public ArrayList<Mail> filterTrash(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
         return userService.filterTrash(email, SortCriteria, type, criteriaMap);
     }
-    @GetMapping(path = "/filterSent")
+    @PostMapping(path = "/filterSent")
     public ArrayList<Mail> filterSent(@RequestParam("email") String email, @RequestParam("SortCriteria") String SortCriteria, @RequestParam("Type") String type, @RequestBody HashMap<String, ArrayList<String>> criteriaMap) throws Exception {
+        System.out.println("hiiiiiiiiii"+criteriaMap.toString());
+        if(criteriaMap.get("receiver") == null){
+            criteriaMap.remove("receiver");
+        }
+        else if(criteriaMap.get("sender") == null){
+            criteriaMap.remove("sender");
+        }
+        else   if(criteriaMap.get("subject") == null){
+            criteriaMap.remove("subject");
+        }
+        else   if(criteriaMap.get("body") == null){
+            criteriaMap.remove("body");
+        }
+        else   if(criteriaMap.get("attachment") == null){
+            criteriaMap.remove("attachment");
+        }
+        else   if(criteriaMap.get("priority") == null){
+            criteriaMap.remove("priority");
+        }
+        else   if(criteriaMap.get("date") == null){
+            criteriaMap.remove("date");
+        }
+        System.out.println("hiiiiiiiiii"+criteriaMap.toString());
         return userService.filterSent(email, SortCriteria, type, criteriaMap);
     }
     @PostMapping(path = "/addContact")

@@ -7,7 +7,7 @@
         </h3>
       </tr>
       <tr v-for="folder in folders">
-        <router-link :to="{path: '/' + clientEmail + '/folder/' + folder}" style="text-decoration: none; color: #ffffff">
+        <router-link :to="{path: '/' + clientEmail + '/folder/' + folder}" style="text-decoration: none; color: #ffffff" @click.alt.exact.prevent="emptyTrash()">
           <div class="folder" style="display: flex; flex-direction: row; align-items: center">
             <div v-if="folder === 'inbox'">
               <lord-icon
@@ -158,7 +158,7 @@
 <script>
 import SideBarItem from "@/components/SideBarItem.vue";
 export default {
-props:['clientEmail'],
+props:['clientEmail', 'folderName'],
 data(){
     return{
         newName:'',
@@ -224,7 +224,7 @@ methods:{
     const body = ""
     console.log("catch1")
     fetch(url+query, {method: method})
-       
+
         .then(()=>{
             const url = "http://localhost:8080/deleteFolder?"
     const params = {
@@ -238,7 +238,7 @@ methods:{
     fetch(url+query, {method: method})
     .then((res)=> {this.fetchFolderList; console.log(res)})
     .then((res)=>{this.fetchFolderList; console.log('DELETED')})
-        }) 
+        })
     })
 
     //     .then(() => this.fetchFolderList)
@@ -253,7 +253,18 @@ methods:{
   },handleDelete(){
     this.fetchFolderList()
     console.log("deleted")
+  },emptyTrash(){
+    const url = "http://localhost:8080/emptyTrash?"
+    const params = {
+      email: this.clientEmail + "@berry.com",
+    }
+    const query = new URLSearchParams(params)
+    const method = "DELETE"
+if(this.folderName === "trash"){
+    fetch(url+query, {method: method})
+        .then((res)=>console.log(res))
   }
+    }
 
 },components:{
     SideBarItem

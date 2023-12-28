@@ -3,13 +3,13 @@
     <table>
       <tr>
         <td>
-            <div class="left"><SideBar :clientEmail="clientEmail"></SideBar></div>
+            <div class="left"><SideBar :folderName="folder" :clientEmail="clientEmail"></SideBar></div>
         </td>
         <td>
-          <div class="middle"><router-view @itemPressed="handleItemPressed" @folderChanged="handleFolderChanged"> </router-view></div>
+          <div class="middle"><router-view :isSearching="isSearching" :searchData="searchData" @itemPressed="handleItemPressed" @folderChanged="handleFolderChanged"> </router-view></div>
           <div class="right" v-if="this.isCompose === true" ><TestComposeEmailArmia :clientEmail="clientEmail"></TestComposeEmailArmia></div>
           <div class="right" v-if="this.isCompose === false && this.id !== null"><Mail :id="id"></Mail></div>
-          <div class="search" v-if="this.isSearch === true"><TestSearchArmia :clientEmail="clientEmail" :folder="folder"></TestSearchArmia></div>
+          <div class="search" v-if="this.isSearch === true"><TestSearchArmia  @searchEvent="handleSearchEvent()" :clientEmail="clientEmail" :currentFolder="folder"></TestSearchArmia></div>
           <div class="contact" v-if="this.isContact === true"><ContactMenu :clientEmail="clientEmail"></ContactMenu></div>
         </td>
       </tr>
@@ -65,6 +65,8 @@ export default {
   props:['clientEmail'],
   data(){
     return{
+      searchData:[],
+      isSearching: false,
       folder:'inbox',
       id: null,
       myEmail:"armia404",
@@ -112,7 +114,10 @@ export default {
     handleFolderChanged(folderName){
       this.folder = folderName
       console.log(folderName)
-    },
+    },handleSearchEvent(data){
+      this.searchData = data;
+      this.isSearching = true;
+    }
   },
   mounted(){
 
@@ -150,8 +155,8 @@ div.left {
   left: 0;
   top: 0;
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.4) no-repeat bottom;
-  //background: rgba(230, 235, 240, .4) no-repeat bottom;
+  //background: rgba(0, 0, 0, 0.4) no-repeat bottom;
+  background: rgba(230, 235, 240, .4) no-repeat bottom;
   backdrop-filter: blur(18px);
   //border: 1px solid #ccc;
 }
@@ -176,15 +181,17 @@ div.left {
 }
   div.middle{
     float: left;
-    margin-left: 350px;
+    margin-left: 327px;
     /* background: #601cb1; */
+    height: 87vh;
     display: flex;
     justify-content: center;
-    border-radius: 10px;
+    text-align: center;
     background: rgba(44, 19, 66, 0.34);
     backdrop-filter: blur(5px);
     border: 2px solid  rgba(44, 19, 66, 0.13);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
+
     /* align-items: center; */
     /* height: 100vh; */
   }

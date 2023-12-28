@@ -1,60 +1,71 @@
 <template>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glass morphism </title>
-  </head>
-  <body>
-  <div class="background">
-    <div class="shape"></div>
-    <div class="shape"></div>
-  </div>
-  <div style="display: flex; justify-content: center;position: absolute;top: 25%; left: 50%">
-    <form>
-      <label for="sender">Search Contact</label>
-      <input type="text" placeholder="Type Contact" id="sender" v-model="Sender">
-      <button type="button" @click="handleSearch">Search</button>
-    </form>
-    <div style="padding-top: 170px">
-      <table >
-        <tr v-for="(contact, name, index) in contacts">
-          <h5>{{name}}</h5>
-          <tr v-for="email in contact">
-            <p>{{email}}</p>
-          </tr>
-        </tr>
-      </table>
+  <div>
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Glass morphism</title>
+    </head>
+    <body>
+    <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
     </div>
-    <div class="new_cont">
-    <span class="btn btn-priority">
-      <div style="display: flex; flex-direction: column; align-items: center">
-        <lord-icon
-          src="https://cdn.lordicon.com/jgnvfzqg.json"
-          trigger="hover"
-          style="width:30px;height:30px;">
-        </lord-icon>
-        <div>
-          Add Contact
-        </div>
-      </div>
-    </span>
-  </div>
-  </div>
 
-  </body>
+    <div v-if="!createCont" style="display: flex; justify-content: center; position: absolute; top: 25%; left: 50%">
+      <form>
+        <label for="sender">Search Contact</label>
+        <input type="text" placeholder="Type Contact" id="sender" v-model="sender">
+        <button type="button" @click="handleSearch">Search</button>
+      </form>
+
+      <div style="padding-top: 170px; color: white">
+        <table>
+          <tr v-for="(contact, name, index) in contacts" :key="index">
+            <h5>{{ name }}</h5>
+            <tr v-for="(email, emailIndex) in contact" :key="emailIndex">
+              <p>{{ email }}</p>
+            </tr>
+          </tr>
+        </table>
+      </div>
+
+      <div class="new_cont">
+          <span class="btn btn-priority" @click="addContact">
+            <div class="icon-container-right-top">
+              <lord-icon
+                  src="https://cdn.lordicon.com/jgnvfzqg.json"
+                  trigger="hover"
+                  colors="primary:#ffffff"
+                  style="width:30px;height:30px;">
+              </lord-icon>
+              <div>Add</div>
+            </div>
+          </span>
+      </div>
+
+      <div v-if="createCont" style="display: flex; justify-content: center; position: absolute; top: 25%; left: 50%"></div>
+    </div>
+    </body>
+  </div>
 </template>
 
 <script>
+import CreateContact from "@/components/CreateContact.vue";
+
 export default {
   name: 'main',
   props: ['clientEmail'],
+  components: {
+    CreateContact
+  },
   data(){
     return{
       contacts: {},
       sortContactsBy: 'date',
+      createCont: false,
       fetchContacts: function(){
-        var url = "http://localhost:8080/" + "contacts" + "?"
+        var url = "http://localhost:8080/contacts?"
         const params = {
           email: this.clientEmail + "@berry.com",
           SortCriteria: this.sortContactsBy,
@@ -70,11 +81,21 @@ export default {
               // this.paginate();
               // this.numOfPages = Math.ceil(this.emails.length / this.emailsPerPage)
             })
-      }
+      },
+      addContact: function(){
+        this.createCont = true;
+        const url = "http://localhost:8080/addContact?"
+        const params = {
+          email: this.clientEmail + "@berry.com",
+          name: this.name,
+          mails: this.mails,
+        }
+
+      },
     }
   },
   mounted(){
-    this.fetchContacts
+    this.fetchContacts()
   },
   methods:{
     handleTime(interval){
@@ -317,5 +338,12 @@ button:hover {
     transition: 1s;
     }
 
-
+.icon-container-right-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: fixed;
+  top: 400px;
+  right: 400px;
+}
 </style>
