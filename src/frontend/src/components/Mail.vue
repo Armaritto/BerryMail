@@ -87,11 +87,12 @@
               {{this.body}}
             </div>
           </div>
-            <div class="form-row mb-3">
-            <label for="Priority" class="col-2 col-sm-1 col-form-label" style="font-weight: bold; margin-right: 30px;font-size: 20px">Attachment:</label>
+            <div class="form-row mb-3" v-if="this.attachments.length !== 0">
+              <label for="Priority" class="col-2 col-sm-1 col-form-label" style="font-weight: bold; margin-right: 30px;font-size: 20px">Attachment:</label>
               <br>
-            <span @click="download" class="btn btn-attachment " :class="{ 'true': this.isCritical.value, 'false': !this.isCritical.value }">
-                <div style="display: flex; flex-direction: column; align-items: center">
+            <div @click="download" class="btn btn-attachment " >
+
+                <div style="display: flex; flex-direction: column; align-items: center;">
                 <lord-icon
                     src="https://cdn.lordicon.com/wzwygmng.json"
                     trigger="hover"
@@ -103,7 +104,7 @@
                   Download
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </main>
       </div>
@@ -159,6 +160,7 @@ export default {
             })
       },
       async download(){
+        console.log(this.attachments.length)
         let i;
         for(i in this.attachments){
           await this.downloadAttachment(this.attachments[i])

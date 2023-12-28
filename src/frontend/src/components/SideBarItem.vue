@@ -1,6 +1,6 @@
 <template>
 <div @dblclick="isRenaming=true">
-  <div v-if="!isRenaming" class="items">
+  <div v-if="!isRenaming" class="items" @click.alt.prevent="handleDelete">
     <div>
       <lord-icon
           src="https://cdn.lordicon.com/jkzgajyr.json"
@@ -13,8 +13,8 @@
       {{folderName}}
     </div>
   </div>
+  <input v-if="isRenaming" :placeholder="folderName" v-model="newName" v-on:keyup.enter="handleEnter" >
   <div>
-    <input v-if="isRenaming" :placeholder="folderName" v-model="newName" v-on:keyup.enter="handleEnter">
   </div>
 </div>
 </template>
@@ -30,6 +30,35 @@
 
     },
     methods:{
+      handleDelete(){
+        const url = "http://localhost:8080/deleteFolder?"
+        const params = {
+          email: this.clientEmail + "@berry.com",
+          name:this.folderName
+
+        }
+        const query = new URLSearchParams(params)
+        const method = "DELETE"
+        const body = ""
+
+        fetch(url+query, {method: method})
+            .then(res => {
+
+              res.json();
+              if(res.status === 200){
+                console.log("success")
+
+
+              }else {
+                console.log("failure")
+
+              }
+
+            })
+            .then(() => {
+              this.$emit('delete')})
+      }
+      ,
       handleEnter(){
         const url = "http://localhost:8080/renameFolder?"
         const params = {
@@ -60,7 +89,7 @@
             .then(() => {this.isRenaming=false;
                           this.$emit('rename',this.newName)})
       }
-    }
+   }
   }
 </script>
 

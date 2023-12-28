@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "vue-click-outside": "^1.1.0"
+    "vue-click-outside": "^1.1.0",
+    "vue3-pagination": "^1.0.16"
   }
 }

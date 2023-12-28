@@ -26,6 +26,8 @@
                   style="width:50px;height:50px">
               </lord-icon>
             </div>
+
+
             <div v-else-if="folder === 'trash'">
               <lord-icon
                   src="https://cdn.lordicon.com/wpyrrmcq.json"
@@ -66,7 +68,7 @@
       </tr>
       <tr v-for="folder in customFolders" :key="folder" >
         <router-link :to="{path: '/' + clientEmail + '/folder/' + folder}" style="text-decoration: none;">
-          <SideBarItem @rename="handleRename" :clientEmail="clientEmail" :folderName="folder" class="folder">
+          <SideBarItem @rename="handleRename" @delete="handleDelete" :clientEmail="clientEmail" :folderName="folder" class="folder">
           </SideBarItem>
         </router-link>
       </tr>
@@ -229,6 +231,9 @@ methods:{
     this.$router.replace({path: path})
     this.fetchFolderList()
     console.log("renamed")
+  },handleDelete(){
+    this.fetchFolderList()
+    console.log("deleted")
   }
 
 },components:{

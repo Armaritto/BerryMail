@@ -11,25 +11,25 @@
     <div class="shape"></div>
   </div>
   <div style="display: flex; justify-content: center;position: absolute;top: 25%; left: 50%">
-    <form>
+    <form >
       <label for="sender">Sender</label>
-      <input type="text" placeholder="example@berry.com" id="sender">
+      <input type="text" placeholder="example@berry.com" id="sender" v-model="Sender">
       <label for="receiver">Receiver</label>
-      <input type="text" placeholder="example@berry.com" id="receiver">
+      <input type="text" placeholder="example@berry.com" id="receiver" v-model="Receiver">
       <label for="sender">Subject</label>
-      <input type="text" placeholder="Type Subject" id="subject">
+      <input type="text" placeholder="Type Subject" id="subject" v-model="Subject">
       <label for="sender">Date</label>
       <div class="date_options">
-        <input type="datetime-local" placeholder="Type Subject" id="subject" style="width: 50%">
+        <input type="datetime-local" placeholder="Type Subject" id="subject" style="width: 50%" v-model="Date">
         <span class="date" :class="{ 'true': this.isBefore.value, 'false': !this.isBefore.value }" @click="handleTime(this.isBefore)"  >Before</span>
         <span class="date" :class="{ 'true': this.isOn.value , 'false': !this.isOn.value  }"  @click="handleTime(this.isOn)"  >On</span>
         <span class="date" :class="{ 'true': this.isAfter.value, 'false': !this.isAfter.value }"  @click="handleTime(this.isAfter)"  >After</span>
       </div>
-      <label for="sender" >Body</label>
-      <input type="text" placeholder="Body" id="username">
+      <label for="sender">Body</label>
+      <input type="text" placeholder="Body" id="username" v-model="Body">
       <label for="sender">Attachment</label>
-      <input type="text" placeholder="Enter type of Attachment" id="attachment">
-      <button>Search</button>
+      <input type="text" placeholder="Enter Attachment Name" id="attachment" v-model="Attachment">
+      <button type="button" @click="handleSearch">Search</button>
     </form>
   </div>
   </body>
@@ -45,7 +45,13 @@ export default {
     return{
       isBefore:{value: false} ,
       isOn: {value: true},
-      isAfter: {value: false}
+      isAfter: {value: false},
+      Sender:'',
+      Receiver:'',
+      Subject:'',
+      Date:'',
+      Body:'',
+      Attachment:''
     }
   },
   methods:{
@@ -54,11 +60,13 @@ export default {
       this.isOn.value = false
       this.isAfter.value = false
       interval.value = true
+    },
+    handleSearch(){
+
     }
   }
 }
 </script>
-
 
 <style scoped>
 .date_options{

@@ -67,7 +67,14 @@
                 <MailPreview :emailMeta="e" ></MailPreview>
             </tr>
         </table>
-    </div>
+<!--          <vue-awesome-paginate-->
+<!--              :total-items="50"-->
+<!--              :items-per-page="5"-->
+<!--              :max-pages-shown="5"-->
+<!--              :current-page="1"-->
+<!--              :on-click="onClickHandler"-->
+<!--          />-->
+        </div>
     </div>
   </div>
 </template>
@@ -75,72 +82,76 @@
 import MailPreview from "@/components/MailPreview.vue";
 import ContextMenu from "@/components/ContextMenu";
 import ContextMenuItem from "@/components/ContextMenuItem";
+// import VuePagination from 'vue3-pagination';
+
+// const changePage = (page: number) => console.log('New page: ', page);
+
 export default {
-   props:['clientEmail', 'folderName'],
-   watch: {
-    folderName: function() {
-          this.fetchFolder()
-          console.log("fetched")
-        }
-    },
-    components:{
-        MailPreview,
-        ContextMenu,
-        ContextMenuItem
-    },
-    data(){
-        return{
-            folders:["inbox", "sent", "draft", "trash"],
-            fetchFolder: function(){
-                var url = null
-                if(this.folderName){
-        if(!this.folders.includes(this.folderName)){
-             url = "http://localhost:8080/" + "customFolder" + "?"
-        }
-        else {
-         url = "http://localhost:8080/" + this.folderName +"?"
+  props: ['clientEmail', 'folderName'],
+  watch: {
+    folderName: function () {
+      this.fetchFolder()
+      console.log("fetched")
     }
-        const params = {
-          email: this.clientEmail + "@berry.com",
-          SortCriteria: this.sortBy,
-          folderName: this.folderName
-        }
-        const query = new URLSearchParams(params)
-        const method = "GET"
-        const body = ""
+  },
+  components: {
+    MailPreview,
+    ContextMenu,
+    ContextMenuItem
+  },
+  data() {
+    return {
+      folders: ["inbox", "sent", "draft", "trash"],
+      fetchFolder: function () {
+        var url = null
+        if (this.folderName) {
+          if (!this.folders.includes(this.folderName)) {
+            url = "http://localhost:8080/" + "customFolder" + "?"
+          } else {
+            url = "http://localhost:8080/" + this.folderName + "?"
+          }
+          const params = {
+            email: this.clientEmail + "@berry.com",
+            SortCriteria: this.sortBy,
+            folderName: this.folderName
+          }
+          const query = new URLSearchParams(params)
+          const method = "GET"
+          const body = ""
 
-        fetch(url+query, {method: method})
-        .then(res => res.json())
-        .then(data => {this.emails = data; console.log(data)})
+          fetch(url + query, {method: method})
+              .then(res => res.json())
+              .then(data => {
+                this.emails = data;
+                console.log(data)
+              })
+        }
+      },
+      emails: [],
+      sortByTime: {value: true},
+      sortByPriority: {value: false},
+      sortBy: 'Time',
+
+      }
+  },
+  mounted() {
+    this.fetchFolder()
+  },
+  methods: {
+    handleSort(interval) {
+      this.sortByTime.value = false
+      this.sortByPriority.value = false
+      interval.value = true
+      if (interval.value === this.sortByTime.value) {
+        this.sortByTime.value = true
+        this.sortBy = 'Time'
+      } else if (interval.value === this.sortByPriority.value) {
+        this.sortByPriority.value = true
+        this.sortBy = 'Priority'
+      }
+      this.fetchFolder()
     }
-            },
-        emails:[],
-        sortByTime: {value: true},
-        sortByPriority:{value: false},
-        sortBy: 'Time'
-        }
-    },
-    mounted(){
-        this.fetchFolder()
-    },
-    methods: {
-        handleSort(interval){
-            this.sortByTime.value = false
-            this.sortByPriority.value = false
-            interval.value = true
-            if(interval.value === this.sortByTime.value){
-                this.sortByTime.value = true
-                this.sortBy = 'Time'
-            }
-            else if(interval.value === this.sortByPriority.value){
-                this.sortByPriority.value = true
-                this.sortBy = 'Priority'
-            }
-            this.fetchFolder()
-        }
-    }
-
-
+  }
 }
 </script>
 <style scoped>
