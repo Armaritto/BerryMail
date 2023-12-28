@@ -21,12 +21,25 @@
 
       <div style="padding-top: 170px; color: white">
         <table>
-          <tr v-for="(contact, name, index) in contacts" :key="index">
-            <h5>{{ name }}</h5>
-            <tr v-for="(email, emailIndex) in contact" :key="emailIndex">
-              <p>{{ email }}</p>
+            <tr @click.alt.exact.prevent="handleDeleteContact(name)" v-for="(contact, name, index) in contacts" :key="index">
+              <tr>
+                <h5>{{ name }}</h5>
+                <tr v-for="(email, emailIndex) in contact" :key="emailIndex">
+                  <p>{{ email }}</p>
+                </tr>
+                <td>
+                  <div class="delete deleteH" @click="handleDeleteContact(name)" style="display: flex; flex-direction: column; align-items: center; border: none; border-radius: 10px">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/wpyrrmcq.json"
+                        trigger="hover"
+                        style="width:30px;height:30px">
+                    </lord-icon>
+                  </div>
+                </td>
+              </tr>
             </tr>
-          </tr>
+
+
         </table>
       </div>
 
@@ -40,6 +53,7 @@
                   style="width:30px;height:30px;">
               </lord-icon>
               <div>Add</div>
+
             </div>
           </span>
       </div>
@@ -52,22 +66,23 @@
 
 <script>
 import CreateContact from "@/components/CreateContact.vue";
-
 export default {
-  name: 'main',
-  props: ['clientEmail'],
+  name: 'ContactMenu',
+  props: ["mail"],
   components: {
     CreateContact
   },
   data(){
     return{
+      searchName: '',
       contacts: {},
       sortContactsBy: 'date',
       createCont: false,
+      mail: this.mail,
       fetchContacts: function(){
         var url = "http://localhost:8080/contacts?"
         const params = {
-          email: this.clientEmail + "@berry.com",
+          email: this.mail + "@berry.com",
           SortCriteria: this.sortContactsBy,
         }
         const query = new URLSearchParams(params)
@@ -82,15 +97,38 @@ export default {
               // this.numOfPages = Math.ceil(this.emails.length / this.emailsPerPage)
             })
       },
-      addContact: function(){
+      addContact: async function () {
+        console.log("add contact"+this.mail);
         this.createCont = true;
-        const url = "http://localhost:8080/addContact?"
-        const params = {
-          email: this.clientEmail + "@berry.com",
-          name: this.name,
-          mails: this.mails,
-        }
-
+        await swal("Enter Name of Contact:", {
+          content: "input",
+        })
+            .then(async (value) => {
+              let NameOfContact = value;
+              await swal(`Enter List of Emails for: ${value}`, {
+                content: "input",
+              })
+                  .then((value) => {
+                    let ListOfEmails = value;
+                    console.log("N"+NameOfContact);
+                    console.log("L"+ListOfEmails);
+                    swal(`Successfully Created: ${NameOfContact}`);
+                    const url = "http://localhost:8080/addContact?"
+                    const params = {
+                      email: this.mail + "@berry.com",
+                      name: NameOfContact,
+                      mails: ListOfEmails,
+                    }
+                    const query = new URLSearchParams(params)
+                    const method = "POST"
+                    fetch(url + query, {method: method})
+                        .then(res => res.json())
+                        .then(data => {
+                          console.log(data)
+                        })
+                    this.fetchContacts();
+                  });
+            });
       },
     }
   },
@@ -98,84 +136,44 @@ export default {
     this.fetchContacts()
   },
   methods:{
-    handleTime(interval){
-      this.isBefore.value = false
-      this.isOn.value = false
-      this.isAfter.value = false
-      interval.value = true
+    storeData(){
+      this.searchName = document.getElementById("sender").value
+
     },
-    handleCriteria(criteria){
-      this.isAND.value = false
-      this.isOR.value = false
-      criteria.value = true
-    },
-    handleSearch() {
-      if(this.isBefore.value){
-        this.criteriaTime = "Before"
-      }
-      else if(this.isOn.value){
-        this.criteriaTime = "On"
-      }
-      else if(this.isAfter.value){
-        this.criteriaTime = "After"
-      }
-      let url;
-      let isCustom = false;
-      switch (this.folder){
-        case "inbox":
-          url = "http://localhost:8080/filterInbox?"
-          break;
-        case "sent":
-          url = "http://localhost:8080/filterSent?"
-          break;
-        case "draft":
-          url = "http://localhost:8080/filterDraft?"
-          break;
-        case "trash":
-          url = "http://localhost:8080/filterTrash?"
-          break;
-        default:
-          isCustom = true
-          url = "http://localhost:8080/filterCustomFolder?"
-          break;
-      }
-      let params;
-      if(isCustom){
-        params = {
-          email: this.clientEmail + "@berry.com",
-          folderName: this.folder,
-          SortCriteria: "Time",
-          Type:this.isAND.value ? "AND" : "OR"
-        }
-      }
-      else{
-        params = {
-          email: this.clientEmail + "@berry.com",
-          SortCriteria: "Time",
-          Type:this.isAND.value ? "AND" : "OR"
-        }
+    handleDeleteContact: function (name) {
+      console.log("delete contact"+this.mail);
+      const url = "http://localhost:8080/deleteContact?"
+      const params = {
+        email: this.mail + "@berry.com",
+        name: name,
       }
       const query = new URLSearchParams(params)
-      const method = "POST"
-      const body = JSON.stringify({
-        sender:this.Sender,
-        receiver:this.Receiver,
-        subject:this.Subject,
-        date:[this.Date, this.criteriaTime],
-        body:this.Body,
-        attachment:this.Attachment,
-      })
-      fetch(url+query, {
-        method: method,
-        body: body,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const method = "DELETE"
+      fetch(url + query, {method: method})
           .then(res => res.json())
           .then(data => {
             console.log(data)
           })
+      this.fetchContacts();
+    },
+    handleSearch: function () {
+      // const url = "http://localhost:8080/searchContact?"
+      // const params = {
+      //   email: this.mail + "@berry.com",
+      //   name: this.searchName,
+      // }
+      // const query = new URLSearchParams(params)
+      // const method = "GET"
+      // fetch(url + query, {method: method})
+      //     .then(res => res.json())
+      //     .then(data => {
+      //       console.log(data)
+      //       this.contacts = {};
+      //       this.contacts.push({
+      //         name: data.name,
+      //         mails: data.mails,
+      //       })
+      //     })
     }
   }
 }
@@ -345,5 +343,12 @@ button:hover {
   position: fixed;
   top: 400px;
   right: 400px;
+}
+.delete{
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.deleteH:hover{
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
 }
 </style>
