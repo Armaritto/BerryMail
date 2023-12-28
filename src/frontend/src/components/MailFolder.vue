@@ -62,11 +62,38 @@
 <!--                <option value="3">Priority</option>-->
 <!--                <option value="4">HELP</option>-->
 <!--            </select>-->
-          <tr v-for="(e, index) in emails" :key="e.id" class="mails" @click="$emit('itemPressed', e.id)">
-                <MailPreview v-if="index < emailsPerPage" :emailMeta="e" ></MailPreview>
+          <tr v-for="e in pageEmails" :key="e.id" class="mails" @click="$emit('itemPressed', e.id)">
+                <MailPreview :emailMeta="e" ></MailPreview>
           </tr>
         </table>
-          <span @click="handleSort(sortByPriority);">Next Page</span>
+        <div class="page_nav">
+          <span v-if="currentPage > 1" class="btn btn-priority" @click="prevPage()">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <lord-icon
+                src="https://cdn.lordicon.com/vduvxizq.json"
+                trigger="hover"
+                style="width:30px;height:30px; transform: scaleX(-1);">
+              </lord-icon>
+              <div>
+                Previous Page
+              </div>
+            </div>
+          </span>
+          <span v-if="currentPage < numOfPages" class="btn btn-priority" @click="nextPage()">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <lord-icon
+                src="https://cdn.lordicon.com/vduvxizq.json"
+                trigger="hover"
+                style="width:30px;height:30px">
+              </lord-icon>
+              <div>
+                Next Page
+              </div>
+            </div>
+          </span>
+        </div>
+
+
 <!--          <vue-awesome-paginate-->
 <!--              :total-items="50"-->
 <!--              :items-per-page="5"-->
@@ -105,7 +132,7 @@ export default {
   data() {
     return {
       folders: ["inbox", "sent", "draft", "trash"],
-      fetchFolder: function () {
+       fetchFolder: function () {
         var url = null
         if (this.folderName) {
           if (!this.folders.includes(this.folderName)) {
@@ -127,16 +154,24 @@ export default {
               .then(data => {
                 this.emails = data;
                 console.log(data)
+                this.paginate();
+                this.numOfPages = Math.ceil(this.emails.length / this.emailsPerPage)
               })
         }
       },
+      paginate: function(){
+        var startIndex = (this.currentPage - 1) * this.emailsPerPage
+        this.pageEmails = this.emails.slice(startIndex, startIndex + this.emailsPerPage)
+        console.log("page" + this.pageEmails)
+      },
       emails: [],
+      pageEmails: [],
       sortByTime: {value: true},
       sortByPriority: {value: false},
       sortBy: 'Time',
       emailsPerPage: 2,
       currentPage: 1,
-      emailsCounter: 0
+      numOfPages: 1
       }
   },
   mounted() {
@@ -155,10 +190,15 @@ export default {
         this.sortBy = 'Priority'
       }
       this.fetchFolder()
+      this.paginate()
     },
     nextPage(){
       this.currentPage++
-      this.emails = this.emails.slice((this.currentPage-1))
+      this.paginate()
+    },
+    prevPage(){
+      this.currentPage--
+      this.paginate()
     }
     // onClickHandler: function(page){
     //   console.log(page);
@@ -168,6 +208,14 @@ export default {
 </script>
 <style scoped>
 .sort_options{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+.page_nav{
   display: flex;
   flex-direction: row;
   align-items: center;

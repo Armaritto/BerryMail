@@ -199,7 +199,7 @@ methods:{
     })
         .then((value) => {
           swal(`Folder Created!`);
-          let folderNamesss = '';
+        let folderNamesss = '';
           folderNamesss = value;
     const url = "http://localhost:8080/createFolder?"
     const params = {
@@ -210,11 +210,40 @@ methods:{
     const method = "POST"
     const body = ""
 
-    fetch(url+query, {method: method})})
+    fetch(url+query, {method: method})
+})
         .then((res) => this.fetchFolderList)
+        .then(()=>{
+            const url = "http://localhost:8080/createFolder?"
+    const params = {
+      email: this.clientEmail + "@berry.com",
+      folderName:"newFolder",
+    }
+    const query = new URLSearchParams(params)
+    const method = "POST"
+    const body = ""
+    console.log("catch1")
+    fetch(url+query, {method: method})
+       
+        .then(()=>{
+            const url = "http://localhost:8080/deleteFolder?"
+    const params = {
+      email: this.clientEmail + "@berry.com",
+      name:"newFolder",
+    }
+    const query = new URLSearchParams(params)
+    const method = "DELETE"
+    const body = ""
+    console.log("catch2")
+    fetch(url+query, {method: method})
+    .then((res)=> {this.fetchFolderList; console.log(res)})
+    .then((res)=>{this.fetchFolderList; console.log('DELETED')})
+        }) 
+    })
 
-        .then(() => this.fetchFolderList)
-    this.fetchFolderList
+    //     .then(() => this.fetchFolderList)
+    // this.fetchFolderList
+    setTimeout(this.fetchFolderList, 5000)
   },handleRename(newName){
 
       const path = '/' + this.clientEmail + '/folder/inbox'
@@ -260,7 +289,7 @@ mounted(){
   padding: 16px;
   border-radius: 0;
   background: transparent;
-  //background: rgba(40, 183, 185, 0.6);
+  /* background: rgba(40, 183, 185, 0.6); */
   box-shadow: 0 0 30px rgba(0, 0, 0, .05);
   transition: .6s cubic-bezier(.8, .5, .5, .8);
 }

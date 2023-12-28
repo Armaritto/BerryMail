@@ -123,7 +123,7 @@ export default {
       arrayReceivers:[],
       subject:'',
       body:'',
-      priority: '',
+      priority: 'Default',
       isCritical:{value: false} ,
       isDefault: {value: true},
       isUrgent: {value: false},

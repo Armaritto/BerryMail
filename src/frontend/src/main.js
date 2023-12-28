@@ -1,8 +1,8 @@
 import { createApp } from 'vue';
 import router from './router'
 import VStickyElement from 'vue-sticky-element';
-import VueAwesomePaginate from "vue-awesome-paginate";
-import "vue-awesome-paginate/dist/style.css";
+// import VueAwesomePaginate from "vue-awesome-paginate";
+// import "vue-awesome-paginate/dist/style.css";
 
 
 // import { createRouter, createWebHashHistory } from 'vue-router';
@@ -21,5 +21,5 @@ import App from './App.vue'
 const app = createApp(App);
 app.use(VStickyElement);
 app.use(router);
-app.use(VueAwesomePaginate);
+// app.use(VueAwesomePaginate);
 app.mount("#app");
