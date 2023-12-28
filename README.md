@@ -11,12 +11,12 @@
 ---
 ## How to run:
 #### Back-end part:
-- Head to the backend directory which is found in the following directory .\BerryMail\src\main\java\com.berrymail\BerryMailtApplication
+- Head to the backend directory which is found in the following directory ```.\BerryMail\src\main\java\com.berrymail\BerryMailtApplication```
 - Run the spring boot application
-- Note that backend will be running at localhost:8080
+- Note that backend will be running at ```localhost:8080```
 #### Front-end part:
-- Head to the frontend directory which is found in .\BerryMail\src\frontend and run npm run serve in terminal
-- Launch any browser and open localhost:3000/login
+- Head to the frontend directory which is found in ```.\BerryMail\src\frontend``` and ```run npm run serve``` in terminal
+- Launch any browser and open ```localhost:3000/login```
 - EEnjoy using the BerryMail web application.
 ---
 ## Design Pattern used:
